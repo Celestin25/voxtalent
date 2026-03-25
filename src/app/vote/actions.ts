@@ -7,7 +7,7 @@ import { redirect } from "next/navigation"
 
 export async function castVote(formData: FormData) {
   const session = await auth()
-  if (!session?.user || session.user.role !== 'EMPLOYEE') {
+  if (!session || !session.user || session.user.role !== 'EMPLOYEE') {
     throw new Error('Unauthorized')
   }
 

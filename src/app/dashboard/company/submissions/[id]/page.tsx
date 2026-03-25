@@ -15,7 +15,9 @@ import { prisma } from "@/lib/prisma";
 export default async function CompanySubmissionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: submissionId } = await params;
   const session = await auth();
-  if (!session?.user || session.user.role !== 'COMPANY') redirect("/login");
+  if (!session || !session.user || session.user.role !== 'COMPANY') {
+    redirect("/login");
+  }
   
   const user = session.user as any;
 

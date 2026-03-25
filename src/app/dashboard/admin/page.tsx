@@ -16,11 +16,11 @@ import SignOutButton from "@/components/SignOutButton";
 
 export default async function AdminDashboard() {
   const session = await auth();
-  if (!session?.user || (session.user as any).role !== 'ADMIN') {
-     // For demo purposes, we usually allow admin access if logged in as admin
+  if (!session || !session.user || (session.user as any).role !== 'ADMIN') {
+    redirect("/login");
   }
   
-  const user = session?.user as any;
+  const user = session.user as any;
 
   return (
     <main className={styles.main}>

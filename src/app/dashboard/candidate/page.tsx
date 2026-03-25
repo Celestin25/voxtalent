@@ -17,7 +17,9 @@ import SignOutButton from "@/components/SignOutButton";
 
 export default async function CandidateDashboard() {
   const session = await auth();
-  if (!session?.user || session.user.role !== 'CANDIDATE') redirect("/login");
+  if (!session || !session.user || session.user.role !== 'CANDIDATE') {
+    redirect("/login");
+  }
   
   const user = session.user as any;
 

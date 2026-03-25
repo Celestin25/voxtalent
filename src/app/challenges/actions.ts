@@ -7,7 +7,7 @@ import { redirect } from "next/navigation"
 
 export async function submitSolution(formData: FormData) {
   const session = await auth()
-  if (!session?.user || session.user.role !== 'CANDIDATE') {
+  if (!session || !session.user || session.user.role !== 'CANDIDATE') {
     throw new Error('Unauthorized')
   }
 
