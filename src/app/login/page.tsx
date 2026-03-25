@@ -94,10 +94,10 @@ export default function LoginPage() {
           <div className={styles.demoBox}>
             <p className={styles.demoTitle}>Universal Demo Access</p>
             <div className={styles.demoGrid}>
-              <div className={styles.demoItem}>Admin: <b>admin@voxtalent.app</b> / <b>password123</b></div>
-              <div className={styles.demoItem}>HR: <b>hr@google.com</b> / <b>password123</b></div>
-              <div className={styles.demoItem}>Employee: <b>employee@google.com</b> / <b>password123</b></div>
-              <div className={styles.demoItem}>Candidate: <b>candidate@pathfinder.com</b> / <b>password123</b></div>
+              <div className={styles.demoItem}>Admin: <b>admin@company.com</b> / <b>admin</b></div>
+              <div className={styles.demoItem}>HR: <b>hr@company.com</b> / <b>hr@company</b></div>
+              <div className={styles.demoItem}>Employee: <b>employee@company.com</b> / <b>employee</b></div>
+              <div className={styles.demoItem}>Candidate: <b>candidate@company.com</b> / <b>candidate</b></div>
             </div>
           </div>
 
