@@ -27,7 +27,7 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
       },
       votes: {
         where: {
-          voterId: session?.user?.id
+          voterId: session?.user?.id || "guest-id-no-match"
         }
       }
     }

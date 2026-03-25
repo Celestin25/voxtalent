@@ -14,6 +14,7 @@ import { prisma } from "@/lib/prisma";
 
 export default async function CompanySubmissionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: submissionId } = await params;
+  const session = await auth();
   const user = session?.user as any || { id: "guest-company", role: "COMPANY" };
 
   const submission = await prisma.submission.findUnique({

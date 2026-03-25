@@ -15,6 +15,7 @@ import { prisma } from "@/lib/prisma";
 
 export default async function CompanyChallengeTalentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: challengeId } = await params;
+  const session = await auth();
   const user = session?.user as any || { id: "guest-company", role: "COMPANY" };
 
   const challenge = await prisma.challenge.findUnique({
