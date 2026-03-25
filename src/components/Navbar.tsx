@@ -45,10 +45,7 @@ export default function Navbar() {
     }
   };
 
-  // Completely hide Navbar on distinct dashboard/app routes
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
-    return null;
-  }
+  /* Removed Navbar hiding for dashboard routes to allow guest navigation */
 
   return (
     <nav className={styles.nav}>
@@ -90,13 +87,9 @@ export default function Navbar() {
             </div>
           ) : (
             <div className={styles.actions}>
-              <Link href="/login" className={styles.loginBtn}>
-                <User size={18} />
-                <span>Login</span>
+              <Link href="/dashboard" className="btn-primary" style={{fontSize:'0.85rem', padding:'0.5rem 1.5rem'}}>
+                 Dashboard
               </Link>
-              <button onClick={() => setRegisterOpen(true)} className="btn-primary" style={{fontSize:'0.85rem', padding:'0.5rem 1rem'}}>
-                Join
-              </button>
             </div>
           )}
         </div>

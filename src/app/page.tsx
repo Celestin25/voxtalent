@@ -19,8 +19,8 @@ export default function Home() {
             We've replaced gut feelings with data-driven consensus from the people who will actually work with the hire.
           </p>
           <div className={styles.heroActions}>
-            <Link href="/challenges" className="btn-primary">
-              Explore Challenges <ArrowRight size={18} style={{ marginLeft: "8px" }} />
+            <Link href="/dashboard" className="btn-primary">
+              Explore Dashboard <ArrowRight size={18} style={{ marginLeft: "8px" }} />
             </Link>
             <Link href="/how-it-works" className="btn-outline">
               Learn Methodology
@@ -100,8 +100,8 @@ export default function Home() {
           <p className="text-secondary" style={{ marginBottom: '2.5rem', maxWidth: '600px', marginInline: 'auto' }}>
             Join the elite companies already using VoxTalent to build teams that matter.
           </p>
-          <Link href="/signup" className="btn-primary">
-            Get Started Today <ArrowRight size={18} style={{ marginLeft: "8px" }} />
+          <Link href="/dashboard" className="btn-primary">
+            Access All Dashboards <ArrowRight size={18} style={{ marginLeft: "8px" }} />
           </Link>
         </div>
       </section>

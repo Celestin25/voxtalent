@@ -20,8 +20,6 @@ import SignOutButton from "@/components/SignOutButton";
 export default async function CompanyDashboard() {
   const session = await auth();
   
-  let userId = (session?.user as any)?.id;
-
   if (!userId) {
      // If guest, find the first company user to show sample data
      const sampleCompany = await prisma.companyProfile.findFirst({
@@ -33,7 +31,7 @@ export default async function CompanyDashboard() {
   }
 
   // Fetch real data
-  const company = await prisma.companyProfile.findUnique({
+  let company = userId ? await prisma.companyProfile.findUnique({
     where: { userId: userId },
     include: {
       challenges: {
@@ -45,7 +43,35 @@ export default async function CompanyDashboard() {
         orderBy: { createdAt: 'desc' }
       }
     }
-  });
+  }) : null;
+
+  if (!company) {
+    // Hardcoded fallback for demonstration purposes when DB is empty
+    company = {
+      id: "guest-company-id",
+      userId: "guest-user-id",
+      name: "Acme Talent Corp",
+      bio: "A demo company showcasing VoxTalent's merit-based recruitment.",
+      website: "https://acme.example.com",
+      location: "San Francisco, CA",
+      challenges: [
+        {
+          id: "sample-ch-1",
+          title: "Senior DevOps Challenge",
+          status: "OPEN",
+          createdAt: new Date(),
+          _count: { submissions: 12 }
+        },
+        {
+          id: "sample-ch-2",
+          title: "Fullstack Product Engineer",
+          status: "OPEN",
+          createdAt: new Date(Date.now() - 86400000 * 5),
+          _count: { submissions: 8 }
+        }
+      ]
+    } as any;
+  }
 
   if (!company) {
     // This shouldn't happen if they have the role, but handle it
