@@ -20,6 +20,8 @@ import SignOutButton from "@/components/SignOutButton";
 export default async function CompanyDashboard() {
   const session = await auth();
   
+  let userId = (session?.user as any)?.id;
+  
   if (!userId) {
      // If guest, find the first company user to show sample data
      const sampleCompany = await prisma.companyProfile.findFirst({
