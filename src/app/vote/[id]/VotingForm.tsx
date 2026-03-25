@@ -10,7 +10,7 @@ export default function VotingForm({ submissionId }: { submissionId: string }) {
   const [loading, setLoading] = useState(false)
   const [score, setScore] = useState(0)
   const [hover, setHover] = useState(0)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
