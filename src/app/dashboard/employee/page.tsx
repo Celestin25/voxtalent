@@ -34,16 +34,28 @@ export default async function EmployeeDashboard() {
   // For simplicity, we'll just fetch all SUBMITTED submissions for challenges at their company
   // In a real app, you'd filter by the employee's company
   
-  const employeeProfile = await prisma.employeeProfile.findUnique({
-    where: { userId: userId }
+  let employeeProfile = await prisma.employeeProfile.findUnique({
+    where: { userId: userId || "non-existent-id" }
   });
+
+  // Provide sample fallback if profile doesn't exist
+  if (!employeeProfile) {
+    employeeProfile = {
+      id: "guest-employee-id",
+      userId: userId || "guest-id",
+      companyId: "guest-company-id",
+      role: "Voter",
+      bio: "A demo employee helping to verify technical merit.",
+      createdAt: new Date(),
+    } as any;
+  }
 
   const pendingSubmissions = await prisma.submission.findMany({
     where: {
       status: 'SUBMITTED',
       votes: {
         none: {
-          voterId: userId
+          voterId: userId || "guest-no-match"
         }
       },
       challenge: {
@@ -68,7 +80,7 @@ export default async function EmployeeDashboard() {
 
   // Calculate company stats
   const totalSubmissionsInCompany = await prisma.submission.count({
-    where: { challenge: { companyId: employeeProfile?.companyId } }
+    where: { challenge: { companyId: employeeProfile?.companyId || "no-match" } }
   });
 
   const votesCount = await prisma.vote.count({
