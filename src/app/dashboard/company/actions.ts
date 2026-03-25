@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache"
 
 export async function createChallenge(formData: FormData) {
   const session = await auth()
-  if (!session?.user || session.user.role !== 'COMPANY') {
+  if (!session || !session.user || session.user.role !== 'COMPANY') {
     throw new Error('Unauthorized')
   }
 
@@ -46,7 +46,7 @@ export async function createChallenge(formData: FormData) {
 
 export async function deleteChallenge(challengeId: string) {
   const session = await auth()
-  if (!session?.user || session.user.role !== 'COMPANY') {
+  if (!session || !session.user || session.user.role !== 'COMPANY') {
     throw new Error('Unauthorized')
   }
 
