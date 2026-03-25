@@ -50,42 +50,52 @@ export default async function EmployeeDashboard() {
     } as any;
   }
 
-  const pendingSubmissions = await prisma.submission.findMany({
-    where: {
-      status: 'SUBMITTED',
-      votes: {
-        none: {
-          voterId: userId || "guest-no-match"
-        }
-      },
-      challenge: {
-        companyId: employeeProfile?.companyId
-      }
-    },
-    include: {
-      challenge: {
-        include: {
-          company: true,
-          _count: {
-            select: { submissions: true }
+  // Fetch submissions and stats
+  let pendingSubmissions: any[] = [];
+  let totalSubmissionsInCompany = 0;
+  let votesCount = 0;
+
+  try {
+    pendingSubmissions = await prisma.submission.findMany({
+      where: {
+        status: 'SUBMITTED',
+        votes: {
+          none: {
+            voterId: userId || "guest-no-match"
           }
+        },
+        challenge: {
+          companyId: employeeProfile?.companyId || "guest-company-id"
         }
       },
-      _count: {
-        select: { votes: true }
-      }
-    },
-    orderBy: { createdAt: 'desc' }
-  });
+      include: {
+        challenge: {
+          include: {
+            company: true,
+            _count: {
+              select: { submissions: true }
+            }
+          }
+        },
+        _count: {
+          select: { votes: true }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    });
 
-  // Calculate company stats
-  const totalSubmissionsInCompany = await prisma.submission.count({
-    where: { challenge: { companyId: employeeProfile?.companyId || "no-match" } }
-  });
+    // Calculate company stats
+    totalSubmissionsInCompany = await prisma.submission.count({
+      where: { challenge: { companyId: employeeProfile?.companyId || "no-match" } }
+    });
 
-  const votesCount = await prisma.vote.count({
-    where: { voterId: userId }
-  });
+    votesCount = await prisma.vote.count({
+      where: { voterId: userId || "guest-id" }
+    });
+  } catch (error) {
+    console.error("Dashboard Error: Database connection failed.", error);
+    // Fallback stays empty/zero or use samples
+  }
 
   return (
     <main className={styles.main}>

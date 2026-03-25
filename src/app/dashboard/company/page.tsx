@@ -33,22 +33,41 @@ export default async function CompanyDashboard() {
   }
 
   // Fetch real data
-  let company = userId ? await prisma.companyProfile.findUnique({
-    where: { userId: userId },
-    include: {
-      challenges: {
-        include: {
-          _count: {
-            select: { submissions: true }
-          }
-        },
-        orderBy: { createdAt: 'desc' }
+  let company: any = null;
+  let totalVotesAcrossCompany = 0;
+
+  try {
+    company = userId ? await prisma.companyProfile.findUnique({
+      where: { userId: userId },
+      include: {
+        challenges: {
+          include: {
+            _count: {
+              select: { submissions: true }
+            }
+          },
+          orderBy: { createdAt: 'desc' }
+        }
       }
+    }) : null;
+
+    if (company && company.id) {
+       totalVotesAcrossCompany = await prisma.vote.count({
+        where: { 
+          submission: { 
+            challenge: { 
+              companyId: company.id 
+            } 
+          } 
+        }
+      });
     }
-  }) : null;
+  } catch (error) {
+    console.error("Dashboard Error: Database connection failed.", error);
+  }
 
   if (!company) {
-    // Hardcoded fallback for demonstration purposes when DB is empty
+    // Hardcoded fallback for demonstration purposes when DB is empty/fails
     company = {
       id: "guest-company-id",
       userId: "guest-user-id",
@@ -75,24 +94,8 @@ export default async function CompanyDashboard() {
     } as any;
   }
 
-  if (!company) {
-    // This shouldn't happen if they have the role, but handle it
-    return <div>Profile not found. Please contact support.</div>;
-  }
-
   const activeChallengesCount = company.challenges.filter((c: any) => c.status === 'OPEN').length;
   const totalSubmissions = company.challenges.reduce((acc: number, c: any) => acc + c._count.submissions, 0);
-  
-  // Total votes across all submissions in this company
-  const totalVotesAcrossCompany = await prisma.vote.count({
-    where: { 
-      submission: { 
-        challenge: { 
-          companyId: company.id 
-        } 
-      } 
-    }
-  });
 
   return (
     <main className={styles.main}>
