@@ -15,6 +15,9 @@ import VotingForm from "./VotingForm";
 export default async function VotePage({ params }: { params: Promise<{ id: string }> }) {
   const { id: submissionId } = await params;
   const session = await auth();
+  if (!session || !session.user) {
+    redirect("/login");
+  }
 
   const submission = await prisma.submission.findUnique({
     where: { id: submissionId },
@@ -26,7 +29,7 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
       },
       votes: {
         where: {
-          voterId: session.user.id
+          voterId: session?.user?.id
         }
       }
     }
