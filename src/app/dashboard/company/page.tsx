@@ -19,15 +19,22 @@ import SignOutButton from "@/components/SignOutButton";
 
 export default async function CompanyDashboard() {
   const session = await auth();
-  if (!session || !session.user || session.user.role !== 'COMPANY') {
-    redirect("/login");
-  }
   
-  const user = session.user as any;
+  let userId = (session?.user as any)?.id;
+
+  if (!userId) {
+     // If guest, find the first company user to show sample data
+     const sampleCompany = await prisma.companyProfile.findFirst({
+       include: { user: true }
+     });
+     if (sampleCompany) {
+       userId = sampleCompany.userId;
+     }
+  }
 
   // Fetch real data
   const company = await prisma.companyProfile.findUnique({
-    where: { userId: user.id },
+    where: { userId: userId },
     include: {
       challenges: {
         include: {

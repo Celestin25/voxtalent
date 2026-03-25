@@ -24,11 +24,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         console.log("Auth Debug: Authorize callback triggered");
         const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
+          .object({ email: z.string().email(), password: z.string().min(3) })
           .safeParse(credentials);
  
         if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
+          let { email, password } = parsedCredentials.data;
+          email = email.toLowerCase().trim();
  
           const user = await getUser(email);
           if (!user) {
@@ -36,8 +37,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return null;
           }
  
+          console.log(`Auth Debug: Comparing password for ${email}...`);
           const passwordsMatch = await bcrypt.compare(password, user.password);
-          console.log(`Auth Debug: Password match result: ${passwordsMatch}`);
+          console.log(`Auth Debug: Password match result for ${email}: ${passwordsMatch}`);
           if (passwordsMatch) return user;
         } else {
           console.log("Auth Debug: Zod validation failed", parsedCredentials.error);

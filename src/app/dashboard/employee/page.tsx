@@ -16,18 +16,26 @@ import SignOutButton from "@/components/SignOutButton";
 
 export default async function EmployeeDashboard() {
   const session = await auth();
-  if (!session || !session.user || session.user.role !== 'EMPLOYEE') {
-    redirect("/login");
-  }
   
-  const user = session.user as any;
+  let userId = (session?.user as any)?.id;
+  let userName = session?.user?.name || "Voter Guest";
+
+  if (!userId) {
+     const sampleEmployee = await prisma.employeeProfile.findFirst({
+       include: { user: true }
+     });
+     if (sampleEmployee) {
+       userId = sampleEmployee.userId;
+       userName = sampleEmployee.user.name || "Voter Guest";
+     }
+  }
 
   // Fetch submissions that this employee hasn't voted on yet
   // For simplicity, we'll just fetch all SUBMITTED submissions for challenges at their company
   // In a real app, you'd filter by the employee's company
   
   const employeeProfile = await prisma.employeeProfile.findUnique({
-    where: { userId: user.id }
+    where: { userId: userId }
   });
 
   const pendingSubmissions = await prisma.submission.findMany({
@@ -35,7 +43,7 @@ export default async function EmployeeDashboard() {
       status: 'SUBMITTED',
       votes: {
         none: {
-          voterId: user.id
+          voterId: userId
         }
       },
       challenge: {
@@ -64,7 +72,7 @@ export default async function EmployeeDashboard() {
   });
 
   const votesCount = await prisma.vote.count({
-    where: { voterId: user.id }
+    where: { voterId: userId }
   });
 
   return (
@@ -73,7 +81,7 @@ export default async function EmployeeDashboard() {
         <header className={styles.header}>
           <div className={styles.headerTitle}>
             <h1>Voter Dashboard</h1>
-            <p className={styles.subtitle}>Welcome back, {user.name}. Your merit verification is needed.</p>
+            <p className={styles.subtitle}>Welcome back, {userName}. Your merit verification is needed.</p>
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
              <SignOutButton />

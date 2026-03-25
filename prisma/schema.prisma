@@ -7,87 +7,82 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
-// SQLite doesn't support enums, so we use String
-// Role: ADMIN, COMPANY, EMPLOYEE, CANDIDATE
-
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  password      String
-  name          String?
-  image         String?
-  role          String    @default("CANDIDATE")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
+  id               String            @id @default(cuid())
+  email            String            @unique
+  password         String
+  name             String?
+  image            String?
+  role             String            @default("CANDIDATE")
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  candidateProfile CandidateProfile?
   companyProfile   CompanyProfile?
   employeeProfile  EmployeeProfile?
-  candidateProfile CandidateProfile?
-
-  submissions   Submission[]
-  votes         Vote[]
+  submissions      Submission[]
+  votes            Vote[]
 }
 
 model CompanyProfile {
-  id          String   @id @default(cuid())
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String      @id @default(cuid())
+  userId      String      @unique
   name        String
   description String?
   website     String?
   challenges  Challenge[]
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model EmployeeProfile {
-  id          String   @id @default(cuid())
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  companyId   String
-  title       String?
+  id        String  @id @default(cuid())
+  userId    String  @unique
+  companyId String
+  title     String?
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CandidateProfile {
-  id          String   @id @default(cuid())
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bio         String?
+  id     String  @id @default(cuid())
+  userId String  @unique
+  bio    String?
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Challenge {
-  id          String   @id @default(cuid())
+  id          String         @id @default(cuid())
   title       String
   description String
   companyId   String
-  company     CompanyProfile @relation(fields: [companyId], references: [id], onDelete: Cascade)
   deadline    DateTime
-  status      String   @default("OPEN") // OPEN, CLOSED, COMPLETED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status      String         @default("OPEN")
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  company     CompanyProfile @relation(fields: [companyId], references: [id], onDelete: Cascade)
   submissions Submission[]
 }
 
 model Submission {
-  id           String    @id @default(cuid())
-  challengeId  String
-  challenge    Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
-  candidateId  String
-  candidate    User      @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  content      String    // The answer/solution
-  anonymousId  String    @default(uuid()) // Used for anonymous display to voters
-  status       String    @default("SUBMITTED")
-  createdAt    DateTime  @default(now())
-  votes        Vote[]
+  id          String    @id @default(cuid())
+  challengeId String
+  candidateId String
+  content     String
+  anonymousId String    @default(uuid())
+  status      String    @default("SUBMITTED")
+  createdAt   DateTime  @default(now())
+  candidate   User      @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  votes       Vote[]
 }
 
 model Vote {
   id           String     @id @default(cuid())
   submissionId String
-  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
   voterId      String
-  voter        User       @relation(fields: [voterId], references: [id])
-  score        Int        @default(1) // Simple vote or 1-5 score
+  score        Int        @default(1)
   createdAt    DateTime   @default(now())
+  voter        User       @relation(fields: [voterId], references: [id])
+  submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
 }
