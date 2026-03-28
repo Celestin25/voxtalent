@@ -21,34 +21,70 @@ export default async function CandidateDashboard() {
   let userId = (session?.user as any)?.id;
 
   if (!userId) {
-     const sampleCandidate = await prisma.user.findFirst({
-       where: { role: 'CANDIDATE' }
-     });
-     if (sampleCandidate) {
-       userId = sampleCandidate.id;
-     }
+    try {
+      const sampleCandidate = await prisma.user.findFirst({
+        where: { role: 'CANDIDATE' }
+      });
+      if (sampleCandidate) {
+        userId = sampleCandidate.id;
+      }
+    } catch {
+      // DB unavailable — fallback data applied below
+    }
   }
 
   // Fetch real data
-  const candidate = await prisma.user.findUnique({
-    where: { id: userId },
-    include: {
-      candidateProfile: true,
-      submissions: {
-        include: {
-          challenge: {
-            include: {
-              company: true
+  let candidate: any = null;
+
+  try {
+    candidate = await prisma.user.findUnique({
+      where: { id: userId || "non-existent-id" },
+      include: {
+        candidateProfile: true,
+        submissions: {
+          include: {
+            challenge: {
+              include: {
+                company: true
+              }
             }
-          }
-        },
-        orderBy: { createdAt: 'desc' }
+          },
+          orderBy: { createdAt: 'desc' }
+        }
       }
-    }
-  });
+    });
+  } catch {
+    // DB unavailable — fallback data applied below
+  }
 
   if (!candidate) {
-    return <div>Profile not found.</div>;
+    candidate = {
+      id: "guest-candidate-id",
+      name: "Alex Rivera",
+      email: "candidate@voxtalent.demo",
+      image: null,
+      candidateProfile: { bio: "A demo candidate showcasing VoxTalent's merit-based recruitment." },
+      submissions: [
+        {
+          id: "sample-sub-1",
+          status: "SUBMITTED",
+          createdAt: new Date(Date.now() - 86400000 * 2),
+          challenge: {
+            title: "Senior DevOps Challenge",
+            company: { name: "Acme Talent Corp" }
+          }
+        },
+        {
+          id: "sample-sub-2",
+          status: "SUBMITTED",
+          createdAt: new Date(Date.now() - 86400000 * 7),
+          challenge: {
+            title: "Fullstack Product Engineer",
+            company: { name: "Lumina Tech" }
+          }
+        }
+      ]
+    };
   }
 
   const activeSubmissions = candidate.submissions.length;

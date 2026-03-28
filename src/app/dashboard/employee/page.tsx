@@ -21,22 +21,32 @@ export default async function EmployeeDashboard() {
   let userName = session?.user?.name || "Voter Guest";
 
   if (!userId) {
-     const sampleEmployee = await prisma.employeeProfile.findFirst({
-       include: { user: true }
-     });
-     if (sampleEmployee) {
-       userId = sampleEmployee.userId;
-       userName = sampleEmployee.user.name || "Voter Guest";
-     }
+    try {
+      const sampleEmployee = await prisma.employeeProfile.findFirst({
+        include: { user: true }
+      });
+      if (sampleEmployee) {
+        userId = sampleEmployee.userId;
+        userName = sampleEmployee.user.name || "Voter Guest";
+      }
+    } catch {
+      // DB unavailable — fallback data applied below
+    }
   }
 
   // Fetch submissions that this employee hasn't voted on yet
   // For simplicity, we'll just fetch all SUBMITTED submissions for challenges at their company
   // In a real app, you'd filter by the employee's company
   
-  let employeeProfile = await prisma.employeeProfile.findUnique({
-    where: { userId: userId || "non-existent-id" }
-  });
+  let employeeProfile: any = null;
+
+  try {
+    employeeProfile = await prisma.employeeProfile.findUnique({
+      where: { userId: userId || "non-existent-id" }
+    });
+  } catch {
+    // DB unavailable — fallback applied below
+  }
 
   // Provide sample fallback if profile doesn't exist
   if (!employeeProfile) {
