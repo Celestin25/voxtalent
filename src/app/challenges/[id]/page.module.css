@@ -109,11 +109,12 @@
 
 .skillBadge {
   padding: 0.6rem 1.2rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 30px;
   font-size: 0.85rem;
   font-weight: 600;
+  color: var(--color-text-primary);
 }
 
 .rubricCard {
@@ -140,7 +141,7 @@
 
 .sidebarCard {
   background: var(--color-bg-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 32px;
   padding: 3rem;
   position: sticky;

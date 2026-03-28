@@ -17,21 +17,27 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
   const session = await auth();
   const user = session?.user || { id: "guest-voter", name: "Guest Reviewer", role: "EMPLOYEE" };
 
-  const submission = await prisma.submission.findUnique({
-    where: { id: submissionId },
-    include: {
-      challenge: {
-        include: {
-          company: true
-        }
-      },
-      votes: {
-        where: {
-          voterId: session?.user?.id || "guest-id-no-match"
+  let submission: any = null;
+
+  try {
+    submission = await prisma.submission.findUnique({
+      where: { id: submissionId },
+      include: {
+        challenge: {
+          include: {
+            company: true
+          }
+        },
+        votes: {
+          where: {
+            voterId: session?.user?.id || "guest-id-no-match"
+          }
         }
       }
-    }
-  });
+    });
+  } catch (error) {
+    console.error("Vote page: DB error", error);
+  }
 
   if (!submission) {
     notFound();

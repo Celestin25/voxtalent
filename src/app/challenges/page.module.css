@@ -76,7 +76,7 @@
 .filterCheckbox {
   width: 18px;
   height: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 4px;
 }
 
@@ -88,7 +88,7 @@
 
 .card {
   background: var(--color-bg-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 2.5rem;
   transition: all var(--transition-smooth);
@@ -171,8 +171,8 @@
 }
 
 .searchBar {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 40px;
   padding: 0.5rem;
   display: flex;

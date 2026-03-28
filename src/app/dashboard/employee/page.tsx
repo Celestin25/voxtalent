@@ -143,6 +143,7 @@ export default async function EmployeeDashboard() {
               <div className={styles.statValue}>100%</div>
               <div className={styles.statLabel}>Voting Accuracy</div>
             </div>
+            
           </div>
         </section>
 

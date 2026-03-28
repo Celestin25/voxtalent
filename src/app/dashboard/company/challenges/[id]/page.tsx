@@ -18,21 +18,27 @@ export default async function CompanyChallengeTalentPage({ params }: { params: P
   const session = await auth();
   const user = session?.user as any || { id: "guest-company", role: "COMPANY" };
 
-  const challenge = await prisma.challenge.findUnique({
-    where: { id: challengeId },
-    include: {
-      company: true,
-      submissions: {
-        include: {
-          candidate: true,
-          votes: true
-        },
-        orderBy: { createdAt: 'desc' }
-      }
-    }
-  });
+  let challenge: any = null;
 
-  if (!challenge || (user.id !== "guest-company" && challenge.company.userId !== user.id)) {
+  try {
+    challenge = await prisma.challenge.findUnique({
+      where: { id: challengeId },
+      include: {
+        company: true,
+        submissions: {
+          include: {
+            candidate: true,
+            votes: true
+          },
+          orderBy: { createdAt: 'desc' }
+        }
+      }
+    });
+  } catch (error) {
+    console.error("View talent page: DB error", error);
+  }
+
+  if (!challenge || (user.id !== "guest-company" && challenge?.company?.userId !== user.id)) {
     notFound();
   }
 

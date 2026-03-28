@@ -17,24 +17,30 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
   const session = await auth();
   const user = session?.user as any || { id: "guest-company", role: "COMPANY" };
 
-  const submission = await prisma.submission.findUnique({
-    where: { id: submissionId },
-    include: {
-      candidate: true,
-      challenge: {
-        include: {
-          company: true
-        }
-      },
-      votes: {
-        include: {
-          voter: true
+  let submission: any = null;
+
+  try {
+    submission = await prisma.submission.findUnique({
+      where: { id: submissionId },
+      include: {
+        candidate: true,
+        challenge: {
+          include: {
+            company: true
+          }
+        },
+        votes: {
+          include: {
+            voter: true
+          }
         }
       }
-    }
-  });
+    });
+  } catch (error) {
+    console.error("Submission detail: DB error", error);
+  }
 
-  if (!submission || (user.id !== "guest-company" && submission.challenge.company.userId !== user.id)) {
+  if (!submission || (user.id !== "guest-company" && submission?.challenge?.company?.userId !== user.id)) {
     notFound();
   }
 

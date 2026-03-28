@@ -2,17 +2,33 @@ import { Search, MapPin, Clock, Users, Zap, Filter, ArrowRight } from 'lucide-re
 import Link from 'next/link'
 import styles from './page.module.css'
 import { prisma } from "@/lib/prisma"
+import { challenges as sampleChallenges } from "@/lib/data"
 
 export default async function ChallengesPage() {
-  const challenges = await prisma.challenge.findMany({
-    include: {
-      company: true,
-      _count: {
-        select: { submissions: true }
-      }
-    },
-    orderBy: { createdAt: 'desc' }
-  });
+  let challenges: any[] = [];
+
+  try {
+    challenges = await prisma.challenge.findMany({
+      include: {
+        company: true,
+        _count: {
+          select: { submissions: true }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+  } catch (error) {
+    console.error("Challenges page: DB unavailable, using fallback data.", error);
+    challenges = sampleChallenges.map(ch => ({
+      id: ch.id,
+      title: ch.title,
+      description: ch.description,
+      status: ch.status,
+      deadline: new Date(ch.deadline),
+      company: { name: ch.company.name },
+      _count: { submissions: ch.applicants }
+    }));
+  }
 
   return (
     <main className={styles.main}>

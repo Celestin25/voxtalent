@@ -22,30 +22,45 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
   const { id: challengeId } = await params;
   const session = await auth();
 
-  const challenge = await prisma.challenge.findUnique({
-    where: { id: challengeId },
-    include: {
-      company: true,
-      _count: {
-        select: { submissions: true }
+  let challenge: any = null;
+  let hasSubmitted = false;
+
+  try {
+    challenge = await prisma.challenge.findUnique({
+      where: { id: challengeId },
+      include: {
+        company: true,
+        _count: {
+          select: { submissions: true }
+        }
       }
+    });
+
+    if (challenge && session?.user && session.user.role === 'CANDIDATE') {
+      const existingSubmission = await prisma.submission.findFirst({
+        where: { challengeId, candidateId: session.user.id }
+      });
+      hasSubmitted = !!existingSubmission;
     }
-  });
+  } catch (error) {
+    console.error("Challenge detail: DB unavailable, trying fallback.", error);
+    const { challenges: sampleChallenges } = await import('@/lib/data');
+    const sample = sampleChallenges.find(c => c.id === challengeId);
+    if (sample) {
+      challenge = {
+        id: sample.id,
+        title: sample.title,
+        description: sample.description,
+        deadline: new Date(sample.deadline),
+        status: sample.status,
+        company: { name: sample.company.name },
+        _count: { submissions: sample.applicants }
+      };
+    }
+  }
 
   if (!challenge) {
     notFound();
-  }
-
-  // Check if current user (if any) is a candidate and has already submitted
-  let hasSubmitted = false;
-  if (session?.user && session.user.role === 'CANDIDATE') {
-    const existingSubmission = await prisma.submission.findFirst({
-      where: {
-        challengeId,
-        candidateId: session.user.id
-      }
-    });
-    hasSubmitted = !!existingSubmission;
   }
 
   return (
