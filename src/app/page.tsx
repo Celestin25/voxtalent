@@ -5,11 +5,18 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <main className={styles.main}>
-      {/* Hero Section */}
-      <section 
-        className={styles.hero}
-        style={{ backgroundImage: 'url("/hero-bg.png")' }}
-      >
+      {/* Hero Section — drop /public/hero-video.mp4 to replace the animated gradient */}
+      <section className={styles.hero}>
+        <video
+          className={styles.heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
         <div className={styles.heroOverlay} />
         <div className={`container ${styles.heroContent}`}>
           <h1 className={styles.heroTitle}>
@@ -94,7 +101,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="section bg-secondary" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+      <section className="section bg-secondary" style={{ borderTop: '1px solid rgba(79,70,229,0.1)' }}>
         <div className="container" style={{ textAlign: 'center' }}>
           <h2 style={{ marginBottom: '1.5rem' }}>Ready to redefine your <span className="text-gold">Hiring?</span></h2>
           <p className="text-secondary" style={{ marginBottom: '2.5rem', maxWidth: '600px', marginInline: 'auto' }}>

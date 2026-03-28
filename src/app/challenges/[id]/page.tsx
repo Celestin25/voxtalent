@@ -67,7 +67,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
     <main className={styles.main}>
       <div className={styles.hero}>
         <div className="container">
-          <Link href="/challenges" className="text-secondary hover:text-white flex items-center gap-2 mb-10 text-xs font-bold uppercase tracking-widest">
+          <Link href="/challenges" className="text-secondary hover:text-accent flex items-center gap-2 mb-10 text-xs font-bold uppercase tracking-widest">
             <ArrowLeft size={14} /> Back to Challenges
           </Link>
           
@@ -118,14 +118,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
             <div className={styles.sidebarCard}>
               <h3 className={styles.sidebarTitle}>Submit Solution</h3>
               
-              {!session?.user ? (
-                <div style={{ textAlign: 'center' }}>
-                  <p className={styles.sidebarText}>Please sign in to submit your solution.</p>
-                  <Link href="/login" className="btn-primary" style={{ display: 'block', textAlign: 'center', marginTop: '1rem' }}>Sign In</Link>
-                </div>
-              ) : session.user.role !== 'CANDIDATE' ? (
-                <p className={styles.sidebarText}>Only candidates can submit solutions to challenges.</p>
-              ) : hasSubmitted ? (
+              {hasSubmitted ? (
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ color: '#10b981', marginBottom: '1rem' }}><CheckCircle size={32} style={{ margin: '0 auto' }} /></div>
                   <p className={styles.sidebarText}>You have already submitted a solution for this challenge.</p>
@@ -136,7 +129,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                   <p className={styles.sidebarText}>
                     Ready to be vetted on your merits? Submit your solution below.
                   </p>
-                  <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(212, 175, 55, 0.05)', borderRadius: '8px', border: '1px solid rgba(212, 175, 55, 0.1)', textAlign: 'center' }}>
+                  <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '8px', border: '1px solid rgba(79, 70, 229, 0.12)', textAlign: 'center' }}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-accent-primary)' }}>{challenge._count.submissions}</div>
                     <div style={{ fontSize: '0.6rem', color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Active Submissions</div>
                   </div>
@@ -145,7 +138,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
               )}
 
               {session?.user && session.user.role === 'EMPLOYEE' && (
-                <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'rgba(212, 175, 55, 0.05)', borderRadius: '12px', border: '1px solid var(--color-accent-primary)' }}>
+                <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px', border: '1px solid var(--color-accent-primary)' }}>
                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '0.7rem', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
                       <ShieldCheck size={16} /> Internal Merit Voter
                    </div>

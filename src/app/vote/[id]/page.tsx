@@ -61,7 +61,7 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
   return (
     <main className={dashboardStyles.main}>
       <div className={dashboardStyles.container}>
-        <Link href="/challenges" className="text-secondary hover:text-white flex items-center gap-2 mb-10 text-xs font-bold uppercase tracking-widest">
+        <Link href="/challenges" className="text-secondary hover:text-accent flex items-center gap-2 mb-10 text-xs font-bold uppercase tracking-widest">
           <ArrowLeft size={14} /> Back to Challenges
         </Link>
 
@@ -87,15 +87,15 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
             </div>
 
             <div style={{
-              background: 'rgba(255,255,255,0.02)',
+              background: 'rgba(79,70,229,0.03)',
               borderRadius: '12px',
               padding: '2rem',
-              border: '1px solid rgba(255,255,255,0.05)',
+              border: '1px solid rgba(79,70,229,0.1)',
               minHeight: '300px',
               whiteSpace: 'pre-wrap',
               fontSize: '1.1rem',
               lineHeight: 1.6,
-              color: '#e2e8f0'
+              color: 'var(--color-text-primary)'
             }}>
               {submission.content}
             </div>

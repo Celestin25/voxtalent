@@ -55,7 +55,7 @@ export default function SubmissionForm({ challengeId }: { challengeId: string })
           required 
           rows={6}
           placeholder="Paste your link (e.g. GitHub repo, Vercel deployment) or write your solution here..."
-          style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '1.5rem', color: 'white', resize: 'vertical', fontSize: '1rem' }}
+          style={{ background: 'rgba(79,70,229,0.04)', border: '1px solid rgba(79,70,229,0.15)', borderRadius: '12px', padding: '1.5rem', color: 'var(--color-text-primary)', resize: 'vertical', fontSize: '1rem' }}
         />
       </div>
 

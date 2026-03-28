@@ -68,8 +68,8 @@ export default function VotingForm({ submissionId, isSignedIn }: { submissionId:
                 height: '32px',
                 borderRadius: '7px',
                 border: '1px solid',
-                borderColor: (hover >= num || score >= num) ? 'var(--color-accent-primary)' : 'rgba(255,255,255,0.1)',
-                background: (hover >= num || score >= num) ? 'rgba(212,175,55,0.1)' : 'transparent',
+                borderColor: (hover >= num || score >= num) ? 'var(--color-accent-primary)' : 'rgba(79,70,229,0.15)',
+                background: (hover >= num || score >= num) ? 'rgba(79,70,229,0.1)' : 'transparent',
                 color: (hover >= num || score >= num) ? 'var(--color-accent-primary)' : 'var(--color-text-secondary)',
                 cursor: 'pointer',
                 fontSize: '0.78rem',
@@ -89,7 +89,7 @@ export default function VotingForm({ submissionId, isSignedIn }: { submissionId:
           name="feedback"
           rows={4}
           placeholder="What stood out about this solution?"
-          style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '1rem', color: 'white', resize: 'vertical' }}
+          style={{ background: 'rgba(79,70,229,0.04)', border: '1px solid rgba(79,70,229,0.12)', borderRadius: '8px', padding: '1rem', color: 'var(--color-text-primary)', resize: 'vertical' }}
         />
       </div>
 

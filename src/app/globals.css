@@ -1,26 +1,26 @@
 :root {
-  /* Colors - Deep Navy/Gold Palette */
-  --color-bg-primary: #0b0f1e; /* Deep Navy */
-  --color-bg-secondary: #121828; /* Rich Dark Blue */
-  --color-bg-glass: rgba(11, 15, 30, 0.75);
+  /* Colors - Clean Light Blue/Indigo Theme */
+  --color-bg-primary: #f0f4ff;
+  --color-bg-secondary: #ffffff;
+  --color-bg-glass: rgba(255, 255, 255, 0.88);
 
-  --color-text-primary: #f0f0f0;
-  --color-text-secondary: #b0b0b0;
-  --color-text-accent: #d4af37; /* Metallic Gold */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-accent: #4f46e5;
 
-  --color-accent-primary: #d4af37;
-  --color-accent-secondary: #f5e6a9; /* Soft Gold Highlight */
-  --color-accent-hover: #e6c24d; /* More vibrant gold hover */
-  
-  --shadow-card: 0 10px 40px rgba(0, 5, 30, 0.6);
-  --shadow-glow: 0 0 30px rgba(212, 175, 55, 0.2);
+  --color-accent-primary: #4f46e5;
+  --color-accent-secondary: #818cf8;
+  --color-accent-hover: #4338ca;
+
+  --shadow-card: 0 4px 24px rgba(79, 70, 229, 0.08);
+  --shadow-glow: 0 0 30px rgba(79, 70, 229, 0.2);
 
   --border-radius-generic: 8px;
   --border-radius-pill: 9999px;
-  
+
   --transition-fast: 0.2s ease;
   --transition-smooth: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  
+
   --font-base: var(--font-inter);
   --font-heading: var(--font-playfair);
 }
@@ -97,7 +97,7 @@ button {
   background: var(--color-bg-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(79, 70, 229, 0.1);
 }
 
 .btn-primary {
@@ -106,7 +106,7 @@ button {
   justify-content: center;
   padding: 0.75rem 2rem;
   background-color: var(--color-accent-primary);
-  color: var(--color-bg-primary);
+  color: #ffffff;
   font-weight: 600;
   border-radius: var(--border-radius-pill);
   border: none;
@@ -119,6 +119,7 @@ button {
 
 .btn-primary:hover {
   background-color: var(--color-accent-hover);
+  color: #ffffff;
   transform: translateY(-2px);
   box-shadow: var(--shadow-glow);
 }
@@ -130,7 +131,7 @@ button {
   padding: 0.75rem 2rem;
   background-color: transparent;
   color: var(--color-accent-primary);
-  border: 1px solid var(--color-accent-primary);
+  border: 1.5px solid var(--color-accent-primary);
   font-weight: 600;
   border-radius: var(--border-radius-pill);
   transition: all var(--transition-smooth);
@@ -141,7 +142,8 @@ button {
 }
 
 .btn-outline:hover {
-  background-color: rgba(212, 175, 55, 0.1);
+  background-color: rgba(79, 70, 229, 0.08);
+  color: var(--color-accent-primary);
   transform: translateY(-2px);
 }
 
@@ -156,7 +158,7 @@ button {
 
 input::placeholder,
 textarea::placeholder {
-  color: #6b6b6b;
+  color: #94a3b8;
 }
 
 input,
@@ -187,3 +189,7 @@ textarea {
 .block { display: block; }
 .w-full { width: 100%; }
 .text-center { text-align: center; }
+
+/* hover utilities for light theme */
+.hover\:text-accent:hover { color: var(--color-accent-primary); }
+.hover\:underline:hover   { text-decoration: underline; }
