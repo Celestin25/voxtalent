@@ -1,36 +1,19 @@
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ShieldUser, Building2, Users, User, ArrowRight } from "lucide-react";
 import styles from "./dashboard.module.css";
 
 export default async function DashboardPage() {
   const session = await auth();
-  
-  if (session?.user) {
-    const role = (session.user as any).role;
-    switch (role) {
-      case 'ADMIN':
-        redirect("/dashboard/admin");
-      case 'COMPANY':
-        redirect("/dashboard/company");
-      case 'EMPLOYEE':
-        redirect("/dashboard/employee");
-      case 'CANDIDATE':
-        redirect("/dashboard/candidate");
-      default:
-        redirect("/");
-    }
-  }
+  const role = (session?.user as any)?.role;
 
-  // Guest Hub
   return (
     <main className={styles.main}>
       <div className={styles.container}>
         <header className={styles.header}>
           <div className={styles.headerTitle}>
             <h1>Dashboard Hub</h1>
-            <p className={styles.subtitle}>Select a dashboard to view as a guest.</p>
+            <p className={styles.subtitle}>{role ? `Logged in as ${role}. Select any dashboard below.` : 'Select a dashboard to explore.'}</p>
           </div>
         </header>
 
