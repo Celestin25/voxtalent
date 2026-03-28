@@ -133,7 +133,7 @@
 .modalOverlay {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(11, 15, 30, 0.8);
   backdrop-filter: blur(8px);
   z-index: 2000;
   display: flex;

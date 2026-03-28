@@ -45,7 +45,7 @@ export default function ChallengeForm() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(0,0,0,0.8)',
+          background: 'rgba(11,15,30,0.85)',
           backdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
