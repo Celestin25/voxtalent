@@ -22,7 +22,7 @@ export default function Footer() {
           <h4>Platform</h4>
           <Link href="/challenges" className={styles.link}>All Challenges</Link>
           <Link href="/how-it-works" className={styles.link}>Methodology</Link>
-          <Link href="/pricing" className={styles.link}>Pricing</Link>
+          <Link href="/about" className={styles.link}>About Us</Link>
         </div>
 
         <div className={styles.column}>

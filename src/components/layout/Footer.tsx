@@ -7,7 +7,7 @@ const footerLinks = {
   Platform: [
     { href: '/challenges', label: 'Explore Challenges' },
     { href: '/how-it-works', label: 'How It Works' },
-    { href: '/pricing', label: 'Enterprise Pricing' },
+    { href: '/about', label: 'About Us' },
   ],
   Ecosystem: [
     { href: '/signup?role=company', label: 'For Companies' },

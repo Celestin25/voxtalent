@@ -7,7 +7,7 @@ import { Menu, X, Zap, ChevronRight } from 'lucide-react'
 const navLinks = [
   { href: '/challenges', label: 'Explore' },
   { href: '/how-it-works', label: 'Methodology' },
-  { href: '/pricing', label: 'Pricing' },
+  { href: '/about', label: 'About' },
 ]
 
 export default function Navbar() {
