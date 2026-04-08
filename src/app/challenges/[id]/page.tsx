@@ -116,39 +116,41 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
 
           <aside>
             <div className={styles.sidebarCard}>
-              <h3 className={styles.sidebarTitle}>Submit Solution</h3>
-              
-              {hasSubmitted ? (
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ color: '#10b981', marginBottom: '1rem' }}><CheckCircle size={32} style={{ margin: '0 auto' }} /></div>
-                  <p className={styles.sidebarText}>You have already submitted a solution for this challenge.</p>
-                  <Link href="/dashboard/candidate" className="btn-outline" style={{ display: 'block', marginTop: '1rem' }}>View My Dashboard</Link>
+              {session?.user && session.user.role === 'EMPLOYEE' ? (
+                <div style={{ padding: '0.5rem 0' }}>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                      <ShieldCheck size={20} /> Internal Merit Voter
+                   </div>
+                   <p className={styles.sidebarText} style={{ fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                      As a verified employee of {challenge.company.name}, your voice matters in the collective vetting. Remember, candidates are the ones who answer the challenge!
+                   </p>
+                   <Link href="/dashboard/employee" className="btn-primary" style={{ display: 'block', textAlign: 'center', fontSize: '0.9rem', padding: '0.8rem' }}>
+                      Open Voting Queue (1-10 Scale)
+                   </Link>
                 </div>
               ) : (
                 <>
-                  <p className={styles.sidebarText}>
-                    Ready to be vetted on your merits? Submit your solution below.
-                  </p>
-                  <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '8px', border: '1px solid rgba(79, 70, 229, 0.12)', textAlign: 'center' }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-accent-primary)' }}>{challenge._count.submissions}</div>
-                    <div style={{ fontSize: '0.6rem', color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Active Submissions</div>
-                  </div>
-                  <SubmissionForm challengeId={challenge.id} />
+                  <h3 className={styles.sidebarTitle}>Submit Solution</h3>
+                  
+                  {hasSubmitted ? (
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ color: '#10b981', marginBottom: '1rem' }}><CheckCircle size={32} style={{ margin: '0 auto' }} /></div>
+                      <p className={styles.sidebarText}>You have already submitted a solution for this challenge.</p>
+                      <Link href="/dashboard/candidate" className="btn-outline" style={{ display: 'block', marginTop: '1rem' }}>View My Dashboard</Link>
+                    </div>
+                  ) : (
+                    <>
+                      <p className={styles.sidebarText}>
+                        Ready to be vetted on your merits? Submit your solution below.
+                      </p>
+                      <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '8px', border: '1px solid rgba(79, 70, 229, 0.12)', textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-accent-primary)' }}>{challenge._count.submissions}</div>
+                        <div style={{ fontSize: '0.6rem', color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Active Submissions</div>
+                      </div>
+                      <SubmissionForm challengeId={challenge.id} />
+                    </>
+                  )}
                 </>
-              )}
-
-              {session?.user && session.user.role === 'EMPLOYEE' && (
-                <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px', border: '1px solid var(--color-accent-primary)' }}>
-                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '0.7rem', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
-                      <ShieldCheck size={16} /> Internal Merit Voter
-                   </div>
-                   <p className={styles.sidebarText} style={{ fontSize: '0.8rem', marginBottom: '1.25rem' }}>
-                      As a verified employee of {challenge.company.name}, your voice matters in the collective vetting.
-                   </p>
-                   <Link href="/dashboard/employee" className="btn-primary" style={{ display: 'block', textAlign: 'center', fontSize: '0.85rem' }}>
-                      Open Voting Queue
-                   </Link>
-                </div>
               )}
 
               <div className={styles.featureList} style={{ marginTop: '2rem' }}>
