@@ -70,7 +70,7 @@ export default function ChallengeForm() {
                   name="title" 
                   required 
                   placeholder="e.g. Senior Frontend Engineer - Design Systems"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '1rem', color: 'white' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a' }}
                 />
               </div>
 
@@ -79,7 +79,7 @@ export default function ChallengeForm() {
                 <input 
                   name="prize" 
                   placeholder="e.g. $5,000"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '1rem', color: 'white' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a' }}
                 />
               </div>
 
@@ -89,7 +89,7 @@ export default function ChallengeForm() {
                   name="deadline" 
                   type="date" 
                   required 
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '1rem', color: 'white' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a' }}
                 />
               </div>
 
@@ -100,7 +100,7 @@ export default function ChallengeForm() {
                   required 
                   rows={5}
                   placeholder="Describe the challenge in detail..."
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '1rem', color: 'white', resize: 'vertical' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a', resize: 'vertical' }}
                 />
               </div>
 
