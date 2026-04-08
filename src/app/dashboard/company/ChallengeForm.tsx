@@ -70,7 +70,7 @@ export default function ChallengeForm() {
                   name="title" 
                   required 
                   placeholder="e.g. Senior Frontend Engineer - Design Systems"
-                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: 'black' }}
                 />
               </div>
 
@@ -79,7 +79,7 @@ export default function ChallengeForm() {
                 <input 
                   name="prize" 
                   placeholder="e.g. $5,000"
-                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: 'black' }}
                 />
               </div>
 
@@ -89,7 +89,7 @@ export default function ChallengeForm() {
                   name="deadline" 
                   type="date" 
                   required 
-                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: 'black' }}
                 />
               </div>
 
@@ -100,7 +100,7 @@ export default function ChallengeForm() {
                   required 
                   rows={5}
                   placeholder="Describe the challenge in detail..."
-                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: '#1a1a1a', resize: 'vertical' }}
+                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: 'black', resize: 'vertical' }}
                 />
               </div>
 
