@@ -59,6 +59,23 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
     }
   }
 
+  // Check if the user is an employee
+  let isEmployee = false;
+  if (session?.user?.id) {
+    if (session.user.role?.toUpperCase() === 'EMPLOYEE') {
+      isEmployee = true;
+    } else {
+      try {
+        const empProfile = await prisma.employeeProfile.findUnique({
+          where: { userId: session.user.id }
+        });
+        if (empProfile) isEmployee = true;
+      } catch (e) {
+        // ignore
+      }
+    }
+  }
+
   if (!challenge) {
     notFound();
   }
@@ -116,7 +133,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
 
           <aside>
             <div className={styles.sidebarCard}>
-              {session?.user && session.user.role === 'EMPLOYEE' ? (
+              {isEmployee ? (
                 <div style={{ padding: '0.5rem 0' }}>
                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', marginBottom: '1rem' }}>
                       <ShieldCheck size={20} /> Internal Merit Voter
