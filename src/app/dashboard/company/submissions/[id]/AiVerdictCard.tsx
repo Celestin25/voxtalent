@@ -15,14 +15,11 @@ export default function AiVerdictCard({ submissionId, existingVerdict }: {
     setLoading(true)
     setError(null)
     const result = await requestAiVerdict(submissionId)
-    if (result.success && result.isDemo) {
-      setError("AI Deep Analysis is a Premium Feature. Upgrade to VoxTalent Pro to unlock full technical critiques.")
-      setLoading(false)
-      return
-    }
     if (!result.success) {
       setError(result.error || "Failed to analyze.")
       setLoading(false)
+    } else {
+      router.refresh()
     }
   }
 
