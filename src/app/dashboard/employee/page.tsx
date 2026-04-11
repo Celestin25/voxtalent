@@ -89,7 +89,6 @@ export default async function EmployeeDashboard() {
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
             {!isGuest && <SignOutButton />}
-            <Link href="/challenges" className="btn-primary">View Challenges</Link>
           </div>
         </header>
 
@@ -133,9 +132,6 @@ export default async function EmployeeDashboard() {
                 <div className={styles.emptyState}>
                   <p>No submissions are available for voting right now.</p>
                   <p className="text-secondary text-xs mt-2">Check back later — new candidate submissions will appear here.</p>
-                  <Link href="/challenges" className="text-gold text-xs font-bold hover:underline mt-4 block">
-                    Browse Challenges
-                  </Link>
                 </div>
               ) : (
                 pendingSubmissions.map((sub: any) => (
