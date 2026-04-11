@@ -21,16 +21,7 @@ export default async function CandidateDashboard() {
   let userId = (session?.user as any)?.id;
 
   if (!userId) {
-    try {
-      const sampleCandidate = await prisma.user.findFirst({
-        where: { role: 'CANDIDATE' }
-      });
-      if (sampleCandidate) {
-        userId = sampleCandidate.id;
-      }
-    } catch {
-      // DB unavailable — fallback data applied below
-    }
+    userId = 'guest-candidate';
   }
 
   // Fetch real data

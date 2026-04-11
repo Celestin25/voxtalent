@@ -12,30 +12,29 @@ export async function submitSolution(formData: FormData) {
 
     let candidateId = (session?.user as any)?.id
 
+    if (candidateId) {
+      const userExists = await prisma.user.findUnique({ where: { id: candidateId } })
+      if (!userExists) {
+        candidateId = null
+      }
+    }
+
     if (!candidateId) {
       try {
-        const sampleCandidate = await prisma.user.findFirst({
-          where: { role: 'CANDIDATE' }
+        candidateId = 'guest-candidate'
+        await prisma.user.upsert({
+          where: { id: 'guest-candidate' },
+          update: {},
+          create: {
+            id: 'guest-candidate',
+            email: 'guest@voxtalent.com',
+            password: 'guest',
+            name: 'Anonymous Guest',
+            role: 'CANDIDATE'
+          }
         })
-        if (sampleCandidate) {
-          candidateId = sampleCandidate.id
-        } else {
-          candidateId = 'guest-candidate'
-          await prisma.user.upsert({
-            where: { id: 'guest-candidate' },
-            update: {},
-            create: {
-              id: 'guest-candidate',
-              email: 'guest@voxtalent.com',
-              password: 'guest',
-              name: 'Anonymous Guest',
-              role: 'CANDIDATE'
-            }
-          })
-        }
       } catch (e) {
         console.error('Upsert failed:', e)
-        candidateId = 'guest-candidate'
       }
     }
 
