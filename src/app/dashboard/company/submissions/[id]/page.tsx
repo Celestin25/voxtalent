@@ -127,7 +127,7 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
           <div style={{ display: 'flex', gap: '1rem' }}>
              {submission.fileUrl && (
                <a href={submission.fileUrl} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                 Download PDF
+                 View Attachment
                </a>
              )}
              <button className="btn-primary">Hire Candidate</button>
