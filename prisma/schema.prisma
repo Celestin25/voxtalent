@@ -73,6 +73,9 @@ model Submission {
   fileType    String?
   anonymousId String    @default(uuid())
   status      String    @default("SUBMITTED")
+  aiScore     Int?
+  aiCritique  String?
+  aiEvaluatedAt DateTime?
   createdAt   DateTime  @default(now())
   candidate   User      @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)

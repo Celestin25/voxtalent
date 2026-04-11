@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import styles from "../../../dashboard.module.css";
 import { prisma } from "@/lib/prisma";
+import AiVerdictCard from "./AiVerdictCard";
 
 export default async function CompanySubmissionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: submissionId } = await params;
@@ -112,6 +113,26 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
     ? (submission.votes.reduce((acc: number, v: any) => acc + v.score, 0) / submission.votes.length).toFixed(1)
     : 'N/A';
   
+  const avgLemonsNum = submission.votes.length > 0 ? parseFloat(avgLemons) : null;
+  const aiScoreNum = submission.aiScore;
+
+  let alignment = "Pending AI Analysis";
+  let alignmentColor = "var(--color-text-secondary)";
+
+  if (avgLemonsNum !== null && aiScoreNum !== null) {
+    const diff = Math.abs(avgLemonsNum - aiScoreNum);
+    if (diff <= 1.5) {
+      alignment = "Verdicts Aligned";
+      alignmentColor = "#10b981";
+    } else if (avgLemonsNum > aiScoreNum) {
+      alignment = "Human-Leaning Critique";
+      alignmentColor = "#ea580c";
+    } else {
+      alignment = "AI-Leaning Critique";
+      alignmentColor = "#d97706";
+    }
+  }
+  
   const lemonColor = avgLemons === 'N/A' ? 'var(--color-text-secondary)' 
     : parseFloat(avgLemons) >= 7 ? '#d97706' // Bad (Yellow/Orange)
     : parseFloat(avgLemons) >= 4 ? '#ea580c' // Poor (Orange/Red)
@@ -162,13 +183,29 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
           </section>
 
           <aside>
+            <AiVerdictCard 
+              submissionId={submissionId} 
+              existingVerdict={submission.aiScore !== null ? { 
+                score: submission.aiScore, 
+                critique: submission.aiCritique || "", 
+                evaluatedAt: submission.aiEvaluatedAt || new Date() 
+              } : null} 
+            />
+
             <div className={styles.card} style={{ border: `1px solid ${lemonColor}`, marginBottom: '1.5rem' }}>
               <h3 className={styles.sidebarTitle}>Lemon Density</h3>
               <div style={{ textAlign: 'center', padding: '1rem 0' }}>
                 <div style={{ fontSize: '3rem', fontWeight: 800, color: lemonColor }}>{avgLemons} 🍋</div>
-                <div className="text-secondary text-xs uppercase tracking-widest" style={{ color: '#000', fontWeight: 600 }}>Average Lemon Intensity</div>
+                <div className="text-secondary text-xs uppercase tracking-widest" style={{ color: '#000', fontWeight: 600 }}>Average Employee Score</div>
               </div>
             </div>
+
+            {aiScoreNum !== null && (
+              <div className={styles.card} style={{ marginBottom: '1.5rem', textAlign: 'center', padding: '1.5rem', border: 'none', background: 'rgba(0,0,0,0.02)' }}>
+                <div style={{ fontSize: '0.7rem', color: '#000', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Sentiment Alignment</div>
+                <div style={{ color: alignmentColor, fontWeight: 700, fontSize: '1rem' }}>{alignment}</div>
+              </div>
+            )}
 
             <section className={styles.card}>
               <h3 className={styles.sidebarTitle}>Verification Trace</h3>
