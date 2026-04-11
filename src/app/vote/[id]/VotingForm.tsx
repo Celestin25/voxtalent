@@ -22,9 +22,9 @@ export default function VotingForm({ submissionId, isSignedIn }: { submissionId:
     setLoading(true)
     setError(null)
 
-    const formData = new FormData()
-    formData.append('submissionId', submissionId)
-    formData.append('score', score.toString())
+    const formData = new FormData(e.currentTarget as HTMLFormElement)
+    formData.set('submissionId', submissionId)
+    formData.set('score', score.toString())
 
     try {
       const result = await castVote(formData)
@@ -34,6 +34,9 @@ export default function VotingForm({ submissionId, isSignedIn }: { submissionId:
         setTimeout(() => {
           window.location.href = isSignedIn ? '/dashboard/employee' : '/challenges'
         }, 1500)
+      } else if (result.error) {
+        setError(result.error)
+        setLoading(false)
       }
     } catch (err: any) {
       setError(err.message || 'Something went wrong. Please try again.')

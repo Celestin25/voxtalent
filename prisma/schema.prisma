@@ -84,6 +84,7 @@ model Vote {
   submissionId String
   voterId      String
   score        Int        @default(1)
+  feedback     String?
   createdAt    DateTime   @default(now())
   voter        User       @relation(fields: [voterId], references: [id])
   submission   Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
