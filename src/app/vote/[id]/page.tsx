@@ -95,10 +95,10 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
               whiteSpace: 'pre-wrap',
               fontSize: '1.1rem',
               lineHeight: 1.6,
-              color: 'var(--color-text-primary)'
+              color: '#000'
             }}>
               {submission.content || (
-                <div className="text-secondary italic text-sm">No text description provided. See attachment below.</div>
+                <div className="text-secondary italic text-sm" style={{ color: '#000' }}>No text description provided. See attachment below.</div>
               )}
             </div>
 
@@ -115,7 +115,7 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
               }}>
                 <div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--color-accent-primary)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Solution Attachment</div>
-                  <div style={{ fontWeight: 600, color: 'white' }}>{submission.fileName || 'Candidate-File'}</div>
+                  <div style={{ fontWeight: 600, color: '#000' }}>{submission.fileName || 'Candidate-File'}</div>
                 </div>
                 <a 
                   href={submission.fileUrl} 

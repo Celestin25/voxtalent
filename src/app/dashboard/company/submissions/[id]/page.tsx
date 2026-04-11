@@ -121,8 +121,8 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
 
         <header className={styles.header}>
           <div className={styles.headerTitle}>
-            <h1>Review: {submission.candidate.name || 'Pathfinder'}</h1>
-            <p className={styles.subtitle}>Solution for {submission.challenge.title}</p>
+            <h1 style={{ color: '#000' }}>Review: {submission.candidate.name || 'Anonymous Guest'}</h1>
+            <p className={styles.subtitle} style={{ color: '#000', opacity: 1, fontWeight: 600 }}>Solution for {submission.challenge.title}</p>
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
              {submission.fileUrl && (
@@ -150,7 +150,7 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
               whiteSpace: 'pre-wrap',
               fontSize: '1.1rem',
               lineHeight: 1.6,
-              color: '#e2e8f0'
+              color: '#000'
             }}>
               {submission.content}
             </div>
@@ -161,7 +161,7 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
               <h3 className={styles.sidebarTitle}>Collective Merit</h3>
               <div style={{ textAlign: 'center', padding: '1rem 0' }}>
                 <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--color-accent-primary)' }}>{avgScore}</div>
-                <div className="text-secondary text-xs uppercase tracking-widest">Average Employee Score</div>
+                <div className="text-secondary text-xs uppercase tracking-widest" style={{ color: '#000', fontWeight: 600 }}>Average Employee Score</div>
               </div>
             </div>
 
@@ -174,8 +174,8 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
                   submission.votes.map((vote: any) => (
                     <div key={vote.id} className={styles.listItem} style={{ padding: '0.75rem 0', border: 'none' }}>
                       <div className={styles.listInfo}>
-                        <div style={{ fontSize: '0.9rem', color: 'white' }}>{vote.voter.name}</div>
-                        <div style={{ fontSize: '0.7rem', color: 'var(--color-text-secondary)' }}>Employee Reviewer</div>
+                        <div style={{ fontSize: '0.9rem', color: '#000', fontWeight: 600 }}>{vote.voter.name}</div>
+                        <div style={{ fontSize: '0.7rem', color: '#000' }}>Employee Reviewer</div>
                       </div>
                       <div style={{ color: 'var(--color-accent-primary)', fontWeight: 700 }}>{vote.score}/10</div>
                     </div>
