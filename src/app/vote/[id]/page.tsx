@@ -132,9 +132,9 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
 
           <aside>
             <div className={dashboardStyles.card} style={{ border: '1px solid var(--color-accent-primary)' }}>
-              <h3 className={dashboardStyles.sidebarTitle}>Cast Your Vote</h3>
-              <p className="text-secondary text-sm mb-6">
-                Score this solution based on technical merit, clarity, and how well it meets the requirements.
+              <h3 className={dashboardStyles.sidebarTitle}>Observation Desk</h3>
+              <p className="text-secondary text-sm mb-6" style={{ color: '#000', fontWeight: 500 }}>
+                Identify technical flaws by stacking lemons. <strong>0 lemons = Excellence</strong>; 10 lemons = Significant failure. Only submit lemons for identified weaknesses.
               </p>
 
               <VotingForm submissionId={submission.id} isSignedIn={isSignedIn} />

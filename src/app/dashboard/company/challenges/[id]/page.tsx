@@ -107,8 +107,8 @@ export default async function CompanyChallengeTalentPage({ params }: { params: P
 
         <section className={styles.card}>
           <div className={styles.cardHeader}>
-             <h2 className={styles.cardTitle}>Submissions & Merit Scores</h2>
-             <div className={`${styles.badge} ${styles.badgeActive}`}>ANONYMOUS MERIT REVIEW</div>
+             <h2 className={styles.cardTitle}>Submissions & Lemon Intensity</h2>
+             <div className={`${styles.badge} ${styles.badgeActive}`}>ANONYMOUS CRITIQUE TRACE</div>
           </div>
 
           <div className={styles.list}>
@@ -132,8 +132,14 @@ export default async function CompanyChallengeTalentPage({ params }: { params: P
                      </div>
                      <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
                         <div style={{ textAlign: 'center' }}>
-                           <div style={{ color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '1.2rem' }}>{avgScore}</div>
-                           <div style={{ fontSize: '0.6rem', color: 'var(--color-text-secondary)', textTransform: 'uppercase' }}>Avg Score</div>
+                           <div style={{ 
+                             color: avgScore === '--' ? 'var(--color-text-secondary)' : parseFloat(avgScore) >= 7 ? '#d97706' : parseFloat(avgScore) >= 4 ? '#ea580c' : 'var(--color-accent-primary)', 
+                             fontWeight: 800, 
+                             fontSize: '1.2rem' 
+                           }}>
+                             {avgScore} {avgScore !== '--' && '🍋'}
+                           </div>
+                           <div style={{ fontSize: '0.6rem', color: '#000', fontWeight: 600, textTransform: 'uppercase' }}>Avg Lemons</div>
                         </div>
                         <Link href={`/dashboard/company/submissions/${sub.id}`} className="btn-primary" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}>
                           View Details
