@@ -35,7 +35,7 @@ export default async function CompanyDashboard() {
      }
   }
 
-  // Fetch real data
+  // Fetch real data here
   let company: any = null;
   let totalVotesAcrossCompany = 0;
 
