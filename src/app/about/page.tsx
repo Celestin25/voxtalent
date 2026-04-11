@@ -41,32 +41,46 @@ const values = [
 
 const team = [
   {
-    name: 'Sophia Reyes',
+    name: 'Celestin Hakorimana',
     role: 'Co-founder & CEO',
     bg: '#4f46e5',
-    initials: 'SR',
-    quote: 'I watched brilliant people get filtered out by résumé screeners for a decade. VoxTalent is the antidote.',
+    initials: 'CH',
+    quote: 'I believe the best predictor of job performance is real-world skill — not the name on a résumé.',
   },
   {
-    name: 'Marcus Chen',
+    name: 'Desange Uwera',
     role: 'Co-founder & CTO',
     bg: '#6366f1',
-    initials: 'MC',
-    quote: 'The math behind collective voting is clear — averaged peer judgment outperforms individual expert judgment every time.',
+    initials: 'DU',
+    quote: 'We built VoxTalent to ensure that mathematical fairness is at the heart of every hiring decision.',
   },
   {
-    name: 'Aisha Okonkwo',
+    name: 'Rim ABDELHAKMI',
     role: 'Head of Product',
     bg: '#10b981',
-    initials: 'AO',
-    quote: 'Great hiring products disappear into the background. Our job is to make fairness feel effortless.',
+    initials: 'RA',
+    quote: 'Our mission is to make the hiring process as transparent and objective as possible for everyone.',
   },
   {
-    name: 'Daniel Park',
-    role: 'Head of Growth',
+    name: 'Maryem Gorbalmous',
+    role: 'Lead Designer',
     bg: '#3b82f6',
-    initials: 'DP',
-    quote: 'Companies that hire on merit retain longer, build faster, and outperform. That story sells itself.',
+    initials: 'MG',
+    quote: 'Beautiful interfaces should lead to beautiful outcomes. Fairness is our most important design principle.',
+  },
+  {
+    name: 'Samira ZOUAOUI',
+    role: 'Operations Director',
+    bg: '#f59e0b',
+    initials: 'SZ',
+    quote: 'Scaling fair hiring across the globe is a challenge, but it is the most rewarding work we do.',
+  },
+  {
+    name: 'Mariam OUKADOUR',
+    role: 'Technical Architect',
+    bg: '#ec4899',
+    initials: 'MO',
+    quote: 'The integrity of our voting systems is paramount. We build for bias-resistant hiring at scale.',
   },
 ]
 
@@ -196,7 +210,7 @@ export default function AboutPage() {
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto' }}>People who obsess over fair hiring — and the systems that make it possible.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
             {team.map((member, i) => (
               <div key={i} style={{ background: 'var(--color-bg-secondary)', border: '1px solid rgba(79,70,229,0.1)', borderRadius: '20px', padding: '2rem', textAlign: 'center', boxShadow: 'var(--shadow-card)' }}>
                 <div style={{ width: '64px', height: '64px', borderRadius: '18px', background: member.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.2rem', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>
