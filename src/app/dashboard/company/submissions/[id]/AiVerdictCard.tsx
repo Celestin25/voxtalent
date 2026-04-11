@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Sparkles, Loader2, AlertTriangle, CheckCircle2 } from 'lucide-react'
-import { requestAiVerdict } from './ai-actions'
+import { Sparkles, Loader2, AlertTriangle, CheckCircle2, Trash2 } from 'lucide-react'
+import { requestAiVerdict, deleteAiVerdict } from './ai-actions'
 
 export default function AiVerdictCard({ submissionId, existingVerdict }: { 
   submissionId: string; 
@@ -12,6 +12,18 @@ export default function AiVerdictCard({ submissionId, existingVerdict }: {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  async function handleDelete() {
+    if (!confirm("Are you sure you want to reset the AI analysis?")) return
+    setLoading(true)
+    const result = await deleteAiVerdict(submissionId)
+    if (result.success) {
+      router.refresh()
+    } else {
+      setError(result.error || "Failed to reset.")
+    }
+    setLoading(false)
+  }
 
   async function handleAnalyze() {
     setLoading(true)

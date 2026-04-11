@@ -59,3 +59,21 @@ export async function requestAiVerdict(submissionId: string) {
     return { success: false, error: error.message || "Failed to analyze with AI" }
   }
 }
+
+export async function deleteAiVerdict(submissionId: string) {
+  try {
+    await prisma.submission.update({
+      where: { id: submissionId },
+      data: {
+        aiScore: null,
+        aiCritique: null,
+        aiEvaluatedAt: null
+      }
+    })
+    revalidatePath(`/dashboard/company/submissions/${submissionId}`)
+    return { success: true }
+  } catch (error: any) {
+    console.error("Delete AI Verdict Error:", error)
+    return { success: false, error: "Failed to reset AI verdict." }
+  }
+}
