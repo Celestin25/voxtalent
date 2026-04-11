@@ -74,7 +74,12 @@ export async function submitSolution(formData: FormData) {
         return { success: false, error: 'File size must be under 100 MB' }
       }
 
-      const uploadDir = join(process.cwd(), 'public', 'uploads')
+      // On serverless (Vercel), only /tmp is writable; locally use public/uploads
+      const isServerless = !!process.env.VERCEL || process.cwd() === '/var/task'
+      const uploadDir = isServerless
+        ? '/tmp/voxtalent-uploads'
+        : join(process.cwd(), 'public', 'uploads')
+
       await mkdir(uploadDir, { recursive: true })
 
       const ext = file.name.split('.').pop()
@@ -82,7 +87,7 @@ export async function submitSolution(formData: FormData) {
       const bytes = await file.arrayBuffer()
       await writeFile(join(uploadDir, safeName), Buffer.from(bytes))
 
-      fileUrl = `/uploads/${safeName}`
+      fileUrl = isServerless ? `/api/uploads/${safeName}` : `/uploads/${safeName}`
       fileName = file.name
       fileType = file.type
     }

@@ -20,6 +20,13 @@ function createPrismaClient() {
     return new PrismaClient({ adapter } as any);
   }
 
+  const isServerless = !!process.env.VERCEL || process.cwd() === '/var/task';
+  if (isServerless) {
+    throw new Error(
+      "Database not configured. Set TURSO_DATABASE_URL and TURSO_AUTH_TOKEN environment variables in your Vercel project settings."
+    );
+  }
+
   console.log("Prisma Client: 🏠 Using LOCAL SQLite (prisma/dev.db)...");
   return new PrismaClient({
     log: ["error", "warn"],
