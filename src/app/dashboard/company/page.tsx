@@ -145,7 +145,7 @@ export default async function CompanyDashboard() {
           <section className={styles.card}>
             <div className={styles.cardHeader}>
               <h2 className={styles.cardTitle}>Active Challenges</h2>
-              <Link href="/company/challenges" className="text-gold text-sm font-bold hover:underline">Manage All</Link>
+              <Link href="/dashboard/company/challenges" className="text-gold text-sm font-bold hover:underline">Manage All</Link>
             </div>
             
             <div className={styles.list}>

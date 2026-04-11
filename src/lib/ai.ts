@@ -37,8 +37,10 @@ export async function analyzeSubmission(challengeDescription: string, candidateC
     // Clean JSON from potential markdown fluff
     const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
     return JSON.parse(jsonStr);
-  } catch (error) {
+  } catch (error: any) {
     console.error("AI Analysis failed:", error);
-    throw new Error("Failed to generate AI verdict. Please check your API key and connection.");
+    // Return a more descriptive error message if available
+    const errorMessage = error?.message || "Check your API key and connection.";
+    throw new Error(`AI Error: ${errorMessage}`);
   }
 }
