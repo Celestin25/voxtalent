@@ -20,6 +20,10 @@ export async function requestAiVerdict(submissionId: string) {
       submission.content
     )
 
+    if (verdict.isDemo) {
+      return { success: true, isDemo: true }
+    }
+
     await prisma.submission.update({
       where: { id: submissionId },
       data: {

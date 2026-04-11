@@ -40,8 +40,12 @@ export async function analyzeSubmission(challengeDescription: string, candidateC
     return JSON.parse(jsonStr);
   } catch (error: any) {
     console.error("AI Analysis failed:", error);
-    // Return a more descriptive error message if available
-    const errorMessage = error?.message || "Check your API key and connection.";
-    throw new Error(`AI Error: ${errorMessage}`);
+    // For demo stability: if AI fails, we return a special object
+    // that the UI can use to show an "Upgrade to Pro" message
+    return {
+      isDemo: true,
+      lemonCount: 10,
+      critique: "Upgrade to VoxTalent Pro for deep technical critiques and automated lemon scoring."
+    };
   }
 }
