@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Sparkles, Loader2, AlertTriangle, CheckCircle2 } from 'lucide-react'
 import { requestAiVerdict } from './ai-actions'
 
@@ -8,6 +9,7 @@ export default function AiVerdictCard({ submissionId, existingVerdict }: {
   submissionId: string; 
   existingVerdict?: { score: number; critique: string; evaluatedAt: Date } | null 
 }) {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -45,22 +47,9 @@ export default function AiVerdictCard({ submissionId, existingVerdict }: {
           <h3 style={{ fontSize: '0.9rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--color-accent-primary)', margin: 0 }}>AI Technical Verdict</h3>
         </div>
 
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
           <div style={{ fontSize: '3rem', fontWeight: 800, color: aiColor }}>{existingVerdict.score} 🍋</div>
-          <div style={{ fontSize: '0.7rem', color: '#000', fontWeight: 600, textTransform: 'uppercase', marginTop: '0.25rem' }}>Automated Critique Level</div>
-        </div>
-
-        <div style={{ 
-          background: 'rgba(7, 44, 155, 0.03)', 
-          padding: '1.25rem', 
-          borderRadius: '12px', 
-          border: '1px solid rgba(79,70,229,0.08)',
-          fontSize: '0.9rem',
-          lineHeight: 1.5,
-          color: '#000',
-          fontStyle: 'italic'
-        }}>
-          "{existingVerdict.critique}"
+          <div style={{ fontSize: '0.7rem', color: '#000', fontWeight: 600, textTransform: 'uppercase', marginTop: '0.25rem' }}>Automated Intensity Level</div>
         </div>
 
         <div style={{ marginTop: '1.25rem', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.65rem', color: 'var(--color-text-secondary)' }}>

@@ -29,10 +29,17 @@ export async function requestAiVerdict(submissionId: string) {
     )
 
     // Demo Mode: If AI fails, simulate a realistic technical score
+    // Demo Mode: Simulate realistic AI variation (-3 to +3 from human average)
+    // We use a "seed" based on submissionId so the result is consistent for that person
     if (verdict.isDemo) {
+      const offsets = [-3, -2, -1, 0, 1, 2, 3]
+      const seed = submissionId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      const randomOffset = offsets[seed % offsets.length]
+      const simulatedScore = Math.max(0, Math.min(10, Math.floor(avgHumanScore) + randomOffset))
+
       verdict = {
-        lemonCount: Math.max(0, Math.floor(avgHumanScore) - 1),
-        critique: "The technical implementation shows solid fundamental reasoning but could benefit from deeper edge-case coverage in the validation layer. Recommended: optimize state transitions."
+        lemonCount: simulatedScore,
+        critique: ""
       }
     }
 
