@@ -10,7 +10,6 @@ export async function createChallenge(formData: FormData) {
   const title = formData.get('title') as string
   const description = formData.get('description') as string
   const deadlineStr = formData.get('deadline') as string
-  const prize = formData.get('prize') as string
 
   if (!title || !description || !deadlineStr) {
     throw new Error('Missing required fields')
@@ -38,7 +37,7 @@ export async function createChallenge(formData: FormData) {
   const challenge = await prisma.challenge.create({
     data: {
       title,
-      description: `${description}\n\nPrize: ${prize}`,
+      description,
       deadline: new Date(deadlineStr),
       companyId: companyProfile.id,
       status: 'OPEN'

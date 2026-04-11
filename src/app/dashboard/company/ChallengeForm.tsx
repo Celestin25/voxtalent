@@ -75,15 +75,6 @@ export default function ChallengeForm() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Prize Pool</label>
-                <input 
-                  name="prize" 
-                  placeholder="e.g. $5,000"
-                  style={{ background: 'transparent', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', padding: '1rem', color: 'black' }}
-                />
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Deadline</label>
                 <input 
                   name="deadline" 
