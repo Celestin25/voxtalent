@@ -155,7 +155,7 @@ export default async function CompanyDashboard() {
                 </div>
               ) : (
                 company.challenges.map((challenge: any) => (
-                  <div key={challenge.id} className={styles.listItem}>
+                  <div key={challenge.id} className={styles.listItem} style={{ position: 'relative' }}>
                     <div className={styles.listInfo}>
                       <h4>{challenge.title}</h4>
                       <div className={styles.listMeta}>
@@ -166,6 +166,8 @@ export default async function CompanyDashboard() {
                       <Link href={`/dashboard/company/challenges/${challenge.id}`} className="btn-outline" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}>
                         View Talent
                       </Link>
+                    </div>
+                    <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
                       <DeleteChallengeButton challengeId={challenge.id} />
                     </div>
                   </div>
