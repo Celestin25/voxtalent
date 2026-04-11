@@ -3,7 +3,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export async function analyzeSubmission(challengeDescription: string, candidateContent: string) {
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  // Use 'gemini-1.5-flash-latest' for better compatibility
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
   const prompt = `
     You are a technical merit assessor for a talent platform called VoxTalent.
