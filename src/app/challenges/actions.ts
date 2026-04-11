@@ -16,7 +16,22 @@ export async function submitSolution(formData: FormData) {
       const sampleCandidate = await prisma.user.findFirst({
         where: { role: 'CANDIDATE' }
       })
-      candidateId = sampleCandidate?.id || 'guest-candidate'
+      if (sampleCandidate) {
+        candidateId = sampleCandidate.id
+      } else {
+        candidateId = 'guest-candidate'
+        await prisma.user.upsert({
+          where: { id: 'guest-candidate' },
+          update: {},
+          create: {
+            id: 'guest-candidate',
+            email: 'guest@voxtalent.com',
+            password: 'guest',
+            name: 'Anonymous Guest',
+            role: 'CANDIDATE'
+          }
+        })
+      }
     } catch {
       candidateId = 'guest-candidate'
     }
