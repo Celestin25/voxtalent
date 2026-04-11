@@ -43,7 +43,11 @@ export default function SubmissionForm({ challengeId }: { challengeId: string })
 
     try {
       const result = await submitSolution(formData)
-      if (result.success) setSubmitted(true)
+      if (result.success) {
+        setSubmitted(true)
+      } else if (result.error) {
+        setError(result.error)
+      }
     } catch (err: any) {
       setError(err.message || 'Something went wrong')
     } finally {
