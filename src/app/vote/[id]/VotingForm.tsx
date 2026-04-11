@@ -55,7 +55,7 @@ export default function VotingForm({ submissionId, isSignedIn }: { submissionId:
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '1rem' }}>
+        <label style={{ display: 'block', fontSize: '0.8rem', color: '#000', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>
           Score (1 – 10)
         </label>
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.4rem' }}>
@@ -87,7 +87,7 @@ export default function VotingForm({ submissionId, isSignedIn }: { submissionId:
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Feedback (Optional)</label>
+        <label style={{ fontSize: '0.8rem', color: '#000', fontWeight: 800, textTransform: 'uppercase' }}>Feedback (Optional)</label>
         <textarea
           name="feedback"
           rows={4}

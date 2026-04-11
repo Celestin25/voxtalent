@@ -68,8 +68,8 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
         <header className={dashboardStyles.header}>
           <div className={dashboardStyles.headerTitle}>
             <h1>Merit Review</h1>
-            <p className={dashboardStyles.subtitle}>
-              Submission for: <span className="text-white font-bold">{submission.challenge.title}</span>
+            <p className={dashboardStyles.subtitle} style={{ color: '#000', opacity: 1 }}>
+              Submission for: <span style={{ color: '#000', fontWeight: 'bold' }}>{submission.challenge.title}</span>
             </p>
           </div>
           <div className={`${dashboardStyles.badge} ${dashboardStyles.badgePending}`}>
@@ -80,8 +80,8 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
         <div className={dashboardStyles.contentGrid}>
           <section className={dashboardStyles.card}>
             <div className={dashboardStyles.cardHeader}>
-              <h2 className={dashboardStyles.cardTitle}>Candidate Solution</h2>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
+              <h2 className={dashboardStyles.cardTitle} style={{ color: '#000' }}>Candidate Solution</h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#000', fontSize: '0.8rem', fontWeight: 600 }}>
                 <AlertCircle size={14} /> SUB-{submission.id.substring(0,8)}
               </div>
             </div>
