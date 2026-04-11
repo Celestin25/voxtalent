@@ -145,7 +145,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                       Open Voting Queue (1-10 Scale)
                    </Link>
                 </div>
-              ) : session?.user?.role?.toUpperCase() === 'CANDIDATE' ? (
+              ) : (!session?.user || session.user.role?.toUpperCase() === 'CANDIDATE') ? (
                 <>
                   <h3 className={styles.sidebarTitle}>Submit Solution</h3>
                   
@@ -173,11 +173,8 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                   <div style={{ marginBottom: '1rem' }}><ShieldCheck size={32} style={{ margin: '0 auto', color: 'var(--color-text-muted)' }} /></div>
                   <h3 className={styles.sidebarTitle} style={{ textAlign: 'center' }}>View Only</h3>
                   <p className={styles.sidebarText}>
-                    {!session?.user ? "Please log in as a candidate to submit your solution." : "Only candidates are allowed to submit solutions."}
+                    Only candidates can submit solutions. Your role is {session.user.role}.
                   </p>
-                  {!session?.user && (
-                    <Link href="/login" className="btn-outline" style={{ display: 'block', marginTop: '1rem' }}>Sign In to Submit</Link>
-                  )}
                 </div>
               )}
 
