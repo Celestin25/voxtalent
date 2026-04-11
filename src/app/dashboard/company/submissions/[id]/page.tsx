@@ -125,7 +125,11 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
             <p className={styles.subtitle}>Solution for {submission.challenge.title}</p>
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
-             <button className="btn-outline">Download PDF</button>
+             {submission.fileUrl && (
+               <a href={submission.fileUrl} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                 Download PDF
+               </a>
+             )}
              <button className="btn-primary">Hire Candidate</button>
           </div>
         </header>
