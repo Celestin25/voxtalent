@@ -3,13 +3,12 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 import { revalidatePath } from "next/cache"
+import { writeFile, mkdir } from "fs/promises"
+import { join } from "path"
 
 export async function submitSolution(formData: FormData) {
   const session = await auth()
 
-  // Allow submissions with or without an account.
-  // Signed-in candidates are tracked by their real user ID.
-  // Guests are assigned a sample candidate ID so the DB constraint is satisfied.
   let candidateId = (session?.user as any)?.id
 
   if (!candidateId) {
@@ -24,10 +23,52 @@ export async function submitSolution(formData: FormData) {
   }
 
   const challengeId = formData.get('challengeId') as string
-  const content = formData.get('content') as string
+  const content = (formData.get('content') as string) || ''
+  const file = formData.get('file') as File | null
 
-  if (!challengeId || !content) {
-    throw new Error('Missing required fields')
+  if (!challengeId) {
+    throw new Error('Missing challenge ID')
+  }
+
+  if (!content && (!file || file.size === 0)) {
+    throw new Error('Please provide a text answer or upload a file')
+  }
+
+  let fileUrl: string | null = null
+  let fileName: string | null = null
+  let fileType: string | null = null
+
+  if (file && file.size > 0) {
+    const allowedTypes = [
+      'application/pdf',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'video/mp4',
+      'video/webm',
+      'video/quicktime',
+      'video/x-msvideo',
+    ]
+
+    if (!allowedTypes.includes(file.type)) {
+      throw new Error('Only PDF, Excel (.xls/.xlsx), and video files are allowed')
+    }
+
+    const maxSize = 100 * 1024 * 1024 // 100 MB
+    if (file.size > maxSize) {
+      throw new Error('File size must be under 100 MB')
+    }
+
+    const uploadDir = join(process.cwd(), 'public', 'uploads')
+    await mkdir(uploadDir, { recursive: true })
+
+    const ext = file.name.split('.').pop()
+    const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+    const bytes = await file.arrayBuffer()
+    await writeFile(join(uploadDir, safeName), Buffer.from(bytes))
+
+    fileUrl = `/uploads/${safeName}`
+    fileName = file.name
+    fileType = file.type
   }
 
   await prisma.submission.create({
@@ -35,6 +76,9 @@ export async function submitSolution(formData: FormData) {
       challengeId,
       candidateId,
       content,
+      fileUrl,
+      fileName,
+      fileType,
       status: 'SUBMITTED'
     }
   })
