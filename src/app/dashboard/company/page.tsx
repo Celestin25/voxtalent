@@ -162,12 +162,10 @@ export default async function CompanyDashboard() {
                          <Users size={14} /> {challenge._count.submissions} Candidates • <Target size={14} /> {challenge.status}
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                       <Link href={`/dashboard/company/challenges/${challenge.id}`} className="btn-outline" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}>
                         View Talent
                       </Link>
-                    </div>
-                    <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
                       <DeleteChallengeButton challengeId={challenge.id} />
                     </div>
                   </div>
