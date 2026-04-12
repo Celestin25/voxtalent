@@ -17,7 +17,7 @@ const values = [
     icon: Eye,
     title: 'Radical Transparency',
     desc: 'Every hiring decision on VoxTalent comes with a full audit trail. Candidates know how they were evaluated. Companies know why someone was chosen. No black boxes.',
-    color: '#4f46e5',
+    color: '#008542',
   },
   {
     icon: ShieldCheck,
@@ -43,7 +43,7 @@ const team = [
   {
     name: 'Celestin Hakorimana',
     role: 'Co-founder & CEO',
-    bg: '#4f46e5',
+    bg: '#008542',
     initials: 'CH',
     quote: 'I believe the best predictor of job performance is real-world skill — not the name on a résumé.',
   },
@@ -85,7 +85,7 @@ const team = [
 ]
 
 const stats = [
-  { value: '1,200+', label: 'Companies hiring on merit', color: '#4f46e5' },
+  { value: '1,200+', label: 'Companies hiring on merit', color: '#008542' },
   { value: '48,000+', label: 'Candidates evaluated fairly', color: '#10b981' },
   { value: '94%', label: 'Candidate satisfaction rate', color: '#6366f1' },
   { value: '61%', label: 'Less bias than traditional hiring', color: '#3b82f6' },
@@ -97,15 +97,15 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section style={{ position: 'relative', padding: '7rem 0 5rem', overflow: 'hidden', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '900px', height: '400px', background: 'radial-gradient(ellipse at center, rgba(79,70,229,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '900px', height: '400px', background: 'radial-gradient(ellipse at center, rgba(0,133,66,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '5px 16px', borderRadius: '9999px', background: 'rgba(79,70,229,0.07)', border: '1px solid rgba(79,70,229,0.2)', color: '#4f46e5', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '2rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '5px 16px', borderRadius: '9999px', background: 'rgba(0,133,66,0.07)', border: '1px solid rgba(0,133,66,0.2)', color: '#008542', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '2rem' }}>
             <Heart size={12} /> Our Mission
           </div>
 
           <h1 style={{ fontSize: 'clamp(2.4rem, 6vw, 5.5rem)', fontWeight: 800, lineHeight: 1.06, letterSpacing: '-0.03em', marginBottom: '1.5rem', color: 'var(--color-text-primary)' }}>
-            Hiring Should Be <span style={{ color: '#4f46e5' }}>Earned.</span>
+            Hiring Should Be <span style={{ color: '#008542' }}>Earned.</span>
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
             VoxTalent was built on a simple belief: the best person for a job should be the one who does the best work — not the one who interviews best or went to the right school.
@@ -122,11 +122,11 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section style={{ borderTop: '1px solid rgba(79,70,229,0.1)', borderBottom: '1px solid rgba(79,70,229,0.1)', background: 'var(--color-bg-secondary)', padding: '0' }}>
+      <section style={{ borderTop: '1px solid rgba(0,133,66,0.1)', borderBottom: '1px solid rgba(0,133,66,0.1)', background: 'var(--color-bg-secondary)', padding: '0' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
             {stats.map((s, i) => (
-              <div key={i} style={{ padding: '2.25rem 1.5rem', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(79,70,229,0.08)' : 'none' }}>
+              <div key={i} style={{ padding: '2.25rem 1.5rem', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(0,133,66,0.08)' : 'none' }}>
                 <div style={{ color: s.color, fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)', fontWeight: 800, lineHeight: 1, marginBottom: '0.4rem' }}>{s.value}</div>
                 <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>{s.label}</div>
               </div>
@@ -140,7 +140,7 @@ export default function AboutPage() {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
             <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 14px', borderRadius: '9999px', background: 'rgba(79,70,229,0.06)', border: '1px solid rgba(79,70,229,0.15)', color: '#4f46e5', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 14px', borderRadius: '9999px', background: 'rgba(0,133,66,0.06)', border: '1px solid rgba(0,133,66,0.15)', color: '#008542', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1.5rem' }}>
                 <Globe size={11} /> Our Story
               </div>
               <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 800, letterSpacing: '-0.025em', marginBottom: '1.5rem', lineHeight: 1.15, color: 'var(--color-text-primary)' }}>

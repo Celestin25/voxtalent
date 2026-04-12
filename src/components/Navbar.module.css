@@ -175,14 +175,15 @@
 .formGroup label { font-size: 0.85rem; font-weight: 500; color: var(--color-text-secondary); }
 .formGroup input, .formGroup select {
   background: rgba(79, 70, 229, 0.03);
-  border: 1px solid rgba(79, 70, 229, 0.15);
+  background: rgba(0, 133, 66, 0.03);
+  border: 1px solid rgba(0, 133, 66, 0.15);
   padding: 0.75rem; border-radius: 8px;
   color: var(--color-text-primary); font-family: inherit;
 }
 .formGroup input:focus, .formGroup select:focus {
   outline: none;
   border-color: var(--color-accent-primary);
-  background: rgba(79, 70, 229, 0.05);
+  background: rgba(0, 133, 66, 0.05);
 }
 
 .modalError   { background: rgba(239,68,68,0.08);  border: 1px solid rgba(239,68,68,0.25);  color: #ef4444; padding: 1rem; border-radius: 8px; font-size: 0.9rem; }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
@@ -12,9 +12,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const playfair = Playfair_Display({ 
+const outfit = Outfit({ 
   subsets: ["latin"], 
-  variable: "--font-playfair",
+  variable: "--font-outfit",
   display: "swap",
 });
 
@@ -32,7 +32,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable}`}>
+      <body className={`${inter.variable} ${outfit.variable}`}>
         <AuthProvider session={session}>
           <Navbar />
           {children}

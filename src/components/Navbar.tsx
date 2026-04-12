@@ -45,13 +45,14 @@ export default function Navbar() {
     }
   };
 
-  /* Removed Navbar hiding for dashboard routes to allow guest navigation */
+  /* Hide Navbar for dashboard routes to use Sidebar instead */
+  if (pathname.startsWith('/dashboard')) return null;
 
   return (
     <nav className={styles.nav}>
       <div className={`container ${styles.container}`}>
         <Link href="/" className={styles.logo}>
-          VoxTalent<span className="text-gold">✦</span>
+          VoxTalent<span style={{color: 'var(--color-accent-primary)'}}>✦</span>
         </Link>
         <div className={styles.links}>
           <Link href="/challenges" className={styles.link}>Explore</Link>

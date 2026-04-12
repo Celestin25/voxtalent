@@ -8,40 +8,47 @@ export default async function DashboardPage() {
   const role = (session?.user as any)?.role;
 
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        <header className={styles.header}>
-          <div className={styles.headerTitle}>
-            <h1>Dashboard Hub</h1>
-            <p className={styles.subtitle}>{role ? `Logged in as ${role}. Select any dashboard below.` : 'Select a dashboard to explore.'}</p>
+    <main>
+      <div className={styles.header}>
+        <div className={styles.headerTitle}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--color-bg-secondary)', border: '1px solid var(--color-accent-primary)', color: 'var(--color-accent-primary)', padding: '2px 8px', borderRadius: '4px' }}>
+              SYSTEM v2.6.4
+            </span>
+            <span style={{ fontSize: '0.65rem', fontWeight: 700, opacity: 0.5 }}>ARCHITECTURAL ANALYST</span>
           </div>
-        </header>
-
-        <section className={styles.statsGrid}>
-          {[
-            { title: "Admin", icon: ShieldUser, href: "/dashboard/admin", color: "#f43f5e", desc: "System control center" },
-            { title: "Company", icon: Building2, href: "/dashboard/company", color: "#d4af37", desc: "Enterprise suite" },
-            { title: "Employee", icon: Users, href: "/dashboard/employee", color: "#3b82f6", desc: "Voter console" },
-            { title: "Candidate", icon: User, href: "/dashboard/candidate", color: "#10b981", desc: "Merit profile" },
-          ].map((item) => (
-            <Link key={item.title} href={item.href} className={styles.statCard} style={{ textDecoration: 'none' }}>
-              <div className={styles.statIcon} style={{ background: `${item.color}1a`, color: item.color }}>
-                <item.icon size={24} />
-              </div>
-              <div>
-                <div className={styles.statValue}>{item.title}</div>
-                <div className={styles.statLabel}>{item.desc}</div>
-              </div>
-              <ArrowRight size={20} style={{ marginLeft: 'auto', opacity: 0.5 }} />
-            </Link>
-          ))}
-        </section>
-
-        <div className={styles.card} style={{ textAlign: 'center', background: 'rgba(212, 175, 55, 0.05)', border: '1px dashed var(--color-accent-primary)' }}>
-          <p className="text-secondary">
-            Note: Accessing these dashboards without a login will show sample data from the system.
-          </p>
+          <h1>Hello, {(session?.user?.name || "Zakariae").split(' ')[0]}</h1>
+          <p className={styles.subtitle}>Today is {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} • <span style={{ color: '#10b981', fontWeight: 600 }}>On track for Elite Tier</span></p>
         </div>
+        <Link href="/challenges" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.75rem' }}>
+          + NEW CHALLENGE ENTRY
+        </Link>
+      </div>
+
+      <section className={styles.statsGrid}>
+        {[
+          { title: "Admin", icon: ShieldUser, href: "/dashboard/admin", color: "var(--color-accent-primary)", desc: "System control" },
+          { title: "Company", icon: Building2, href: "/dashboard/company", color: "var(--color-accent-primary)", desc: "Enterprise suite" },
+          { title: "Employee", icon: Users, href: "/dashboard/employee", color: "var(--color-accent-primary)", desc: "Voter console" },
+          { title: "Candidate", icon: User, href: "/dashboard/candidate", color: "var(--color-accent-primary)", desc: "Merit profile" },
+        ].map((item) => (
+          <Link key={item.title} href={item.href} className={styles.statCard} style={{ textDecoration: 'none' }}>
+            <div className={styles.statIcon} style={{ background: 'rgba(0, 133, 66, 0.08)', color: 'var(--color-accent-primary)' }}>
+              <item.icon size={22} />
+            </div>
+            <div>
+              <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--color-text-secondary)', marginBottom: '2px' }}>MODULE</div>
+              <div className={styles.statValue} style={{ fontSize: '1.25rem' }}>{item.title}</div>
+            </div>
+            <ArrowRight size={18} style={{ marginLeft: 'auto', opacity: 0.3 }} />
+          </Link>
+        ))}
+      </section>
+
+      <div className={styles.card} style={{ textAlign: 'center', opacity: 0.7 }}>
+        <p className="text-secondary" style={{ fontSize: '0.85rem' }}>
+          Comparative performance benchmark vs VoxTalent global target.
+        </p>
       </div>
     </main>
   );

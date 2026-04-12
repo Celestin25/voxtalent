@@ -27,7 +27,7 @@ const steps = [
     title: 'Post a Real Challenge',
     desc: 'Instead of asking candidates to solve hypothetical puzzles, companies post actual problems from the role. Everyone knows what they\'re walking into — no surprises, no tricks.',
     icon: Target,
-    color: '#4f46e5',
+    color: '#008542',
     bullets: ['Tied to the actual job scope', 'Deadline and prize pool set upfront', 'A scoring rubric is attached from the start'],
   },
   {
@@ -60,9 +60,9 @@ const roles = [
   {
     label: 'For Companies',
     icon: Building2,
-    color: '#4f46e5',
-    bg: 'rgba(79,70,229,0.04)',
-    border: 'rgba(79,70,229,0.15)',
+    color: '#008542',
+    bg: 'rgba(0,133,66,0.04)',
+    border: 'rgba(0,133,66,0.15)',
     items: [
       'Post a challenge in under 5 minutes',
       'Set your own rubric and prize pool',
@@ -120,7 +120,7 @@ const voxtalent = [
 ]
 
 const stats = [
-  { value: '61%', label: 'Less hiring bias', color: '#4f46e5', icon: ShieldCheck },
+  { value: '61%', label: 'Less hiring bias', color: '#008542', icon: ShieldCheck },
   { value: '3×', label: 'Higher 1-year retention', color: '#10b981', icon: TrendingUp },
   { value: '12 days', label: 'Average time to hire', color: '#6366f1', icon: Clock },
   { value: '94%', label: 'Candidate satisfaction', color: '#3b82f6', icon: Star },
@@ -132,15 +132,15 @@ export default function HowItWorksPage() {
 
       {/* Hero */}
       <section style={{ position: 'relative', padding: '6rem 0 4rem', overflow: 'hidden', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '800px', height: '350px', background: 'radial-gradient(ellipse at center, rgba(79,70,229,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '800px', height: '350px', background: 'radial-gradient(ellipse at center, rgba(0,133,66,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '5px 16px', borderRadius: '9999px', background: 'rgba(79,70,229,0.07)', border: '1px solid rgba(79,70,229,0.2)', color: '#4f46e5', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '2rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '5px 16px', borderRadius: '9999px', background: 'rgba(0,133,66,0.07)', border: '1px solid rgba(0,133,66,0.2)', color: '#008542', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '2rem' }}>
             <Cpu size={12} /> How It Works
           </div>
 
           <h1 style={{ fontSize: 'clamp(2.2rem, 6vw, 5rem)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.03em', marginBottom: '1.5rem', color: 'var(--color-text-primary)' }}>
-            Proof, Not <span style={{ color: '#4f46e5' }}>Promises.</span>
+            Proof, Not <span style={{ color: '#008542' }}>Promises.</span>
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '560px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
             VoxTalent replaces gut feelings with anonymous, merit-based challenges — candidates answer, your team votes.
@@ -157,11 +157,11 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Stats Bar */}
-      <section style={{ borderTop: '1px solid rgba(79,70,229,0.1)', borderBottom: '1px solid rgba(79,70,229,0.1)', background: 'var(--color-bg-secondary)', padding: '0' }}>
+      <section style={{ borderTop: '1px solid rgba(0,133,66,0.1)', borderBottom: '1px solid rgba(0,133,66,0.1)', background: 'var(--color-bg-secondary)', padding: '0' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
             {stats.map((s, i) => (
-              <div key={i} style={{ padding: '2rem 1.5rem', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(79,70,229,0.08)' : 'none' }}>
+              <div key={i} style={{ padding: '2rem 1.5rem', textAlign: 'center', borderRight: i < 3 ? '1px solid rgba(0,133,66,0.08)' : 'none' }}>
                 <div style={{ color: s.color, fontSize: 'clamp(1.6rem, 2.8vw, 2.4rem)', fontWeight: 800, lineHeight: 1, marginBottom: '0.4rem' }}>{s.value}</div>
                 <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>{s.label}</div>
               </div>
@@ -186,7 +186,7 @@ export default function HowItWorksPage() {
                   key={i}
                   style={{
                     background: 'var(--color-bg-secondary)',
-                    border: `1px solid rgba(79,70,229,0.1)`,
+                    border: `1px solid rgba(0,133,66,0.1)`,
                     borderRadius: '20px',
                     padding: '2.5rem',
                     position: 'relative',
@@ -225,7 +225,7 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Role Perspectives */}
-      <section style={{ padding: '5rem 0', background: 'var(--color-bg-secondary)', borderTop: '1px solid rgba(79,70,229,0.08)', borderBottom: '1px solid rgba(79,70,229,0.08)' }}>
+      <section style={{ padding: '5rem 0', background: 'var(--color-bg-secondary)', borderTop: '1px solid rgba(0,133,66,0.08)', borderBottom: '1px solid rgba(0,133,66,0.08)' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <h2 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.8rem)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '0.75rem', color: 'var(--color-text-primary)' }}>Everyone Has a Seat at the Table</h2>

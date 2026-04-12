@@ -118,14 +118,16 @@
 
 .card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.14);
-  border-color: var(--color-accent-primary);
+  border-bottom: 1px solid rgba(0, 133, 66, 0.08);
+  background: rgba(0, 133, 66, 0.03);
+  border: 1px solid rgba(0, 133, 66, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 133, 66, 0.05);
 }
 
 .iconWrapper {
   width: 52px;
   height: 52px;
-  background: rgba(79, 70, 229, 0.08);
+  background: rgba(0, 133, 66, 0.05);
   border-radius: 14px;
   display: flex;
   align-items: center;
