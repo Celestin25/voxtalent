@@ -8,14 +8,25 @@ export async function createChallenge(formData: FormData) {
   const session = await auth()
 
   const title = formData.get('title') as string
-  const description = formData.get('description') as string
   const deadlineStr = formData.get('deadline') as string
+  // description from text tab; descriptionNote from file tab (optional note)
+  const descriptionText = formData.get('description') as string
+  const descriptionNote = formData.get('descriptionNote') as string
+  const description = descriptionNote?.trim()
+    ? descriptionNote.trim()
+    : (descriptionText?.trim() || 'See attachment')
 
-  if (!title || !description || !deadlineStr) {
+  const attachmentFile = formData.get('attachmentFile') as File | null
+
+  if (!title || !deadlineStr) {
     throw new Error('Missing required fields')
   }
 
-  // Use session company if available, otherwise fall back to first company in DB
+  if (!descriptionText && (!attachmentFile || attachmentFile.size === 0)) {
+    throw new Error('Please provide a description or upload a file')
+  }
+
+  // Resolve company profile
   let companyProfile = null
 
   if (session?.user?.role === 'COMPANY') {
@@ -34,19 +45,63 @@ export async function createChallenge(formData: FormData) {
     throw new Error('No company profile found in database')
   }
 
+  // Handle optional file attachment
+  let attachmentUrl: string | null = null
+  let attachmentName: string | null = null
+  let attachmentType: string | null = null
+
+  if (attachmentFile && attachmentFile.size > 0) {
+    const allowedTypes = [
+      'application/pdf',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'video/mp4',
+      'video/webm',
+      'video/quicktime',
+      'video/x-msvideo',
+    ]
+
+    if (!allowedTypes.includes(attachmentFile.type)) {
+      throw new Error('Only PDF, Excel (.xls/.xlsx), and video files are allowed')
+    }
+
+    const maxSize = 100 * 1024 * 1024
+    if (attachmentFile.size > maxSize) {
+      throw new Error('File size must be under 100 MB')
+    }
+
+    try {
+      const { put } = await import('@vercel/blob')
+      const blob = await put(
+        `challenges/${companyProfile.id}/${Date.now()}-${attachmentFile.name}`,
+        attachmentFile,
+        { access: 'public' }
+      )
+      attachmentUrl = blob.url
+      attachmentName = attachmentFile.name
+      attachmentType = attachmentFile.type
+    } catch (blobError: any) {
+      console.error('Blob upload failed:', blobError)
+      throw new Error('Failed to upload file. Please check your storage configuration.')
+    }
+  }
+
   const challenge = await prisma.challenge.create({
     data: {
       title,
       description,
       deadline: new Date(deadlineStr),
       companyId: companyProfile.id,
-      status: 'OPEN'
+      status: 'OPEN',
+      attachmentUrl,
+      attachmentName,
+      attachmentType,
     }
   })
 
   revalidatePath('/dashboard/company')
   revalidatePath('/challenges')
-  
+
   return { success: true, challengeId: challenge.id }
 }
 
@@ -78,6 +133,6 @@ export async function deleteChallenge(challengeId: string) {
 
   revalidatePath('/dashboard/company')
   revalidatePath('/challenges')
-  
+
   return { success: true }
 }

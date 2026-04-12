@@ -1,13 +1,13 @@
 import Link from 'next/link'
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  Calendar, 
-  Users, 
-  Award, 
-  CheckCircle, 
-  Clock, 
-  Zap, 
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Users,
+  Award,
+  CheckCircle,
+  Clock,
+  Zap,
   ShieldCheck,
   Star,
   CheckCircle2
@@ -17,6 +17,7 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 import SubmissionForm from "./SubmissionForm"
 import { notFound } from "next/navigation"
+import FileViewer from "@/components/FileViewer"
 
 export default async function ChallengeDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: challengeId } = await params;
@@ -119,6 +120,15 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
             <div className={styles.section}>
               <h2 className={styles.sectionTitle}>Overview</h2>
               <p className={styles.text} style={{ whiteSpace: 'pre-wrap' }}>{challenge.description}</p>
+
+              {challenge.attachmentUrl && challenge.attachmentName && challenge.attachmentType && (
+                <FileViewer
+                  url={challenge.attachmentUrl}
+                  name={challenge.attachmentName}
+                  type={challenge.attachmentType}
+                  label="Challenge Attachment"
+                />
+              )}
             </div>
 
             <div className={styles.section}>

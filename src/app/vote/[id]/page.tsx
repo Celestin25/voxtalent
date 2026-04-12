@@ -3,20 +3,20 @@ import { notFound } from "next/navigation";
 import {
   ArrowLeft,
   ShieldCheck,
-  AlertCircle
+  AlertCircle,
+  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 import styles from "../../challenges/[id]/page.module.css";
 import dashboardStyles from "../../dashboard/dashboard.module.css";
 import { prisma } from "@/lib/prisma";
 import VotingForm from "./VotingForm";
+import FileViewer from "@/components/FileViewer";
 
 export default async function VotePage({ params }: { params: Promise<{ id: string }> }) {
   const { id: submissionId } = await params;
   const session = await auth();
 
-  // Voting is open to everyone — no sign-in required.
-  // Signed-in users are tracked by their real ID; guests vote anonymously.
   const isSignedIn = !!session?.user?.id;
 
   let submission: any = null;
@@ -30,8 +30,6 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
             company: true
           }
         },
-        // Only check for duplicate votes from signed-in users.
-        // Anonymous votes always go through.
         votes: isSignedIn
           ? { where: { voterId: session!.user!.id } }
           : { where: { voterId: 'no-match' } }
@@ -45,7 +43,6 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
     notFound();
   }
 
-  // If the signed-in user already voted, show a confirmation instead.
   if (isSignedIn && submission.votes.length > 0) {
     return (
       <main className={dashboardStyles.main}>
@@ -58,6 +55,8 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
     )
   }
 
+  const challenge = submission.challenge;
+
   return (
     <main className={dashboardStyles.main}>
       <div className={dashboardStyles.container}>
@@ -69,7 +68,7 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
           <div className={dashboardStyles.headerTitle}>
             <h1>Merit Review</h1>
             <p className={dashboardStyles.subtitle} style={{ color: '#000', opacity: 1 }}>
-              Submission for: <span style={{ color: '#000', fontWeight: 'bold' }}>{submission.challenge.title}</span>
+              Submission for: <span style={{ color: '#000', fontWeight: 'bold' }}>{challenge.title}</span>
             </p>
           </div>
           <div className={`${dashboardStyles.badge} ${dashboardStyles.badgePending}`}>
@@ -77,12 +76,49 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
           </div>
         </header>
 
+        {/* Challenge brief */}
+        <section className={dashboardStyles.card} style={{ marginBottom: '2rem' }}>
+          <div className={dashboardStyles.cardHeader}>
+            <h2 className={dashboardStyles.cardTitle} style={{ color: '#000', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <BookOpen size={20} /> Challenge Brief
+            </h2>
+            <span style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', fontWeight: 600 }}>
+              {challenge.company.name}
+            </span>
+          </div>
+
+          <div style={{
+            background: 'rgba(79,70,229,0.03)',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            border: '1px solid rgba(79,70,229,0.1)',
+            whiteSpace: 'pre-wrap',
+            fontSize: '1rem',
+            lineHeight: 1.7,
+            color: '#000',
+          }}>
+            {challenge.description || (
+              <span style={{ fontStyle: 'italic', color: '#555' }}>No text description. See attachment below.</span>
+            )}
+          </div>
+
+          {challenge.attachmentUrl && challenge.attachmentName && challenge.attachmentType && (
+            <FileViewer
+              url={challenge.attachmentUrl}
+              name={challenge.attachmentName}
+              type={challenge.attachmentType}
+              label="Challenge Attachment"
+            />
+          )}
+        </section>
+
         <div className={dashboardStyles.contentGrid}>
+          {/* Candidate solution */}
           <section className={dashboardStyles.card}>
             <div className={dashboardStyles.cardHeader}>
               <h2 className={dashboardStyles.cardTitle} style={{ color: '#000' }}>Candidate Solution</h2>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#000', fontSize: '0.8rem', fontWeight: 600 }}>
-                <AlertCircle size={14} /> SUB-{submission.id.substring(0,8)}
+                <AlertCircle size={14} /> SUB-{submission.id.substring(0, 8)}
               </div>
             </div>
 
@@ -91,42 +127,26 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
               borderRadius: '12px',
               padding: '2rem',
               border: '1px solid rgba(79,70,229,0.1)',
-              minHeight: '300px',
+              minHeight: '200px',
               whiteSpace: 'pre-wrap',
               fontSize: '1.1rem',
               lineHeight: 1.6,
-              color: '#000'
+              color: '#000',
             }}>
               {submission.content || (
-                <div className="text-secondary italic text-sm" style={{ color: '#000' }}>No text description provided. See attachment below.</div>
+                <div style={{ fontStyle: 'italic', color: '#555', fontSize: '0.95rem' }}>
+                  No text provided. See attachment below.
+                </div>
               )}
             </div>
 
-            {submission.fileUrl && (
-              <div style={{ 
-                marginTop: '1.5rem', 
-                padding: '1.5rem', 
-                background: 'rgba(79,70,229,0.06)', 
-                border: '1px solid var(--color-accent-primary)', 
-                borderRadius: '12px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-              }}>
-                <div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-accent-primary)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Solution Attachment</div>
-                  <div style={{ fontWeight: 600, color: '#000' }}>{submission.fileName || 'Candidate-File'}</div>
-                </div>
-                <a 
-                  href={submission.fileUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn-primary"
-                  style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}
-                >
-                  View Attachment
-                </a>
-              </div>
+            {submission.fileUrl && submission.fileName && submission.fileType && (
+              <FileViewer
+                url={submission.fileUrl}
+                name={submission.fileName}
+                type={submission.fileType}
+                label="Answer Attachment"
+              />
             )}
           </section>
 

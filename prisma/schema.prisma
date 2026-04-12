@@ -51,16 +51,19 @@ model CandidateProfile {
 }
 
 model Challenge {
-  id          String         @id @default(cuid())
-  title       String
-  description String
-  companyId   String
-  deadline    DateTime
-  status      String         @default("OPEN")
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  company     CompanyProfile @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  submissions Submission[]
+  id             String         @id @default(cuid())
+  title          String
+  description    String
+  companyId      String
+  deadline       DateTime
+  status         String         @default("OPEN")
+  attachmentUrl  String?
+  attachmentName String?
+  attachmentType String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  company        CompanyProfile @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  submissions    Submission[]
 }
 
 model Submission {
