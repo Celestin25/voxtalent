@@ -8,18 +8,13 @@ export default async function DashboardPage() {
   const role = (session?.user as any)?.role;
 
   return (
-    <main>
-      <div className={styles.header}>
-        <div className={styles.headerTitle}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--color-bg-secondary)', border: '1px solid var(--color-accent-primary)', color: 'var(--color-accent-primary)', padding: '2px 8px', borderRadius: '4px' }}>
-              SYSTEM v2.6.4
-            </span>
-            <span style={{ fontSize: '0.65rem', fontWeight: 700, opacity: 0.5 }}>ARCHITECTURAL ANALYST</span>
+    <main className={styles.main}>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <div className={styles.headerTitle}>
+            <h1>Hello, {session?.user?.name || "User"}</h1>
+            <p className={styles.subtitle}>Today is {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} • <span style={{ color: '#10b981', fontWeight: 600 }}>On track for Elite Tier</span></p>
           </div>
-          <h1>Hello, {(session?.user?.name || "Zakariae").split(' ')[0]}</h1>
-          <p className={styles.subtitle}>Today is {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} • <span style={{ color: '#10b981', fontWeight: 600 }}>On track for Elite Tier</span></p>
-        </div>
         <Link href="/challenges" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.75rem' }}>
           + NEW CHALLENGE ENTRY
         </Link>
@@ -49,6 +44,7 @@ export default async function DashboardPage() {
         <p className="text-secondary" style={{ fontSize: '0.85rem' }}>
           Comparative performance benchmark vs VoxTalent global target.
         </p>
+        </div>
       </div>
     </main>
   );

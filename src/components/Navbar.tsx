@@ -45,8 +45,7 @@ export default function Navbar() {
     }
   };
 
-  /* Hide Navbar for dashboard routes to use Sidebar instead */
-  if (pathname.startsWith('/dashboard')) return null;
+  /* Removed Navbar hiding for dashboard routes to allow guest navigation */
 
   return (
     <nav className={styles.nav}>
