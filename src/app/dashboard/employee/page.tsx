@@ -83,8 +83,8 @@ export default async function EmployeeDashboard() {
             <h1>{isGuest ? "Community Voting" : "Voter Dashboard"}</h1>
             <p className={styles.subtitle}>
               {isGuest
-                ? "Review candidate submissions and cast your vote. No account required."
-                : `Welcome back, ${userName}. Your merit verification is needed.`}
+                ? "Review candidate submissions and cast your vote No account required"
+                : `Welcome back ${userName} Your merit verification is needed`}
             </p>
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
@@ -130,8 +130,8 @@ export default async function EmployeeDashboard() {
             <div className={styles.list}>
               {pendingSubmissions.length === 0 ? (
                 <div className={styles.emptyState}>
-                  <p>No submissions are available for voting right now.</p>
-                  <p className="text-secondary text-xs mt-2">Check back later — new candidate submissions will appear here.</p>
+                  <p>No submissions are available for voting right now</p>
+                  <p className="text-secondary text-xs mt-2">Check back later new candidate submissions will appear here</p>
                 </div>
               ) : (
                 pendingSubmissions.map((sub: any) => (
@@ -162,22 +162,22 @@ export default async function EmployeeDashboard() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', paddingTop: '0.5rem' }}>
                 <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                   <div style={{ minWidth: '28px', height: '28px', borderRadius: '50%', background: 'rgba(79,70,229,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '0.75rem' }}>1</div>
-                  <p className="text-secondary text-sm" style={{ lineHeight: 1.5 }}>Pick a submission from the list and click <strong style={{ color: 'var(--color-text-primary)' }}>Vote Now</strong>.</p>
+                  <p className="text-secondary text-sm" style={{ lineHeight: 1.5 }}>Pick a submission from the list and click <strong style={{ color: 'var(--color-text-primary)' }}>Vote Now</strong></p>
                 </div>
                 <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                   <div style={{ minWidth: '28px', height: '28px', borderRadius: '50%', background: 'rgba(79,70,229,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '0.75rem' }}>2</div>
-                  <p className="text-secondary text-sm" style={{ lineHeight: 1.5 }}>Read the candidate's solution and score it <strong style={{ color: 'var(--color-text-primary)' }}>1 (poor) to 10 (excellent)</strong>.</p>
+                  <p className="text-secondary text-sm" style={{ lineHeight: 1.5 }}>Read the candidate's solution and score it <strong style={{ color: 'var(--color-text-primary)' }}>1 (poor) to 10 (excellent)</strong></p>
                 </div>
                 <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                   <div style={{ minWidth: '28px', height: '28px', borderRadius: '50%', background: 'rgba(79,70,229,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-accent-primary)', fontWeight: 800, fontSize: '0.75rem' }}>3</div>
-                  <p className="text-secondary text-sm" style={{ lineHeight: 1.5 }}>Optionally leave feedback, then submit. <strong style={{ color: 'var(--color-text-primary)' }}>No account needed.</strong></p>
+                  <p className="text-secondary text-sm" style={{ lineHeight: 1.5 }}>Optionally leave feedback then submit <strong style={{ color: 'var(--color-text-primary)' }}>No account needed</strong></p>
                 </div>
                 <div style={{ paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent-primary)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     <ShieldCheck size={14} /> Anonymous &amp; Secure
                   </div>
                   <p className="text-secondary" style={{ fontSize: '0.72rem', marginTop: '0.4rem', lineHeight: 1.5 }}>
-                    Candidates never see who voted or what score they gave. Only aggregated results are shared.
+                    Candidates never see who voted or what score they gave Only aggregated results are shared
                   </p>
                 </div>
               </div>

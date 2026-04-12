@@ -39,7 +39,7 @@ export default async function DashboardPage() {
 
       <div className={styles.card} style={{ textAlign: 'center', opacity: 0.7 }}>
         <p className="text-secondary" style={{ fontSize: '0.85rem' }}>
-          Comparative performance benchmark vs VoxTalent global target.
+          Comparative performance benchmark vs VoxTalent global target
         </p>
       </div>
       </div>

@@ -23,7 +23,7 @@ export default function Home() {
             Hire via <span className="text-gold">Collective Intelligence</span>
           </h1>
           <p className={styles.heroSubtitle}>
-            We've replaced gut feelings with data-driven consensus from the people who will actually work with the hire.
+            We've replaced gut feelings with data driven consensus from the people who will actually work with the hire
           </p>
           <div className={styles.heroActions}>
             <Link href="/dashboard" className="btn-primary">
@@ -42,7 +42,7 @@ export default function Home() {
           <div className={styles.sectionHeader}>
             <div>
               <p className="text-gold" style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '1rem' }}>Our Philosophy</p>
-              <h2 style={{ maxWidth: '600px' }}>Engineered for Accuracy, Built for Truth.</h2>
+              <h2 style={{ maxWidth: '600px' }}>Engineered for Accuracy Built for Truth</h2>
             </div>
           </div>
           
@@ -53,7 +53,7 @@ export default function Home() {
               </div>
               <h3 className={styles.cardTitle}>Collective Intelligence</h3>
               <p className={styles.cardText}>
-                Harness the wisdom of your entire team. Multiple voters mean better signal and less individual bias.
+                Harness the wisdom of your entire team Multiple voters mean better signal and less individual bias
               </p>
             </div>
 
@@ -63,7 +63,7 @@ export default function Home() {
               </div>
               <h3 className={styles.cardTitle}>Real-Work Challenges</h3>
               <p className={styles.cardText}>
-                Candidates prove their ability by solving actual problems your company faces — not theoretical puzzles.
+                Candidates prove their ability by solving actual problems your company faces not theoretical puzzles
               </p>
             </div>
 
@@ -73,7 +73,7 @@ export default function Home() {
               </div>
               <h3 className={styles.cardTitle}>Anonymous Voting</h3>
               <p className={styles.cardText}>
-                Employees vote without seeing each other's scores, eliminating groupthink and social pressure.
+                Employees vote without seeing each other's scores eliminating groupthink and social pressure
               </p>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function Home() {
         <div className="container" style={{ textAlign: 'center' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem' }}>
             <div>
-              <h2 className="text-gold" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>2,400+</h2>
+              <h2 className="text-gold" style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>2400+</h2>
               <p className="text-secondary" style={{ fontSize: '0.9rem', fontWeight: 600, textTransform: 'uppercase' }}>Active Challenges</p>
             </div>
             <div>
@@ -103,9 +103,9 @@ export default function Home() {
       {/* CTA Section */}
       <section className="section bg-secondary" style={{ borderTop: '1px solid rgba(79,70,229,0.1)' }}>
         <div className="container" style={{ textAlign: 'center' }}>
-          <h2 style={{ marginBottom: '1.5rem' }}>Ready to redefine your <span className="text-gold">Hiring?</span></h2>
+          <h2 style={{ marginBottom: '1.5rem' }}>Ready to redefine your <span className="text-gold">Hiring</span></h2>
           <p className="text-secondary" style={{ marginBottom: '2.5rem', maxWidth: '600px', marginInline: 'auto' }}>
-            Join the elite companies already using VoxTalent to build teams that matter.
+            Join the elite companies already using VoxTalent to build teams that matter
           </p>
           <Link href="/dashboard" className="btn-primary">
             Access All Dashboards <ArrowRight size={18} style={{ marginLeft: "8px" }} />

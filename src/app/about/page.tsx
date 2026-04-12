@@ -16,25 +16,25 @@ const values = [
   {
     icon: Eye,
     title: 'Radical Transparency',
-    desc: 'Every hiring decision on VoxTalent comes with a full audit trail. Candidates know how they were evaluated. Companies know why someone was chosen. No black boxes.',
+    desc: 'Every hiring decision on VoxTalent comes with a full audit trail Candidates know how they were evaluated Companies know why someone was chosen No black boxes',
     color: '#008542',
   },
   {
     icon: ShieldCheck,
     title: 'Anonymity by Design',
-    desc: 'We strip names, photos, and schools before any reviewer sees a submission. Bias is a systems problem — we solve it at the architecture level.',
+    desc: 'We strip names photos and schools before any reviewer sees a submission Bias is a systems problem we solve it at the architecture level',
     color: '#6366f1',
   },
   {
     icon: Users,
     title: 'Collective Intelligence',
-    desc: 'No single manager should have all the power in a hire. We aggregate the judgment of the people who will actually work with the candidate.',
+    desc: 'No single manager should have all the power in a hire We aggregate the judgment of the people who will actually work with the candidate',
     color: '#3b82f6',
   },
   {
     icon: Target,
     title: 'Merit Over Pedigree',
-    desc: 'We believe the best predictor of job performance is job-relevant work — not where someone studied or who they know.',
+    desc: 'We believe the best predictor of job performance is job relevant work not where someone studied or who they know',
     color: '#10b981',
   },
 ]
@@ -45,42 +45,42 @@ const team = [
     role: 'Co-founder & CEO',
     bg: '#008542',
     initials: 'CH',
-    quote: 'I believe the best predictor of job performance is real-world skill — not the name on a résumé.',
+    quote: 'I believe the best predictor of job performance is real world skill not the name on a résumé',
   },
   {
     name: 'Desange Uwera',
     role: 'Co-founder & CTO',
     bg: '#6366f1',
     initials: 'DU',
-    quote: 'We built VoxTalent to ensure that mathematical fairness is at the heart of every hiring decision.',
+    quote: 'We built VoxTalent to ensure that mathematical fairness is at the heart of every hiring decision',
   },
   {
     name: 'Rim ABDELHAKMI',
     role: 'Head of Product',
     bg: '#10b981',
     initials: 'RA',
-    quote: 'Our mission is to make the hiring process as transparent and objective as possible for everyone.',
+    quote: 'Our mission is to make the hiring process as transparent and objective as possible for everyone',
   },
   {
     name: 'Maryem Gorbalmous',
     role: 'Lead Designer',
     bg: '#3b82f6',
     initials: 'MG',
-    quote: 'Beautiful interfaces should lead to beautiful outcomes. Fairness is our most important design principle.',
+    quote: 'Beautiful interfaces should lead to beautiful outcomes Fairness is our most important design principle',
   },
   {
     name: 'Samira ZOUAOUI',
     role: 'Operations Director',
     bg: '#f59e0b',
     initials: 'SZ',
-    quote: 'Scaling fair hiring across the globe is a challenge, but it is the most rewarding work we do.',
+    quote: 'Scaling fair hiring across the globe is a challenge but it is the most rewarding work we do',
   },
   {
     name: 'Mariam OUKADOUR',
     role: 'Technical Architect',
     bg: '#ec4899',
     initials: 'MO',
-    quote: 'The integrity of our voting systems is paramount. We build for bias-resistant hiring at scale.',
+    quote: 'The integrity of our voting systems is paramount We build for bias resistant hiring at scale',
   },
 ]
 
@@ -105,10 +105,10 @@ export default function AboutPage() {
           </div>
 
           <h1 style={{ fontSize: 'clamp(2.4rem, 6vw, 5.5rem)', fontWeight: 800, lineHeight: 1.06, letterSpacing: '-0.03em', marginBottom: '1.5rem', color: 'var(--color-text-primary)' }}>
-            Hiring Should Be <span style={{ color: '#008542' }}>Earned.</span>
+            Hiring Should Be <span style={{ color: '#008542' }}>Earned</span>
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
-            VoxTalent was built on a simple belief: the best person for a job should be the one who does the best work — not the one who interviews best or went to the right school.
+            VoxTalent was built on a simple belief the best person for a job should be the one who does the best work not the one who interviews best or went to the right school
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/challenges" className="btn-primary" style={{ gap: '8px', display: 'inline-flex', alignItems: 'center' }}>
@@ -147,13 +147,13 @@ export default function AboutPage() {
                 Built out of Frustration With the Status Quo
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem', marginBottom: '1.25rem' }}>
-                VoxTalent started in 2023 when our founders — coming from engineering, behavioral science, and talent operations — kept running into the same broken pattern: exceptional candidates filtered out because their CV didn't fit a template, or hired because they interviewed well despite having no real skill.
+                VoxTalent started in 2023 when our founders coming from engineering behavioral science and talent operations kept running into the same broken pattern exceptional candidates filtered out because their CV didn't fit a template or hired because they interviewed well despite having no real skill
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem', marginBottom: '1.25rem' }}>
-                We asked a different question: what if every candidate competed on the same real challenge, and the people who would actually work with them voted on the results — anonymously?
+                We asked a different question what if every candidate competed on the same real challenge and the people who would actually work with them voted on the results anonymously
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem' }}>
-                The research backed it up. MIT Sloan and Harvard Business Review studies consistently show that work-sample evaluation by a group outperforms individual interviews. We built the infrastructure to make that the default.
+                The research backed it up MIT Sloan and Harvard Business Review studies consistently show that work sample evaluation by a group outperforms individual interviews We built the infrastructure to make that the default
               </p>
             </div>
 
@@ -182,7 +182,7 @@ export default function AboutPage() {
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '1rem', color: 'var(--color-text-primary)' }}>What We Stand For</h2>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto' }}>Four principles that guide every product decision we make.</p>
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto' }}>Four principles that guide every product decision we make</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
@@ -207,7 +207,7 @@ export default function AboutPage() {
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 800, letterSpacing: '-0.02em', marginBottom: '1rem', color: 'var(--color-text-primary)' }}>The Team Behind VoxTalent</h2>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto' }}>People who obsess over fair hiring — and the systems that make it possible.</p>
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', maxWidth: '480px', margin: '0 auto' }}>People who obsess over fair hiring and the systems that make it possible</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
@@ -230,10 +230,10 @@ export default function AboutPage() {
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 100%, rgba(0,133,66,0.06) 0%, transparent 60%)', pointerEvents: 'none' }} />
         <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontSize: 'clamp(1.8rem, 4.5vw, 3.5rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '1.25rem', color: 'var(--color-text-primary)' }}>
-            Join the Movement.
+            Join the Movement
           </h2>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', maxWidth: '460px', margin: '0 auto 3rem', lineHeight: 1.75 }}>
-            Whether you're a company tired of bad hires or a candidate tired of being overlooked — VoxTalent is built for you.
+            Whether you're a company tired of bad hires or a candidate tired of being overlooked VoxTalent is built for you
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/signup?role=company" className="btn-primary" style={{ padding: '0.9rem 2.5rem', fontSize: '0.875rem', gap: '8px', display: 'inline-flex', alignItems: 'center' }}>

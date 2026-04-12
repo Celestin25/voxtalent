@@ -51,7 +51,7 @@ export default function Navbar() {
     <nav className={styles.nav}>
       <div className={`container ${styles.container}`}>
         <Link href="/" className={styles.logo}>
-          VoxTalent<span style={{color: 'var(--color-accent-primary)', marginLeft: '2px'}}><Sparkles size={16} /></span>
+          VoxTalent
         </Link>
         <div className={styles.links}>
           <Link href="/challenges" className={styles.link}>Explore</Link>

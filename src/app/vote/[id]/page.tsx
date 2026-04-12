@@ -134,7 +134,7 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
             <div className={dashboardStyles.card} style={{ border: '1px solid var(--color-accent-primary)' }}>
               <h3 className={dashboardStyles.sidebarTitle}>Observation Desk</h3>
               <p className="text-secondary text-sm mb-6" style={{ color: '#000', fontWeight: 500 }}>
-                Identify technical flaws by stacking lemons. <strong>0 lemons = Excellence</strong>; 10 lemons = Significant failure. Only submit lemons for identified weaknesses.
+                Identify technical flaws by stacking lemons <strong>0 lemons = Excellence</strong> 10 lemons = Significant failure Only submit lemons for identified weaknesses
               </p>
 
               <VotingForm submissionId={submission.id} isSignedIn={isSignedIn} />
@@ -144,7 +144,7 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
                   <ShieldCheck size={16} /> Anonymous Protocol
                 </div>
                 <p className="text-secondary" style={{ fontSize: '0.75rem', marginTop: '0.5rem', lineHeight: 1.5 }}>
-                  Your identity is never shown to the candidate. Only the aggregated score is revealed.
+                  Your identity is never shown to the candidate Only the aggregated score is revealed
                 </p>
               </div>
             </div>
