@@ -71,18 +71,20 @@ export async function createChallenge(formData: FormData) {
     }
 
     try {
-      const { put } = await import('@vercel/blob')
-      const blob = await put(
-        `challenges/${companyProfile.id}/${Date.now()}-${attachmentFile.name}`,
-        attachmentFile,
-        { access: 'public' }
-      )
-      attachmentUrl = blob.url
+      const { writeFile, mkdir } = await import('fs/promises')
+      const { join } = await import('path')
+      const uploadDir = join(process.cwd(), 'public', 'uploads', 'challenges')
+      await mkdir(uploadDir, { recursive: true })
+      const safeName = `${Date.now()}-${attachmentFile.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+      const filePath = join(uploadDir, safeName)
+      const buffer = Buffer.from(await attachmentFile.arrayBuffer())
+      await writeFile(filePath, buffer)
+      attachmentUrl = `/uploads/challenges/${safeName}`
       attachmentName = attachmentFile.name
       attachmentType = attachmentFile.type
-    } catch (blobError: any) {
-      console.error('Blob upload failed:', blobError)
-      throw new Error('Failed to upload file. Please check your storage configuration.')
+    } catch (uploadError: any) {
+      console.error('File upload failed:', uploadError)
+      throw new Error('Failed to upload file.')
     }
   }
 

@@ -3,8 +3,6 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 import { revalidatePath } from "next/cache"
-import { writeFile, mkdir } from "fs/promises"
-import { join } from "path"
 
 export async function submitSolution(formData: FormData) {
   try {
@@ -75,16 +73,20 @@ export async function submitSolution(formData: FormData) {
       }
 
       try {
-        const { put } = await import('@vercel/blob')
-        const blob = await put(`submissions/${challengeId}/${Date.now()}-${file.name}`, file, {
-          access: 'public',
-        })
-        fileUrl = blob.url
+        const { writeFile, mkdir } = await import('fs/promises')
+        const { join } = await import('path')
+        const uploadDir = join(process.cwd(), 'public', 'uploads', 'submissions')
+        await mkdir(uploadDir, { recursive: true })
+        const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+        const filePath = join(uploadDir, safeName)
+        const buffer = Buffer.from(await file.arrayBuffer())
+        await writeFile(filePath, buffer)
+        fileUrl = `/uploads/submissions/${safeName}`
         fileName = file.name
         fileType = file.type
-      } catch (blobError: any) {
-        console.error('Vercel Blob upload failed:', blobError)
-        return { success: false, error: 'Failed to upload file. Please check your storage configuration.' }
+      } catch (uploadError: any) {
+        console.error('File upload failed:', uploadError)
+        return { success: false, error: 'Failed to upload file.' }
       }
     }
 
