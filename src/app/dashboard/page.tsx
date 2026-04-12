@@ -15,9 +15,6 @@ export default async function DashboardPage() {
             <h1>Hello, {session?.user?.name || "User"}</h1>
             <p className={styles.subtitle}>Today is {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} • <span style={{ color: '#10b981', fontWeight: 600 }}>On track for Elite Tier</span></p>
           </div>
-        <Link href="/challenges" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.75rem' }}>
-          + NEW CHALLENGE ENTRY
-        </Link>
         </header>
 
       <section className={styles.statsGrid}>
