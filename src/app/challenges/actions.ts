@@ -73,15 +73,10 @@ export async function submitSolution(formData: FormData) {
       }
 
       try {
-        const { writeFile, mkdir } = await import('fs/promises')
-        const { join } = await import('path')
-        const uploadDir = join(process.cwd(), 'public', 'uploads', 'submissions')
-        await mkdir(uploadDir, { recursive: true })
-        const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
-        const filePath = join(uploadDir, safeName)
-        const buffer = Buffer.from(await file.arrayBuffer())
-        await writeFile(filePath, buffer)
-        fileUrl = `/uploads/submissions/${safeName}`
+        const { put } = await import('@vercel/blob')
+        const safeName = `submissions/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+        const blob = await put(safeName, file, { access: 'public' })
+        fileUrl = blob.url
         fileName = file.name
         fileType = file.type
       } catch (uploadError: any) {
