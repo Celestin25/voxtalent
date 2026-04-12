@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { User, Search, LogOut, LayoutDashboard, Crown, Zap } from "lucide-react";
+import { User, Search, LogOut, LayoutDashboard, Crown, Zap, Sparkles } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -51,11 +51,11 @@ export default function Navbar() {
     <nav className={styles.nav}>
       <div className={`container ${styles.container}`}>
         <Link href="/" className={styles.logo}>
-          VoxTalent<span style={{color: 'var(--color-accent-primary)'}}>✦</span>
+          VoxTalent<span style={{color: 'var(--color-accent-primary)', marginLeft: '2px'}}><Sparkles size={16} /></span>
         </Link>
         <div className={styles.links}>
           <Link href="/challenges" className={styles.link}>Explore</Link>
-          <Link href="/how-it-works" className={styles.link}>Methodology</Link>
+          <Link href="/how-it-works" className={styles.link}>How It Works</Link>
           <Link href="/about" className={styles.link}>About</Link>
         </div>
         <div className={styles.actions}>

@@ -25,7 +25,7 @@ const steps = [
   {
     num: 1,
     title: 'Post a Real Challenge',
-    desc: 'Instead of asking candidates to solve hypothetical puzzles, companies post actual problems from the role. Everyone knows what they\'re walking into — no surprises, no tricks.',
+    desc: 'Instead of asking candidates to solve hypothetical puzzles, companies post actual problems from the role. Everyone knows what they\'re walking into, no surprises, no tricks.',
     icon: Target,
     color: '#008542',
     bullets: ['Tied to the actual job scope', 'Deadline and prize pool set upfront', 'A scoring rubric is attached from the start'],
@@ -33,7 +33,7 @@ const steps = [
   {
     num: 2,
     title: 'Candidates Submit Their Work',
-    desc: 'Names, photos, and CVs are stripped before reviewers see anything. Candidates answer the challenge and their work speaks on its own — not where someone went to school.',
+    desc: 'Names, photos, and CVs are stripped before reviewers see anything. Candidates answer the challenge and their work speaks on its own, not where someone went to school.',
     icon: ShieldCheck,
     color: '#6366f1',
     bullets: ['No personal details visible to voters', 'Open to candidates worldwide', 'Everyone competes on the same terms'],
@@ -41,7 +41,7 @@ const steps = [
   {
     num: 3,
     title: 'Employees Vote on Submissions',
-    desc: 'Your team members review and vote on each candidate\'s submitted work — they do not answer challenges themselves. Because no one can see what others voted, every score stays honest.',
+    desc: 'Your team members review and vote on each candidate\'s submitted work. they do not answer challenges themselves. Because no one can see what others voted, every score stays honest.',
     icon: Users,
     color: '#3b82f6',
     bullets: ['Employees evaluate candidate answers, not write their own', 'Each reviewer votes independently', 'Results are compiled automatically'],
@@ -49,7 +49,7 @@ const steps = [
   {
     num: 4,
     title: 'Hire With Confidence',
-    desc: 'The best work rises naturally from the votes. You get a full picture of who solved the problem and how — with every vote on record. No guesswork, no politics.',
+    desc: 'The best work rises naturally from the votes. You get a full picture of who solved the problem and how, with every vote on record. No guesswork, no politics.',
     icon: Trophy,
     color: '#10b981',
     bullets: ['Complete audit trail on every decision', 'Team consensus is on record', 'One clear hire recommendation'],
@@ -143,7 +143,7 @@ export default function HowItWorksPage() {
             Proof, Not <span style={{ color: '#008542' }}>Promises.</span>
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '560px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
-            VoxTalent replaces gut feelings with anonymous, merit-based challenges — candidates answer, your team votes.
+            VoxTalent replaces gut feelings with anonymous, merit based challenges, candidates answer, your team votes.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/challenges" className="btn-primary" style={{ gap: '8px', display: 'inline-flex', alignItems: 'center' }}>
@@ -284,13 +284,13 @@ export default function HowItWorksPage() {
 
             <div style={{ background: 'rgba(79,70,229,0.03)', border: '1px solid rgba(79,70,229,0.2)', borderRadius: '18px', overflow: 'hidden', boxShadow: 'var(--shadow-card)' }}>
               <div style={{ padding: '1.25rem 1.75rem', borderBottom: '1px solid rgba(79,70,229,0.1)', display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(79,70,229,0.04)' }}>
-                <CheckCircle2 size={17} style={{ color: '#4f46e5' }} />
-                <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#4f46e5' }}>VoxTalent</span>
+                <CheckCircle2 size={17} style={{ color: '#008542' }} />
+                <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#008542' }}>VoxTalent</span>
               </div>
               <ul style={{ padding: '1.5rem 1.75rem', margin: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {voxtalent.map((item, i) => (
                   <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                    <CheckCircle2 size={13} style={{ color: '#4f46e5', flexShrink: 0, marginTop: '2px' }} />
+                    <CheckCircle2 size={13} style={{ color: '#008542', flexShrink: 0, marginTop: '2px' }} />
                     {item}
                   </li>
                 ))}
@@ -313,8 +313,8 @@ export default function HowItWorksPage() {
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
                 {[
-                  { icon: Eye, label: 'Anonymity removes affinity bias', color: '#4f46e5' },
-                  { icon: Lock, label: 'Private votes keep scores honest', color: '#6366f1' },
+                  { icon: Eye, label: 'Anonymity removes affinity bias', color: '#008542' },
+                  { icon: Lock, label: 'Private votes keep scores honest', color: '#10b981' },
                   { icon: BarChart3, label: 'Averaged votes smooth out outliers', color: '#10b981' },
                   { icon: Award, label: 'Work samples are job-relevant predictors', color: '#3b82f6' },
                 ].map(({ icon: Icon, label, color }, i) => (
@@ -348,7 +348,7 @@ export default function HowItWorksPage() {
 
       {/* CTA */}
       <section style={{ padding: '7rem 0', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 100%, rgba(79,70,229,0.05) 0%, transparent 60%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 100%, rgba(0,133,66,0.05) 0%, transparent 60%)', pointerEvents: 'none' }} />
         <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontSize: 'clamp(1.8rem, 4.5vw, 3.5rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '1.25rem', color: 'var(--color-text-primary)' }}>
             Hire by Truth.

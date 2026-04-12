@@ -108,7 +108,7 @@ export default function AboutPage() {
             Hiring Should Be <span style={{ color: '#008542' }}>Earned.</span>
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
-            VoxTalent was built on a simple belief: the best person for a job should be the one who does the best work — not the one who interviews best or went to the right school.
+            VoxTalent was built on a simple belief. the best person for a job should be the one who does the best work, not the one who interviews best or went to the right school.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/challenges" className="btn-primary" style={{ gap: '8px', display: 'inline-flex', alignItems: 'center' }}>
@@ -147,19 +147,19 @@ export default function AboutPage() {
                 Built out of Frustration With the Status Quo
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem', marginBottom: '1.25rem' }}>
-                VoxTalent started in 2023 when our founders — coming from engineering, behavioral science, and talent operations — kept running into the same broken pattern: exceptional candidates filtered out because their CV didn't fit a template, or hired because they interviewed well despite having no real skill.
+                VoxTalent started in 2023 when our founders, coming from engineering, behavioral science, and talent operations, kept running into the same broken pattern. exceptional candidates filtered out because their CV didn't fit a template, or hired because they interviewed well despite having no real skill.
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem', marginBottom: '1.25rem' }}>
-                We asked a different question: what if every candidate competed on the same real challenge, and the people who would actually work with them voted on the results — anonymously?
+                We asked a different question. what if every candidate competed on the same real challenge, and the people who would actually work with them voted on the results, anonymously?
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem' }}>
-                The research backed it up. MIT Sloan and Harvard Business Review studies consistently show that work-sample evaluation by a group outperforms individual interviews. We built the infrastructure to make that the default.
+                The research backed it up. MIT Sloan and Harvard Business Review studies consistently show that work sample evaluation by a group outperforms individual interviews. We built the infrastructure to make that the default.
               </p>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               {[
-                { icon: Zap, label: 'Founded', value: '2023', color: '#4f46e5' },
+                { icon: Zap, label: 'Founded', value: '2023', color: '#008542' },
                 { icon: Globe, label: 'Countries', value: '40+', color: '#10b981' },
                 { icon: TrendingUp, label: 'Challenges run', value: '8,400+', color: '#6366f1' },
                 { icon: Award, label: 'Hires made', value: '12,000+', color: '#3b82f6' },
@@ -212,7 +212,7 @@ export default function AboutPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
             {team.map((member, i) => (
-              <div key={i} style={{ background: 'var(--color-bg-secondary)', border: '1px solid rgba(79,70,229,0.1)', borderRadius: '20px', padding: '2rem', textAlign: 'center', boxShadow: 'var(--shadow-card)' }}>
+              <div key={i} style={{ background: 'var(--color-bg-secondary)', border: '1px solid rgba(0,133,66,0.1)', borderRadius: '20px', padding: '2rem', textAlign: 'center', boxShadow: 'var(--shadow-card)' }}>
                 <div style={{ width: '64px', height: '64px', borderRadius: '18px', background: member.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', fontSize: '1.2rem', fontWeight: 800, color: 'white', letterSpacing: '-0.02em' }}>
                   {member.initials}
                 </div>
@@ -227,13 +227,13 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section style={{ padding: '7rem 0', position: 'relative', overflow: 'hidden', borderTop: '1px solid rgba(79,70,229,0.08)' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 100%, rgba(79,70,229,0.06) 0%, transparent 60%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 100%, rgba(0,133,66,0.06) 0%, transparent 60%)', pointerEvents: 'none' }} />
         <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontSize: 'clamp(1.8rem, 4.5vw, 3.5rem)', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: '1.25rem', color: 'var(--color-text-primary)' }}>
             Join the Movement.
           </h2>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', maxWidth: '460px', margin: '0 auto 3rem', lineHeight: 1.75 }}>
-            Whether you're a company tired of bad hires or a candidate tired of being overlooked — VoxTalent is built for you.
+            Whether you're a company tired of bad hires or a candidate tired of being overlooked, VoxTalent is built for you.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/signup?role=company" className="btn-primary" style={{ padding: '0.9rem 2.5rem', fontSize: '0.875rem', gap: '8px', display: 'inline-flex', alignItems: 'center' }}>
@@ -251,6 +251,6 @@ export default function AboutPage() {
 
 function hexToRgb(hex: string): string {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  if (!result) return '79,70,229'
+  if (!result) return '0,133,66'
   return `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}`
 }
