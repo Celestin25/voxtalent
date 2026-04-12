@@ -121,7 +121,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Stats */}
+      {/* Stat */}
       <section style={{ borderTop: '1px solid rgba(0,133,66,0.1)', borderBottom: '1px solid rgba(0,133,66,0.1)', background: 'var(--color-bg-secondary)', padding: '0' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
