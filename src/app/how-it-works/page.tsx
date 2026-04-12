@@ -25,7 +25,7 @@ const steps = [
   {
     num: 1,
     title: 'Post a Real Challenge',
-    desc: 'Instead of asking candidates to solve hypothetical puzzles, companies post actual problems from the role. Everyone knows what they\'re walking into, no surprises, no tricks.',
+    desc: 'Instead of asking candidates to solve hypothetical puzzles, companies post actual problems from the role. Everyone knows what they\'re walking into — no surprises, no tricks.',
     icon: Target,
     color: '#008542',
     bullets: ['Tied to the actual job scope', 'Deadline and prize pool set upfront', 'A scoring rubric is attached from the start'],
@@ -33,7 +33,7 @@ const steps = [
   {
     num: 2,
     title: 'Candidates Submit Their Work',
-    desc: 'Names, photos, and CVs are stripped before reviewers see anything. Candidates answer the challenge and their work speaks on its own, not where someone went to school.',
+    desc: 'Names, photos, and CVs are stripped before reviewers see anything. Candidates answer the challenge and their work speaks on its own — not where someone went to school.',
     icon: ShieldCheck,
     color: '#6366f1',
     bullets: ['No personal details visible to voters', 'Open to candidates worldwide', 'Everyone competes on the same terms'],
@@ -41,7 +41,7 @@ const steps = [
   {
     num: 3,
     title: 'Employees Vote on Submissions',
-    desc: 'Your team members review and vote on each candidate\'s submitted work. they do not answer challenges themselves. Because no one can see what others voted, every score stays honest.',
+    desc: 'Your team members review and vote on each candidate\'s submitted work — they do not answer challenges themselves. Because no one can see what others voted, every score stays honest.',
     icon: Users,
     color: '#3b82f6',
     bullets: ['Employees evaluate candidate answers, not write their own', 'Each reviewer votes independently', 'Results are compiled automatically'],
@@ -49,7 +49,7 @@ const steps = [
   {
     num: 4,
     title: 'Hire With Confidence',
-    desc: 'The best work rises naturally from the votes. You get a full picture of who solved the problem and how, with every vote on record. No guesswork, no politics.',
+    desc: 'The best work rises naturally from the votes. You get a full picture of who solved the problem and how — with every vote on record. No guesswork, no politics.',
     icon: Trophy,
     color: '#10b981',
     bullets: ['Complete audit trail on every decision', 'Team consensus is on record', 'One clear hire recommendation'],
@@ -143,7 +143,7 @@ export default function HowItWorksPage() {
             Proof, Not <span style={{ color: '#008542' }}>Promises.</span>
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '560px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
-            VoxTalent replaces gut feelings with anonymous, merit based challenges, candidates answer, your team votes.
+            VoxTalent replaces gut feelings with anonymous, merit-based challenges — candidates answer, your team votes.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/challenges" className="btn-primary" style={{ gap: '8px', display: 'inline-flex', alignItems: 'center' }}>

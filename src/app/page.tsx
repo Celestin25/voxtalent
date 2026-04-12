@@ -23,14 +23,14 @@ export default function Home() {
             Hire via <span className="text-gold">Collective Intelligence</span>
           </h1>
           <p className={styles.heroSubtitle}>
-            We've replaced gut feelings with data driven consensus from the people who will actually work with the hire.
+            We've replaced gut feelings with data-driven consensus from the people who will actually work with the hire.
           </p>
           <div className={styles.heroActions}>
             <Link href="/dashboard" className="btn-primary">
               Explore Dashboard <ArrowRight size={18} style={{ marginLeft: "8px" }} />
             </Link>
             <Link href="/how-it-works" className="btn-outline">
-              How It Works
+              Learn Methodology
             </Link>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Home() {
               </div>
               <h3 className={styles.cardTitle}>Real-Work Challenges</h3>
               <p className={styles.cardText}>
-                Candidates prove their ability by solving actual problems your company faces. Not theoretical puzzles.
+                Candidates prove their ability by solving actual problems your company faces — not theoretical puzzles.
               </p>
             </div>
 

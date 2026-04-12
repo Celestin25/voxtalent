@@ -108,7 +108,7 @@ export default function AboutPage() {
             Hiring Should Be <span style={{ color: '#008542' }}>Earned.</span>
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', maxWidth: '600px', margin: '0 auto 2.5rem', lineHeight: 1.75 }}>
-            VoxTalent was built on a simple belief. the best person for a job should be the one who does the best work, not the one who interviews best or went to the right school.
+            VoxTalent was built on a simple belief: the best person for a job should be the one who does the best work — not the one who interviews best or went to the right school.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/challenges" className="btn-primary" style={{ gap: '8px', display: 'inline-flex', alignItems: 'center' }}>
@@ -147,13 +147,13 @@ export default function AboutPage() {
                 Built out of Frustration With the Status Quo
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem', marginBottom: '1.25rem' }}>
-                VoxTalent started in 2023 when our founders, coming from engineering, behavioral science, and talent operations, kept running into the same broken pattern. exceptional candidates filtered out because their CV didn't fit a template, or hired because they interviewed well despite having no real skill.
+                VoxTalent started in 2023 when our founders — coming from engineering, behavioral science, and talent operations — kept running into the same broken pattern: exceptional candidates filtered out because their CV didn't fit a template, or hired because they interviewed well despite having no real skill.
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem', marginBottom: '1.25rem' }}>
-                We asked a different question. what if every candidate competed on the same real challenge, and the people who would actually work with them voted on the results, anonymously?
+                We asked a different question: what if every candidate competed on the same real challenge, and the people who would actually work with them voted on the results — anonymously?
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.85, fontSize: '0.95rem' }}>
-                The research backed it up. MIT Sloan and Harvard Business Review studies consistently show that work sample evaluation by a group outperforms individual interviews. We built the infrastructure to make that the default.
+                The research backed it up. MIT Sloan and Harvard Business Review studies consistently show that work-sample evaluation by a group outperforms individual interviews. We built the infrastructure to make that the default.
               </p>
             </div>
 
@@ -233,7 +233,7 @@ export default function AboutPage() {
             Join the Movement.
           </h2>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', maxWidth: '460px', margin: '0 auto 3rem', lineHeight: 1.75 }}>
-            Whether you're a company tired of bad hires or a candidate tired of being overlooked, VoxTalent is built for you.
+            Whether you're a company tired of bad hires or a candidate tired of being overlooked — VoxTalent is built for you.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/signup?role=company" className="btn-primary" style={{ padding: '0.9rem 2.5rem', fontSize: '0.875rem', gap: '8px', display: 'inline-flex', alignItems: 'center' }}>
