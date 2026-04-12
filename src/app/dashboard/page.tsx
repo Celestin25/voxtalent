@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import Link from "next/link";
-import { ShieldUser, Building2, Users, User, ArrowRight } from "lucide-react";
+import { ShieldUser, Building2, Users, User } from "lucide-react";
 import styles from "./dashboard.module.css";
 
 export default async function DashboardPage() {
@@ -32,7 +32,7 @@ export default async function DashboardPage() {
               <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--color-text-secondary)', marginBottom: '2px' }}>MODULE</div>
               <div className={styles.statValue} style={{ fontSize: '1.25rem' }}>{item.title}</div>
             </div>
-            <ArrowRight size={18} style={{ marginLeft: 'auto', opacity: 0.3 }} />
+
           </Link>
         ))}
       </section>
