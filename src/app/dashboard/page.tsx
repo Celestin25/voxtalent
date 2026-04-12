@@ -18,7 +18,7 @@ export default async function DashboardPage() {
         <Link href="/challenges" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.75rem' }}>
           + NEW CHALLENGE ENTRY
         </Link>
-      </div>
+        </header>
 
       <section className={styles.statsGrid}>
         {[
