@@ -52,6 +52,8 @@ model CandidateProfile {
 
 model Challenge {
   id             String         @id @default(cuid())
+  jobTitle       String?
+  jobDescription String?
   title          String
   description    String
   companyId      String

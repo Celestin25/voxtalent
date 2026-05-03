@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache"
 export async function createChallenge(formData: FormData) {
   const session = await auth()
 
+  const jobTitle = formData.get('jobTitle') as string | null
+  const jobDescription = formData.get('jobDescription') as string | null
   const title = formData.get('title') as string
   const deadlineStr = formData.get('deadline') as string
   // description from text tab; descriptionNote from file tab (optional note)
@@ -90,6 +92,8 @@ export async function createChallenge(formData: FormData) {
 
   const challenge = await prisma.challenge.create({
     data: {
+      jobTitle,
+      jobDescription,
       title,
       description,
       deadline: new Date(deadlineStr),

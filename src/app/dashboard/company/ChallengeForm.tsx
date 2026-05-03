@@ -112,6 +112,29 @@ export default function ChallengeForm() {
             <h2 className={styles.cardTitle} style={{ marginBottom: '2rem' }}>New Merit Challenge</h2>
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {/* Job Title */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Job Title</label>
+                <input
+                  name="jobTitle"
+                  required
+                  placeholder="e.g. Senior Frontend Engineer"
+                  style={inputStyle}
+                />
+              </div>
+
+              {/* Job Description */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Job Description</label>
+                <textarea
+                  name="jobDescription"
+                  rows={3}
+                  required
+                  placeholder="Describe the job role..."
+                  style={{ ...inputStyle, resize: 'vertical' }}
+                />
+              </div>
+
               {/* Title */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Challenge Title</label>

@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
+import Chatbot from "@/components/Chatbot";
 import "./globals.css";
 import { auth } from "@/auth";
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <Chatbot />
         </AuthProvider>
       </body>
     </html>

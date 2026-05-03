@@ -1,11 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
 export async function analyzeSubmission(challengeDescription: string, candidateContent: string) {
-  // Use 'gemini-1.5-flash-latest' for better compatibility
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
-
   const prompt = `
     You are a technical merit assessor for a talent platform called VoxTalent.
     Your job is to provide a "Technical Verdict" for a candidate's submission based on a challenge description.
@@ -31,9 +24,24 @@ export async function analyzeSubmission(challengeDescription: string, candidateC
   `;
 
   try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: "You are a helpful JSON-outputting assistant." },
+          { role: "user", content: prompt }
+        ]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.choices[0].message.content;
     
     // Clean JSON from potential markdown fluff
     const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();

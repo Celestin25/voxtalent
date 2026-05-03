@@ -117,8 +117,18 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
       <div className="container">
         <div className={styles.content}>
           <section>
+            {challenge.jobTitle && (
+              <div className={styles.section}>
+                <h2 className={styles.sectionTitle}>Job Role</h2>
+                <h3 className={styles.text} style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--color-text-primary)', marginBottom: '0.5rem' }}>{challenge.jobTitle}</h3>
+                {challenge.jobDescription && (
+                  <p className={styles.text} style={{ whiteSpace: 'pre-wrap', marginTop: '0.5rem' }}>{challenge.jobDescription}</p>
+                )}
+              </div>
+            )}
+
             <div className={styles.section}>
-              <h2 className={styles.sectionTitle}>Overview</h2>
+              <h2 className={styles.sectionTitle}>Challenge Overview</h2>
               <p className={styles.text} style={{ whiteSpace: 'pre-wrap' }}>{challenge.description}</p>
 
               {challenge.attachmentUrl && challenge.attachmentName && challenge.attachmentType && (
@@ -129,15 +139,6 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                   label="Challenge Attachment"
                 />
               )}
-            </div>
-
-            <div className={styles.section}>
-              <h2 className={styles.sectionTitle}>Technical Requirements</h2>
-              <div className={styles.skills}>
-                {['Next.js', 'TypeScript', 'Tailwind CSS'].map(skill => (
-                  <span key={skill} className={styles.skillBadge}>{skill}</span>
-                ))}
-              </div>
             </div>
           </section>
 
