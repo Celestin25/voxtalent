@@ -10,7 +10,8 @@ import {
   Zap,
   ShieldCheck,
   Star,
-  CheckCircle2
+  CheckCircle2,
+  MapPin
 } from 'lucide-react'
 import styles from './page.module.css'
 import { prisma } from "@/lib/prisma"

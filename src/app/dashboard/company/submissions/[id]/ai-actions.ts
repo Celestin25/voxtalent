@@ -25,7 +25,7 @@ export async function requestAiVerdict(submissionId: string) {
 
     let verdict = await analyzeSubmission(
       submission.challenge.description,
-      submission.content
+      submission.content || ""
     )
 
     // Demo Mode: If AI fails, simulate a realistic technical score
