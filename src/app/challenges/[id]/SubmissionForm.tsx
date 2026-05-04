@@ -1,35 +1,22 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { ArrowRight, Loader2, CheckCircle, Upload, X, FileText, Film, FileSpreadsheet } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { Loader2, CheckCircle, ArrowRight, Upload, X, FileText, Globe, Phone, Mail, Linkedin, User } from 'lucide-react'
 import { submitSolution } from '../actions'
 import styles from './page.module.css'
 import Link from 'next/link'
 
-type Tab = 'text' | 'file'
-
-const ACCEPTED = '.pdf,.xls,.xlsx,.mp4,.webm,.mov,.avi'
-
-function fileIcon(type: string) {
-  if (type.startsWith('video/')) return <Film size={20} />
-  if (type.includes('spreadsheet') || type.includes('excel')) return <FileSpreadsheet size={20} />
-  return <FileText size={20} />
-}
-
-function formatBytes(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-}
-
 export default function SubmissionForm({ challengeId }: { challengeId: string }) {
-  const [tab, setTab] = useState<Tab>('text')
+  const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [file, setFile] = useState<File | null>(null)
-  const [dragging, setDragging] = useState(false)
-  const fileRef = useRef<HTMLInputElement>(null)
+  
+  const [resume, setResume] = useState<File | null>(null)
+  const [coverLetter, setCoverLetter] = useState<File | null>(null)
+  
+  const resumeRef = useRef<HTMLInputElement>(null)
+  const coverLetterRef = useRef<HTMLInputElement>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -37,9 +24,9 @@ export default function SubmissionForm({ challengeId }: { challengeId: string })
     setError(null)
 
     const formData = new FormData(e.currentTarget)
-    if (file) {
-      formData.set('file', file)
-    }
+    if (resume) formData.append('resume', resume)
+    if (coverLetter) formData.append('coverLetter', coverLetter)
+    formData.append('challengeId', challengeId)
 
     try {
       const result = await submitSolution(formData)
@@ -55,185 +42,263 @@ export default function SubmissionForm({ challengeId }: { challengeId: string })
     }
   }
 
-  function handleFileDrop(e: React.DragEvent) {
-    e.preventDefault()
-    setDragging(false)
-    const dropped = e.dataTransfer.files[0]
-    if (dropped) setFile(dropped)
+  const inputStyle = {
+    width: '100%',
+    padding: '0.75rem 1rem',
+    borderRadius: '8px',
+    border: '1px solid rgba(0,0,0,0.1)',
+    background: 'white',
+    fontSize: '0.95rem',
+    color: 'black',
+    boxSizing: 'border-box' as const
+  }
+
+  const labelStyle = {
+    fontSize: '0.85rem',
+    fontWeight: 700,
+    color: '#333',
+    marginBottom: '0.4rem',
+    display: 'block'
+  }
+
+  const fieldGroupStyle = {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '0.25rem',
+    marginBottom: '1.25rem'
   }
 
   if (submitted) {
     return (
       <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <div style={{ width: '80px', height: '80px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem', color: '#10b981' }}>
-          <CheckCircle size={40} />
+        <div style={{ color: '#10b981', marginBottom: '1.5rem' }}>
+          <CheckCircle size={60} style={{ margin: '0 auto' }} />
         </div>
-        <h2 className={styles.sectionTitle}>Submission Received</h2>
-        <p className="text-secondary mb-8">
-          Your solution has been sent for anonymous review. Our employees will vote based on your merit alone.
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.5rem' }}>Application Submitted!</h2>
+        <p style={{ color: 'var(--color-text-secondary)', marginBottom: '2rem' }}>
+          Thank you for applying. We'll review your profile and get back to you soon.
         </p>
-        <Link href="/dashboard/candidate" className="btn-primary">Go to My Dashboard</Link>
+        <button onClick={() => setIsOpen(false)} className="btn-primary" style={{ width: '100%' }}>
+          Close
+        </button>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      <input type="hidden" name="challengeId" value={challengeId} />
+    <>
+      <button 
+        onClick={() => setIsOpen(true)} 
+        className="btn-primary" 
+        style={{ width: '100%', height: '3.5rem', fontSize: '1.1rem', fontWeight: 700 }}
+      >
+        Apply Now
+      </button>
 
-      {/* Tab switcher */}
-      <div style={{ display: 'flex', gap: '0.5rem', background: 'rgba(79,70,229,0.06)', borderRadius: '10px', padding: '4px' }}>
-        {(['text', 'file'] as Tab[]).map(t => (
-          <button
-            key={t}
-            type="button"
-            onClick={() => setTab(t)}
-            style={{
-              flex: 1,
-              padding: '0.5rem',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: 700,
-              fontSize: '0.8rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              background: tab === t ? 'var(--color-accent-primary)' : 'transparent',
-              color: tab === t ? '#fff' : 'var(--color-text-secondary)',
-              transition: 'all 0.2s',
-            }}
-          >
-            {t === 'text' ? 'Write Answer' : 'Upload File'}
-          </button>
-        ))}
-      </div>
-
-      {/* Text tab */}
-      {tab === 'text' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-            Your Solution (link or text)
-          </label>
-          <textarea
-            name="content"
-            rows={7}
-            placeholder="Paste a link (e.g. GitHub repo, Vercel deployment) or write your solution here…"
-            style={{
-              background: 'rgba(79,70,229,0.04)',
-              border: '1px solid rgba(79,70,229,0.15)',
-              borderRadius: '12px',
-              padding: '1.25rem',
-              color: 'var(--color-text-primary)',
-              resize: 'vertical',
-              fontSize: '1rem',
-            }}
-          />
-        </div>
-      )}
-
-      {/* File tab */}
-      {tab === 'file' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-            Upload File <span style={{ fontWeight: 400, textTransform: 'none', fontSize: '0.75rem' }}>(PDF, Excel, Video — max 100 MB)</span>
-          </label>
-
-          {/* Drop zone */}
-          <div
-            onClick={() => fileRef.current?.click()}
-            onDragOver={e => { e.preventDefault(); setDragging(true) }}
-            onDragLeave={() => setDragging(false)}
-            onDrop={handleFileDrop}
-            style={{
-              border: `2px dashed ${dragging ? 'var(--color-accent-primary)' : 'rgba(79,70,229,0.25)'}`,
-              borderRadius: '12px',
-              padding: '2rem',
-              textAlign: 'center',
-              cursor: 'pointer',
-              background: dragging ? 'rgba(79,70,229,0.06)' : 'rgba(79,70,229,0.02)',
-              transition: 'all 0.2s',
-            }}
-          >
-            <Upload size={28} style={{ margin: '0 auto 0.75rem', color: 'var(--color-accent-primary)', display: 'block' }} />
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', marginBottom: '0.25rem' }}>
-              Drop your file here or <span style={{ color: 'var(--color-accent-primary)', fontWeight: 700 }}>click to browse</span>
-            </p>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>
-              PDF &bull; Excel (.xls / .xlsx) &bull; Video (MP4, MOV, WebM, AVI)
-            </p>
-          </div>
-
-          <input
-            ref={fileRef}
-            type="file"
-            accept={ACCEPTED}
-            style={{ display: 'none' }}
-            onChange={e => setFile(e.target.files?.[0] ?? null)}
-          />
-
-          {/* Selected file preview */}
-          {file && (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              padding: '0.75rem 1rem',
-              background: 'rgba(16,185,129,0.06)',
-              border: '1px solid rgba(16,185,129,0.2)',
-              borderRadius: '10px',
-            }}>
-              <span style={{ color: '#10b981' }}>{fileIcon(file.type)}</span>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {file.name}
-                </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>{formatBytes(file.size)}</p>
+      {isOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0,0,0,0.75)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            background: '#f8fafc',
+            width: '100%',
+            maxWidth: '800px',
+            maxHeight: '90vh',
+            borderRadius: '16px',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)'
+          }}>
+            {/* Header */}
+            <div style={{ padding: '2rem 2.5rem', borderBottom: '1px solid rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'white', borderTopLeftRadius: '16px', borderTopRightRadius: '16px' }}>
+              <div>
+                <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#000000', margin: 0, fontFamily: 'var(--font-heading)' }}>Apply for this job</h2>
+                <p style={{ fontSize: '0.9rem', color: '#334155', marginTop: '0.4rem', fontWeight: 500 }}>* indicates a required field</p>
               </div>
-              <button
-                type="button"
-                onClick={() => { setFile(null); if (fileRef.current) fileRef.current.value = '' }}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-secondary)', padding: '4px' }}
-              >
-                <X size={16} />
+              <button onClick={() => setIsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}>
+                <X size={24} />
               </button>
             </div>
-          )}
 
-          {/* Optional note alongside the file */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>
-              Additional notes <span style={{ fontWeight: 400, textTransform: 'none' }}>(optional)</span>
-            </label>
-            <textarea
-              name="content"
-              rows={3}
-              placeholder="Add any context or explanation for your uploaded file…"
-              style={{
-                background: 'rgba(79,70,229,0.04)',
-                border: '1px solid rgba(79,70,229,0.15)',
-                borderRadius: '12px',
-                padding: '1rem',
-                color: 'var(--color-text-primary)',
-                resize: 'vertical',
-                fontSize: '0.9375rem',
-              }}
-            />
+            {/* Form Content */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '2rem' }}>
+              <form onSubmit={handleSubmit}>
+                {error && <div style={{ background: '#fef2f2', border: '1px solid #fee2e2', color: '#b91c1c', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>{error}</div>}
+
+                {/* Name Row */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>First Name *</label>
+                    <input name="firstName" required style={inputStyle} placeholder="First name" />
+                  </div>
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>Last Name *</label>
+                    <input name="lastName" required style={inputStyle} placeholder="Last name" />
+                  </div>
+                </div>
+
+                <div style={fieldGroupStyle}>
+                  <label style={labelStyle}>Preferred First Name</label>
+                  <input name="preferredFirstName" style={inputStyle} placeholder="Preferred name" />
+                </div>
+
+                <div style={fieldGroupStyle}>
+                  <label style={labelStyle}>Email *</label>
+                  <input name="email" type="email" required style={inputStyle} placeholder="email@example.com" />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>Country</label>
+                    <input name="country" style={inputStyle} placeholder="Your country" />
+                  </div>
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>Phone *</label>
+                    <input name="phone" required style={inputStyle} placeholder="Phone number" />
+                  </div>
+                </div>
+
+                {/* File Upload Section */}
+                <div style={{ marginBottom: '2rem', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '2rem' }}>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <label style={labelStyle}>Resume/CV *</label>
+                    <div 
+                      onClick={() => resumeRef.current?.click()}
+                      style={{ border: '2px dashed rgba(0,0,0,0.1)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', cursor: 'pointer', background: resume ? 'rgba(16,185,129,0.03)' : 'white' }}
+                    >
+                      {resume ? (
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: '#10b981' }}>
+                          <CheckCircle size={20} /> <span style={{ fontWeight: 600 }}>{resume.name}</span>
+                        </div>
+                      ) : (
+                        <div style={{ color: '#64748b' }}>
+                          <Upload size={24} style={{ margin: '0 auto 0.5rem' }} />
+                          <p style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-accent-primary)' }}>Attach Resume/CV</p>
+                          <p style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>PDF, DOCX, TXT</p>
+                        </div>
+                      )}
+                    </div>
+                    <input type="file" ref={resumeRef} onChange={e => setResume(e.target.files?.[0] || null)} style={{ display: 'none' }} accept=".pdf,.doc,.docx,.txt" />
+                  </div>
+
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <label style={labelStyle}>Cover Letter</label>
+                    <div 
+                      onClick={() => coverLetterRef.current?.click()}
+                      style={{ border: '2px dashed rgba(0,0,0,0.1)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', cursor: 'pointer', background: coverLetter ? 'rgba(16,185,129,0.03)' : 'white' }}
+                    >
+                      {coverLetter ? (
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: '#10b981' }}>
+                          <CheckCircle size={20} /> <span style={{ fontWeight: 600 }}>{coverLetter.name}</span>
+                        </div>
+                      ) : (
+                        <div style={{ color: '#64748b' }}>
+                          <Upload size={24} style={{ margin: '0 auto 0.5rem' }} />
+                          <p style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-accent-primary)' }}>Attach Cover Letter</p>
+                          <p style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>PDF, DOCX, TXT</p>
+                        </div>
+                      )}
+                    </div>
+                    <input type="file" ref={coverLetterRef} onChange={e => setCoverLetter(e.target.files?.[0] || null)} style={{ display: 'none' }} accept=".pdf,.doc,.docx,.txt" />
+                  </div>
+                </div>
+
+                {/* Questions Section */}
+                <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '2rem' }}>
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>What interests and excites you about joining our team? *</label>
+                    <textarea name="interestQuestion" required style={{ ...inputStyle, resize: 'vertical' }} rows={4} placeholder="Max 200 words" />
+                  </div>
+
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>Why do you think you'd be a good fit? *</label>
+                    <textarea name="fitQuestion" required style={{ ...inputStyle, resize: 'vertical' }} rows={4} />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                    <div style={fieldGroupStyle}>
+                      <label style={labelStyle}>Salary Expectations (USD) *</label>
+                      <input name="salaryExpectations" required style={inputStyle} placeholder="e.g. 50000" />
+                    </div>
+                    <div style={fieldGroupStyle}>
+                      <label style={labelStyle}>When can you join? *</label>
+                      <input name="joinDate" required style={inputStyle} placeholder="e.g. Immediately, 2 weeks notice" />
+                    </div>
+                  </div>
+
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>Country of Residence *</label>
+                    <input name="countryOfResidence" required style={inputStyle} />
+                  </div>
+
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>Do you require visa sponsorship? *</label>
+                    <select name="visaSponsorship" required style={inputStyle}>
+                      <option value="">Select...</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                    <div style={fieldGroupStyle}>
+                      <label style={labelStyle}>Gender *</label>
+                      <select name="gender" required style={inputStyle}>
+                        <option value="">Select...</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Decline">Decline to self-identify</option>
+                      </select>
+                    </div>
+                    <div style={fieldGroupStyle}>
+                      <label style={labelStyle}>LinkedIn Profile</label>
+                      <input name="linkedInProfile" style={inputStyle} placeholder="https://linkedin.com/in/..." />
+                    </div>
+                  </div>
+
+                  <div style={fieldGroupStyle}>
+                    <label style={labelStyle}>How did you hear about this role? *</label>
+                    <select name="heardAboutRole" required style={inputStyle}>
+                      <option value="">Select...</option>
+                      <option value="LinkedIn">LinkedIn</option>
+                      <option value="Company Website">Company Website</option>
+                      <option value="Referral">Referral</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem' }}>
+                  <button 
+                    type="submit" 
+                    disabled={loading}
+                    className="btn-primary" 
+                    style={{ flex: 1, height: '3.5rem', fontSize: '1.1rem' }}
+                  >
+                    {loading ? <Loader2 className="animate-spin" size={24} style={{ margin: '0 auto' }} /> : 'Submit Application'}
+                  </button>
+                  <button 
+                    type="button" 
+                    onClick={() => setIsOpen(false)}
+                    style={{ padding: '0 1.5rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#475569', fontWeight: 600 }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}
-
-      {error && <p style={{ color: '#f43f5e', fontSize: '0.9rem' }}>{error}</p>}
-
-      <button
-        type="submit"
-        className="btn-primary"
-        disabled={loading}
-        style={{ width: '100%', height: '4rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-      >
-        {loading ? <Loader2 className="animate-spin" size={24} /> : (
-          <>Submit Now <ArrowRight size={20} /></>
-        )}
-      </button>
-    </form>
+    </>
   )
 }

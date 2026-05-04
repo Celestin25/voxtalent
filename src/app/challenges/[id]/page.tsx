@@ -100,16 +100,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
               </div>
             </div>
 
-            <div className={styles.heroStats}>
-              <div className={styles.heroStat}>
-                <div className={styles.statLabel}>Submissions</div>
-                <div className={styles.statValue}>{challenge._count.submissions}</div>
-              </div>
-              <div className={styles.heroStat} style={{ borderColor: 'var(--color-accent-primary)' }}>
-                <div className={styles.statLabel} style={{ color: 'var(--color-accent-primary)' }}>Deadline</div>
-                <div className={styles.statValue} style={{ fontSize: '1rem' }}>{new Date(challenge.deadline).toLocaleDateString()}</div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -119,27 +110,26 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
           <section>
             {challenge.jobTitle && (
               <div className={styles.section}>
-                <h2 className={styles.sectionTitle}>Job Role</h2>
-                <h3 className={styles.text} style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--color-text-primary)', marginBottom: '0.5rem' }}>{challenge.jobTitle}</h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                  <h3 className={styles.text} style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--color-text-primary)', marginBottom: 0 }}>{challenge.jobTitle}</h3>
+                  {challenge.isRemote && (
+                    <span style={{ fontSize: '0.75rem', background: 'rgba(79,70,229,0.1)', color: 'var(--color-accent-primary)', padding: '2px 10px', borderRadius: '4px', fontWeight: 800, textTransform: 'uppercase' }}>
+                      Remote
+                    </span>
+                  )}
+                  {challenge.jobLocation && (
+                    <span style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <MapPin size={16} /> {challenge.jobLocation}
+                    </span>
+                  )}
+                </div>
                 {challenge.jobDescription && (
                   <p className={styles.text} style={{ whiteSpace: 'pre-wrap', marginTop: '0.5rem' }}>{challenge.jobDescription}</p>
                 )}
               </div>
             )}
 
-            <div className={styles.section}>
-              <h2 className={styles.sectionTitle}>Challenge Overview</h2>
-              <p className={styles.text} style={{ whiteSpace: 'pre-wrap' }}>{challenge.description}</p>
 
-              {challenge.attachmentUrl && challenge.attachmentName && challenge.attachmentType && (
-                <FileViewer
-                  url={challenge.attachmentUrl}
-                  name={challenge.attachmentName}
-                  type={challenge.attachmentType}
-                  label="Challenge Attachment"
-                />
-              )}
-            </div>
           </section>
 
           <aside>
@@ -158,7 +148,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                 </div>
               ) : (!session?.user || session.user.role?.toUpperCase() === 'CANDIDATE') ? (
                 <>
-                  <h3 className={styles.sidebarTitle}>Submit Solution</h3>
+                  <h3 className={styles.sidebarTitle}>Apply for Role</h3>
                   
                   {hasSubmitted ? (
                     <div style={{ textAlign: 'center' }}>
@@ -168,13 +158,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                     </div>
                   ) : (
                     <>
-                      <p className={styles.sidebarText}>
-                        Ready to be vetted on your merits? Submit your solution below.
-                      </p>
-                      <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '8px', border: '1px solid rgba(79, 70, 229, 0.12)', textAlign: 'center' }}>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-accent-primary)' }}>{challenge._count.submissions}</div>
-                        <div style={{ fontSize: '0.6rem', color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Active Submissions</div>
-                      </div>
+
                       <SubmissionForm challengeId={challenge.id} />
                     </>
                   )}
@@ -189,11 +173,7 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                 </div>
               )}
 
-              <div className={styles.featureList} style={{ marginTop: '2rem' }}>
-                <div className={styles.featureItem}><ShieldCheck size={18} className="text-gold" /> Anonymous Merit Review</div>
-                <div className={styles.featureItem}><CheckCircle2 size={18} className="text-gold" /> Verified Prize Guarantee</div>
-                <div className={styles.featureItem}><Zap size={18} className="text-gold" /> Priority Hiring Status</div>
-              </div>
+
             </div>
           </aside>
         </div>

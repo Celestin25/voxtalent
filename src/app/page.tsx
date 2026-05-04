@@ -29,6 +29,9 @@ export default function Home() {
             <Link href="/dashboard" className="btn-primary">
               Explore Dashboard <ArrowRight size={18} style={{ marginLeft: "8px" }} />
             </Link>
+            <Link href="/jobs" className="btn-outline">
+              See Open Roles
+            </Link>
             <Link href="/how-it-works" className="btn-outline">
               Learn Methodology
             </Link>

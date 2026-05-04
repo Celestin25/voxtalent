@@ -9,6 +9,8 @@ export async function createChallenge(formData: FormData) {
 
   const jobTitle = formData.get('jobTitle') as string | null
   const jobDescription = formData.get('jobDescription') as string | null
+  const jobLocation = formData.get('jobLocation') as string | null
+  const isRemote = formData.get('isRemote') === 'true'
   const title = formData.get('title') as string
   const deadlineStr = formData.get('deadline') as string
   // description from text tab; descriptionNote from file tab (optional note)
@@ -73,15 +75,10 @@ export async function createChallenge(formData: FormData) {
     }
 
     try {
-      const { writeFile, mkdir } = await import('fs/promises')
-      const { join } = await import('path')
-      const uploadDir = join(process.cwd(), 'public', 'uploads', 'challenges')
-      await mkdir(uploadDir, { recursive: true })
-      const safeName = `${Date.now()}-${attachmentFile.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
-      const filePath = join(uploadDir, safeName)
-      const buffer = Buffer.from(await attachmentFile.arrayBuffer())
-      await writeFile(filePath, buffer)
-      attachmentUrl = `/uploads/challenges/${safeName}`
+      const { put } = await import('@vercel/blob')
+      const safeName = `challenges/${Date.now()}-${attachmentFile.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+      const blob = await put(safeName, attachmentFile, { access: 'public' })
+      attachmentUrl = blob.url
       attachmentName = attachmentFile.name
       attachmentType = attachmentFile.type
     } catch (uploadError: any) {
@@ -94,6 +91,8 @@ export async function createChallenge(formData: FormData) {
     data: {
       jobTitle,
       jobDescription,
+      jobLocation,
+      isRemote,
       title,
       description,
       deadline: new Date(deadlineStr),

@@ -54,6 +54,8 @@ model Challenge {
   id             String         @id @default(cuid())
   jobTitle       String?
   jobDescription String?
+  jobLocation    String?
+  isRemote       Boolean        @default(false)
   title          String
   description    String
   companyId      String
@@ -72,7 +74,36 @@ model Submission {
   id          String    @id @default(cuid())
   challengeId String
   candidateId String
-  content     String
+  content     String?
+  
+  // Personal Information
+  firstName          String?
+  lastName           String?
+  preferredFirstName String?
+  email              String?
+  phone              String?
+  country            String?
+  
+  // Files
+  resumeUrl          String?
+  resumeName         String?
+  resumeType         String?
+  coverLetterUrl     String?
+  coverLetterName    String?
+  coverLetterType    String?
+  
+  // Application Questions
+  interestQuestion   String?
+  fitQuestion        String?
+  salaryExpectations String?
+  joinDate           String?
+  countryOfResidence String?
+  visaSponsorship    String?
+  gender             String?
+  heardAboutRole     String?
+  sourceDetail       String?
+  linkedInProfile    String?
+
   fileUrl     String?
   fileName    String?
   fileType    String?

@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import Link from "next/link";
-import { ShieldUser, Building2, Users, User } from "lucide-react";
+import { ShieldUser, Building2, Users, User, Briefcase } from "lucide-react";
 import styles from "./dashboard.module.css";
 
 export default async function DashboardPage() {
@@ -23,6 +23,7 @@ export default async function DashboardPage() {
           { title: "Company", icon: Building2, href: "/dashboard/company", color: "var(--color-accent-primary)", desc: "Enterprise suite" },
           { title: "Employee", icon: Users, href: "/dashboard/employee", color: "var(--color-accent-primary)", desc: "Voter console" },
           { title: "Candidate", icon: User, href: "/dashboard/candidate", color: "var(--color-accent-primary)", desc: "Merit profile" },
+          { title: "Recruiter", icon: Briefcase, href: "/dashboard/recruiter", color: "var(--color-accent-primary)", desc: "Applicant tracking" },
         ].map((item) => (
           <Link key={item.title} href={item.href} className={styles.statCard} style={{ textDecoration: 'none' }}>
             <div className={styles.statIcon}>

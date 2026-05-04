@@ -135,6 +135,28 @@ export default function ChallengeForm() {
                 />
               </div>
 
+              {/* Job Location & Remote */}
+              <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-end' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Job Location</label>
+                  <input
+                    name="jobLocation"
+                    placeholder="e.g. San Francisco, CA"
+                    style={inputStyle}
+                  />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <input
+                    type="checkbox"
+                    name="isRemote"
+                    id="isRemote"
+                    value="true"
+                    style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                  />
+                  <label htmlFor="isRemote" style={{ fontSize: '0.9rem', color: 'black', fontWeight: 600, cursor: 'pointer' }}>Remote Role</label>
+                </div>
+              </div>
+
               {/* Title */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <label style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontWeight: 700, textTransform: 'uppercase' }}>Challenge Title</label>

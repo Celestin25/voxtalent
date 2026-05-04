@@ -38,23 +38,45 @@ export async function submitSolution(formData: FormData) {
 
     const challengeId = formData.get('challengeId') as string
     const content = (formData.get('content') as string) || ''
-    const file = formData.get('file') as File | null
+    
+    // Personal Information
+    const firstName = formData.get('firstName') as string
+    const lastName = formData.get('lastName') as string
+    const preferredFirstName = formData.get('preferredFirstName') as string
+    const email = formData.get('email') as string
+    const phone = formData.get('phone') as string
+    const country = formData.get('country') as string
+    
+    // Application Questions
+    const interestQuestion = formData.get('interestQuestion') as string
+    const fitQuestion = formData.get('fitQuestion') as string
+    const salaryExpectations = formData.get('salaryExpectations') as string
+    const joinDate = formData.get('joinDate') as string
+    const countryOfResidence = formData.get('countryOfResidence') as string
+    const visaSponsorship = formData.get('visaSponsorship') as string
+    const gender = formData.get('gender') as string
+    const heardAboutRole = formData.get('heardAboutRole') as string
+    const sourceDetail = formData.get('sourceDetail') as string
+    const linkedInProfile = formData.get('linkedInProfile') as string
+
+    const resumeFile = formData.get('resume') as File | null
+    const coverLetterFile = formData.get('coverLetter') as File | null
 
     if (!challengeId) {
       return { success: false, error: 'Missing challenge ID' }
     }
 
-    if (!content && (!file || file.size === 0)) {
-      return { success: false, error: 'Please provide a text answer or upload a file' }
-    }
-
-    let fileUrl: string | null = null
-    let fileName: string | null = null
-    let fileType: string | null = null
-
-    if (file && file.size > 0) {
+    const { put } = await import('@vercel/blob')
+    
+    async function uploadFile(file: File | null, pathPrefix: string) {
+      if (!file || file.size === 0) return null
+      
       const allowedTypes = [
         'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain',
+        'application/rtf',
         'application/vnd.ms-excel',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'video/mp4',
@@ -64,25 +86,36 @@ export async function submitSolution(formData: FormData) {
       ]
 
       if (!allowedTypes.includes(file.type)) {
-        return { success: false, error: 'Only PDF, Excel (.xls/.xlsx), and video files are allowed' }
+        throw new Error(`File type ${file.type} not allowed for ${pathPrefix}`)
       }
 
       const maxSize = 100 * 1024 * 1024 // 100 MB
       if (file.size > maxSize) {
-        return { success: false, error: 'File size must be under 100 MB' }
+        throw new Error(`File size must be under 100 MB for ${pathPrefix}`)
       }
 
       try {
-        const { put } = await import('@vercel/blob')
-        const safeName = `submissions/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+        const safeName = `${pathPrefix}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
         const blob = await put(safeName, file, { access: 'public' })
-        fileUrl = blob.url
-        fileName = file.name
-        fileType = file.type
+        return {
+          url: blob.url,
+          name: file.name,
+          type: file.type
+        }
       } catch (uploadError: any) {
-        console.error('File upload failed:', uploadError)
-        return { success: false, error: 'Failed to upload file.' }
+        console.error(`${pathPrefix} upload failed:`, uploadError)
+        throw new Error(`Failed to upload ${pathPrefix}.`)
       }
+    }
+
+    let resumeData = null
+    let coverLetterData = null
+
+    try {
+      resumeData = await uploadFile(resumeFile, 'resumes')
+      coverLetterData = await uploadFile(coverLetterFile, 'cover-letters')
+    } catch (e: any) {
+      return { success: false, error: e.message }
     }
 
     await prisma.submission.create({
@@ -90,9 +123,28 @@ export async function submitSolution(formData: FormData) {
         challengeId,
         candidateId,
         content,
-        fileUrl,
-        fileName,
-        fileType,
+        firstName,
+        lastName,
+        preferredFirstName,
+        email,
+        phone,
+        country,
+        interestQuestion,
+        fitQuestion,
+        salaryExpectations,
+        joinDate,
+        countryOfResidence,
+        visaSponsorship,
+        gender,
+        heardAboutRole,
+        sourceDetail,
+        linkedInProfile,
+        resumeUrl: resumeData?.url,
+        resumeName: resumeData?.name,
+        resumeType: resumeData?.type,
+        coverLetterUrl: coverLetterData?.url,
+        coverLetterName: coverLetterData?.name,
+        coverLetterType: coverLetterData?.type,
         status: 'SUBMITTED'
       }
     })

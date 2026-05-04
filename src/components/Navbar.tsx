@@ -54,6 +54,7 @@ export default function Navbar() {
           VoxTalent
         </Link>
         <div className={styles.links}>
+          <Link href="/jobs" className={styles.link}>Open Roles</Link>
           <Link href="/challenges" className={styles.link}>Explore</Link>
           <Link href="/how-it-works" className={styles.link}>How It Works</Link>
           <Link href="/about" className={styles.link}>About</Link>
