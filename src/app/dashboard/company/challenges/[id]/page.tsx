@@ -26,6 +26,7 @@ export default async function CompanyChallengeTalentPage({ params }: { params: P
       include: {
         company: true,
         submissions: {
+          where: { resumeUrl: null },
           include: {
             candidate: true,
             votes: true
