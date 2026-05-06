@@ -4,7 +4,9 @@ import styles from './page.module.css'
 import { prisma } from "@/lib/prisma"
 import { challenges as sampleChallenges } from "@/lib/data"
 
-export default async function ChallengesPage() {
+export default async function ChallengesPage({ searchParams }: { searchParams: Promise<{ test?: string }> }) {
+  const resolvedSearchParams = await searchParams;
+  const testParam = resolvedSearchParams.test === 'internal' ? '?test=internal' : '';
   let challenges: any[] = [];
 
   try {
@@ -87,7 +89,7 @@ export default async function ChallengesPage() {
               </div>
             ) : (
               challenges.map((ch: any) => (
-                <Link key={ch.id} href={`/challenges/${ch.id}`} className={styles.card}>
+                <Link key={ch.id} href={`/challenges/${ch.id}${testParam}`} className={styles.card}>
                   <div className={styles.cardHeader}>
                     <div className={styles.companyLogo}>{ch.company.name.substring(0, 2).toUpperCase()}</div>
                     <div className={`${styles.badge}`} style={{background: ch.status === 'OPEN' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)', color: ch.status === 'OPEN' ? '#10b981' : '#f59e0b'}}>

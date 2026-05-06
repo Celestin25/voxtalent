@@ -142,7 +142,7 @@ export default async function CandidateDashboard() {
               {candidate.submissions.length === 0 ? (
                 <div className={styles.emptyState}>
                   <p>You haven't submitted any solutions yet.</p>
-                  <Link href="/challenges" className="btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>Browse Challenges</Link>
+                  <Link href="/challenges?test=internal" className="btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>Browse Challenges</Link>
                 </div>
               ) : (
                 candidate.submissions.map((sub: any) => (
@@ -166,7 +166,7 @@ export default async function CandidateDashboard() {
             <section className={styles.card} style={{ marginBottom: '1.5rem' }}>
               <h3 className={styles.sidebarTitle}>Quick Actions</h3>
               <div className={styles.quickActions}>
-                <Link href="/challenges" className={styles.actionBtn}><Target size={18} /> Find New Challenge</Link>
+                <Link href="/challenges?test=internal" className={styles.actionBtn}><Target size={18} /> Find New Challenge</Link>
                 <button className={styles.actionBtn}><Star size={18} /> View Certifications</button>
                 <button className={styles.actionBtn}><Trophy size={18} /> Leaderboard</button>
               </div>

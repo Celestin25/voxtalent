@@ -20,8 +20,9 @@ import SubmissionForm from "./SubmissionForm"
 import { notFound } from "next/navigation"
 import FileViewer from "@/components/FileViewer"
 
-export default async function ChallengeDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ChallengeDetailPage({ params, searchParams }: { params: Promise<{ id: string }>, searchParams: Promise<{ test?: string }> }) {
   const { id: challengeId } = await params;
+  const resolvedSearchParams = await searchParams;
   const session = await auth();
 
   let challenge: any = null;
@@ -159,8 +160,10 @@ export default async function ChallengeDetailPage({ params }: { params: Promise<
                     </div>
                   ) : (
                     <>
-
-                      <SubmissionForm challengeId={challenge.id} />
+                      <SubmissionForm 
+                        challengeId={challenge.id} 
+                        isInternalCandidate={resolvedSearchParams.test === 'internal' || !!(session?.user && session.user.role?.toUpperCase() === 'CANDIDATE')} 
+                      />
                     </>
                   )}
                 </>

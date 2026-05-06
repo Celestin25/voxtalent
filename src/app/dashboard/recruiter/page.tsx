@@ -8,6 +8,9 @@ export const dynamic = 'force-dynamic';
 
 export default async function RecruiterDashboard() {
   const submissions = await prisma.submission.findMany({
+    where: {
+      resumeUrl: { not: null }
+    },
     include: {
       challenge: true,
       candidate: true,

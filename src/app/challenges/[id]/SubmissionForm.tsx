@@ -6,12 +6,14 @@ import { submitSolution } from '../actions'
 import styles from './page.module.css'
 import Link from 'next/link'
 
-export default function SubmissionForm({ challengeId }: { challengeId: string }) {
+export default function SubmissionForm({ challengeId, isInternalCandidate }: { challengeId: string, isInternalCandidate?: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
   
+  const [file, setFile] = useState<File | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
   const [resume, setResume] = useState<File | null>(null)
   const [coverLetter, setCoverLetter] = useState<File | null>(null)
   
@@ -24,8 +26,12 @@ export default function SubmissionForm({ challengeId }: { challengeId: string })
     setError(null)
 
     const formData = new FormData(e.currentTarget)
-    if (resume) formData.append('resume', resume)
-    if (coverLetter) formData.append('coverLetter', coverLetter)
+    if (isInternalCandidate) {
+      if (file) formData.append('file', file)
+    } else {
+      if (resume) formData.append('resume', resume)
+      if (coverLetter) formData.append('coverLetter', coverLetter)
+    }
     formData.append('challengeId', challengeId)
 
     try {
@@ -134,7 +140,52 @@ export default function SubmissionForm({ challengeId }: { challengeId: string })
               <form onSubmit={handleSubmit}>
                 {error && <div style={{ background: '#fef2f2', border: '1px solid #fee2e2', color: '#b91c1c', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', fontSize: '0.9rem' }}>{error}</div>}
 
-                {/* Name Row */}
+                {isInternalCandidate ? (
+                  <>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1rem' }}>
+                      <div style={fieldGroupStyle}>
+                        <label style={labelStyle}>First Name *</label>
+                        <input name="firstName" required style={inputStyle} placeholder="First name" />
+                      </div>
+                      <div style={fieldGroupStyle}>
+                        <label style={labelStyle}>Last Name *</label>
+                        <input name="lastName" required style={inputStyle} placeholder="Last name" />
+                      </div>
+                    </div>
+                    <div style={fieldGroupStyle}>
+                      <label style={labelStyle}>Email *</label>
+                      <input name="email" type="email" required style={inputStyle} placeholder="email@example.com" />
+                    </div>
+
+                    <div style={fieldGroupStyle}>
+                      <label style={labelStyle}>Your Solution (Optional)</label>
+                      <textarea name="content" style={{ ...inputStyle, resize: 'vertical' }} rows={6} placeholder="Provide your written solution or links to your work..." />
+                    </div>
+
+                    <div style={{ marginBottom: '1.5rem', marginTop: '1.5rem' }}>
+                      <label style={labelStyle}>Attach File (Optional)</label>
+                      <div 
+                        onClick={() => fileRef.current?.click()}
+                        style={{ border: '2px dashed rgba(0,0,0,0.1)', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', cursor: 'pointer', background: file ? 'rgba(16,185,129,0.03)' : 'white' }}
+                      >
+                        {file ? (
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: '#10b981' }}>
+                            <CheckCircle size={20} /> <span style={{ fontWeight: 600 }}>{file.name}</span>
+                          </div>
+                        ) : (
+                          <div style={{ color: '#64748b' }}>
+                            <Upload size={24} style={{ margin: '0 auto 0.5rem' }} />
+                            <p style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-accent-primary)' }}>Upload Solution Document</p>
+                            <p style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>PDF, ZIP, DOCX, TXT</p>
+                          </div>
+                        )}
+                      </div>
+                      <input type="file" ref={fileRef} onChange={e => setFile(e.target.files?.[0] || null)} style={{ display: 'none' }} accept=".pdf,.doc,.docx,.txt,.zip" />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Name Row */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                   <div style={fieldGroupStyle}>
                     <label style={labelStyle}>First Name *</label>
@@ -276,6 +327,8 @@ export default function SubmissionForm({ challengeId }: { challengeId: string })
                     </select>
                   </div>
                 </div>
+                </>
+                )}
 
                 <div style={{ marginTop: '2.5rem', display: 'flex', gap: '1rem' }}>
                   <button 

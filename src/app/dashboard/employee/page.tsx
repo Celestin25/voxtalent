@@ -37,6 +37,7 @@ export default async function EmployeeDashboard() {
     // Guests see ALL open submissions; authenticated employees see their company's only
     const whereClause: any = {
       status: 'SUBMITTED',
+      resumeUrl: null, // Only show submissions from candidates without a CV/resume (internal/anonymous candidates)
     };
 
     if (!isGuest) {

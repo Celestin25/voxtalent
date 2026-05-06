@@ -61,6 +61,7 @@ export async function submitSolution(formData: FormData) {
 
     const resumeFile = formData.get('resume') as File | null
     const coverLetterFile = formData.get('coverLetter') as File | null
+    const generalFile = formData.get('file') as File | null
 
     if (!challengeId) {
       return { success: false, error: 'Missing challenge ID' }
@@ -110,10 +111,12 @@ export async function submitSolution(formData: FormData) {
 
     let resumeData = null
     let coverLetterData = null
+    let generalFileData = null
 
     try {
       resumeData = await uploadFile(resumeFile, 'resumes')
       coverLetterData = await uploadFile(coverLetterFile, 'cover-letters')
+      generalFileData = await uploadFile(generalFile, 'submissions')
     } catch (e: any) {
       return { success: false, error: e.message }
     }
@@ -145,6 +148,9 @@ export async function submitSolution(formData: FormData) {
         coverLetterUrl: coverLetterData?.url,
         coverLetterName: coverLetterData?.name,
         coverLetterType: coverLetterData?.type,
+        fileUrl: generalFileData?.url,
+        fileName: generalFileData?.name,
+        fileType: generalFileData?.type,
         status: 'SUBMITTED'
       }
     })

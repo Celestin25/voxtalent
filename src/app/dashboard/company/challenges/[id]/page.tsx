@@ -117,15 +117,21 @@ export default async function CompanyChallengeTalentPage({ params }: { params: P
                  <p>No submissions yet. Talent is still preparing their solutions.</p>
                </div>
              ) : (
-               challenge.submissions.map((sub: any) => {
-                 const avgScore = sub.votes.length > 0 
-                  ? (sub.votes.reduce((acc: number, v: any) => acc + v.score, 0) / sub.votes.length).toFixed(1)
-                  : '--';
+               [...challenge.submissions]
+                 .map((sub: any) => {
+                   const avgScoreVal = sub.votes.length > 0 
+                    ? sub.votes.reduce((acc: number, v: any) => acc + v.score, 0) / sub.votes.length
+                    : Infinity;
+                   const avgScore = avgScoreVal === Infinity ? '--' : avgScoreVal.toFixed(1);
+                   return { ...sub, avgScoreVal, avgScore };
+                 })
+                 .sort((a: any, b: any) => a.avgScoreVal - b.avgScoreVal)
+                 .map((sub: any) => {
                  
                  return (
                    <div key={sub.id} className={styles.listItem}>
                      <div className={styles.listInfo}>
-                       <h4>{sub.candidate.name || 'Anonymous Pathfinder'}</h4>
+                       <h4>{sub.firstName ? `${sub.firstName} ${sub.lastName}` : (sub.candidate?.name || 'Anonymous Pathfinder')}</h4>
                        <div className={styles.listMeta}>
                          <Clock size={14} /> Submitted {new Date(sub.createdAt).toLocaleDateString()} • <Users size={14} /> {sub.votes.length} Votes
                        </div>
@@ -133,11 +139,11 @@ export default async function CompanyChallengeTalentPage({ params }: { params: P
                      <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
                         <div style={{ textAlign: 'center' }}>
                            <div style={{ 
-                             color: avgScore === '--' ? 'var(--color-text-secondary)' : parseFloat(avgScore) >= 7 ? '#d97706' : parseFloat(avgScore) >= 4 ? '#ea580c' : 'var(--color-accent-primary)', 
+                             color: sub.avgScore === '--' ? 'var(--color-text-secondary)' : parseFloat(sub.avgScore) >= 7 ? '#d97706' : parseFloat(sub.avgScore) >= 4 ? '#ea580c' : 'var(--color-accent-primary)', 
                              fontWeight: 800, 
                              fontSize: '1.2rem' 
                            }}>
-                             {avgScore} {avgScore !== '--' && '🍋'}
+                             {sub.avgScore} {sub.avgScore !== '--' && '🍋'}
                            </div>
                            <div style={{ fontSize: '0.6rem', color: '#000', fontWeight: 600, textTransform: 'uppercase' }}>Avg Lemons</div>
                         </div>

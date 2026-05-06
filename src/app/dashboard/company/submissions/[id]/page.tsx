@@ -138,6 +138,7 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
     : parseFloat(avgLemons) >= 4 ? '#ea580c' // Poor (Orange/Red)
     : 'var(--color-accent-primary)'; // Good (Blue/Default)
 
+
   return (
     <main className={styles.main}>
       <div className={styles.container}>
@@ -147,8 +148,8 @@ export default async function CompanySubmissionDetailPage({ params }: { params: 
 
         <header className={styles.header}>
           <div className={styles.headerTitle}>
-            <h1 style={{ color: '#000' }}>Review: {submission.candidate.name || 'Anonymous Guest'}</h1>
-            <p className={styles.subtitle} style={{ color: '#000', opacity: 1, fontWeight: 600 }}>Solution for {submission.challenge.title}</p>
+            <h1 style={{ color: '#000' }}>Review: {submission.firstName ? `${submission.firstName} ${submission.lastName}` : (submission.candidate?.name || 'Anonymous Guest')}</h1>
+            <p className={styles.subtitle} style={{ color: '#000', opacity: 1, fontWeight: 600 }}>Solution for {submission.challenge.title} {submission.email && ` • ${submission.email}`}</p>
           </div>
           <div style={{ display: 'flex', gap: '1rem' }}>
              {submission.fileUrl && (
