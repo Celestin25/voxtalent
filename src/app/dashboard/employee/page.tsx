@@ -3,12 +3,17 @@ import {
   Vote,
   Users,
   ShieldCheck,
-  AlertCircle
+  AlertCircle,
+  CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
 import styles from "../dashboard.module.css";
 import { prisma } from "@/lib/prisma";
 import SignOutButton from "@/components/SignOutButton";
+import { cookies } from "next/headers";
+
+// Never serve a cached version — vote state must always be fresh
+export const dynamic = 'force-dynamic';
 
 export default async function EmployeeDashboard() {
   const session = await auth();
@@ -29,27 +34,35 @@ export default async function EmployeeDashboard() {
     }
   }
 
-  // Fetch submissions and stats
-  let pendingSubmissions: any[] = [];
+  // Resolve the effective voter ID for this browser/session
+  // Authenticated users → their DB userId
+  // Anonymous guests    → their unique cookie-based guestVoterId (or null if never voted)
+  let effectiveVoterId: string | null = userId;
+  if (isGuest) {
+    const cookieStore = await cookies();
+    effectiveVoterId = cookieStore.get('guestVoterId')?.value ?? null;
+  }
+
+  // Fetch ALL eligible submissions (no voted filter — we'll mark them instead)
+  let allSubmissions: any[] = [];
+  let votedSubmissionIds = new Set<string>();
   let votesCount = 0;
 
   try {
-    // Guests see ALL open submissions; authenticated employees see their company's only
     const whereClause: any = {
       status: 'SUBMITTED',
-      resumeUrl: null, // Only show submissions from candidates without a CV/resume (internal/anonymous candidates)
+      OR: [
+        { content: { not: '' } },
+        { fileUrl: { not: null } }
+      ]
     };
 
-    if (!isGuest) {
-      // Exclude submissions this user already voted on
-      whereClause.votes = { none: { voterId: userId } };
-      // Filter to their company if profile exists
-      if (employeeProfile?.companyId) {
-        whereClause.challenge = { companyId: employeeProfile.companyId };
-      }
+    if (!isGuest && employeeProfile?.companyId) {
+      // Authenticated employees only see their company's submissions
+      whereClause.challenge = { companyId: employeeProfile.companyId };
     }
 
-    pendingSubmissions = await prisma.submission.findMany({
+    allSubmissions = await prisma.submission.findMany({
       where: whereClause,
       include: {
         challenge: {
@@ -67,14 +80,20 @@ export default async function EmployeeDashboard() {
       orderBy: { createdAt: 'desc' }
     });
 
-    if (!isGuest) {
-      votesCount = await prisma.vote.count({
-        where: { voterId: userId }
+    // Fetch which submissions this browser/user has already voted on
+    if (effectiveVoterId) {
+      const myVotes = await prisma.vote.findMany({
+        where: { voterId: effectiveVoterId },
+        select: { submissionId: true }
       });
+      votedSubmissionIds = new Set(myVotes.map((v: any) => v.submissionId));
+      votesCount = myVotes.length;
     }
   } catch (error) {
     console.error("Dashboard Error: Database connection failed.", error);
   }
+
+  const pendingCount = allSubmissions.filter(s => !votedSubmissionIds.has(s.id)).length;
 
   return (
     <main className={styles.main}>
@@ -97,19 +116,17 @@ export default async function EmployeeDashboard() {
           <div className={styles.statCard}>
             <div className={styles.statIcon}><Users size={24} /></div>
             <div>
-              <div className={styles.statValue}>{pendingSubmissions.length}</div>
-              <div className={styles.statLabel}>Open for Voting</div>
+              <div className={styles.statValue}>{pendingCount}</div>
+              <div className={styles.statLabel}>Pending Your Vote</div>
             </div>
           </div>
-          {!isGuest && (
-            <div className={styles.statCard}>
-              <div className={styles.statIcon}><Vote size={24} /></div>
-              <div>
-                <div className={styles.statValue}>{votesCount}</div>
-                <div className={styles.statLabel}>Votes Cast</div>
-              </div>
+          <div className={styles.statCard}>
+            <div className={styles.statIcon}><Vote size={24} /></div>
+            <div>
+              <div className={styles.statValue}>{votesCount}</div>
+              <div className={styles.statLabel}>Votes Cast</div>
             </div>
-          )}
+          </div>
           <div className={styles.statCard}>
             <div className={styles.statIcon}><ShieldCheck size={24} /></div>
             <div>
@@ -123,35 +140,95 @@ export default async function EmployeeDashboard() {
           <section className={styles.card}>
             <div className={styles.cardHeader}>
               <h2 className={styles.cardTitle}>
-                {isGuest ? "Submissions Available to Vote" : "Submissions Pending Your Vote"}
+                All Candidate Submissions
               </h2>
               <span className="text-secondary text-sm">Score each on a 1–10 scale</span>
             </div>
 
             <div className={styles.list}>
-              {pendingSubmissions.length === 0 ? (
+              {allSubmissions.length === 0 ? (
                 <div className={styles.emptyState}>
                   <p>No submissions are available for voting right now</p>
                   <p className="text-secondary text-xs mt-2">Check back later new candidate submissions will appear here</p>
                 </div>
               ) : (
-                pendingSubmissions.map((sub: any) => (
-                  <div key={sub.id} className={styles.listItem}>
-                    <div className={styles.listInfo}>
-                      <h4>{sub.challenge.title}</h4>
-                      <div className={styles.listMeta}>
-                        <AlertCircle size={14} className="text-gold" /> SUB-{sub.id.substring(0,4)}
-                        {isGuest && sub.challenge.company?.name && (
-                          <> • {sub.challenge.company.name}</>
-                        )}
-                        {' '}• <Users size={14} /> {sub._count.votes} votes so far
+                allSubmissions.map((sub: any) => {
+                  const hasVoted = votedSubmissionIds.has(sub.id);
+                  return (
+                    <div
+                      key={sub.id}
+                      className={styles.listItem}
+                      style={{
+                        opacity: hasVoted ? 0.75 : 1,
+                        background: hasVoted ? 'rgba(16, 185, 129, 0.04)' : undefined,
+                        borderLeft: hasVoted ? '3px solid #10b981' : '3px solid transparent',
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      <div className={styles.listInfo}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                          <h4 style={{ margin: 0 }}>{sub.challenge.title}</h4>
+                          {hasVoted && (
+                            <span style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              background: 'rgba(16,185,129,0.12)',
+                              color: '#10b981',
+                              borderRadius: '999px',
+                              padding: '2px 10px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              letterSpacing: '0.04em',
+                              textTransform: 'uppercase',
+                            }}>
+                              <CheckCircle2 size={12} />
+                              Voted
+                            </span>
+                          )}
+                        </div>
+                        <div className={styles.listMeta}>
+                          <AlertCircle size={14} className="text-gold" /> SUB-{sub.id.substring(0, 4)}
+                          {isGuest && sub.challenge.company?.name && (
+                            <> • {sub.challenge.company.name}</>
+                          )}
+                          {' '}• <Users size={14} /> {sub._count.votes} votes so far
+                        </div>
                       </div>
+
+                      {hasVoted ? (
+                        <button
+                          disabled
+                          style={{
+                            padding: '0.4rem 1rem',
+                            fontSize: '0.8rem',
+                            borderRadius: '999px',
+                            border: '2px solid #10b981',
+                            background: 'rgba(16,185,129,0.1)',
+                            color: '#10b981',
+                            fontWeight: 700,
+                            cursor: 'not-allowed',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            whiteSpace: 'nowrap',
+                            opacity: 0.9,
+                          }}
+                        >
+                          <CheckCircle2 size={14} /> Done
+                        </button>
+                      ) : (
+                        <Link
+                          href={`/vote/${sub.id}`}
+                          className="btn-primary"
+                          style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+                        >
+                          Vote Now
+                        </Link>
+                      )}
                     </div>
-                    <Link href={`/vote/${sub.id}`} className="btn-primary" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}>
-                      Vote Now
-                    </Link>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
             

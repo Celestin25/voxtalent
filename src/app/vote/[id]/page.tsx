@@ -12,12 +12,22 @@ import dashboardStyles from "../../dashboard/dashboard.module.css";
 import { prisma } from "@/lib/prisma";
 import VotingForm from "./VotingForm";
 import FileViewer from "@/components/FileViewer";
+import { cookies } from "next/headers";
+
+export const dynamic = 'force-dynamic';
 
 export default async function VotePage({ params }: { params: Promise<{ id: string }> }) {
   const { id: submissionId } = await params;
   const session = await auth();
 
   const isSignedIn = !!session?.user?.id;
+
+  // For anonymous guests, use their unique cookie-based ID for vote-checking
+  const cookieStore = await cookies();
+  const guestVoterId = cookieStore.get('guestVoterId')?.value ?? null;
+
+  // The voter ID we'll use to check if this browser already voted
+  const effectiveVoterId = session?.user?.id ?? guestVoterId;
 
   let submission: any = null;
 
@@ -30,8 +40,8 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
             company: true
           }
         },
-        votes: isSignedIn
-          ? { where: { voterId: session!.user!.id } }
+        votes: effectiveVoterId
+          ? { where: { voterId: effectiveVoterId } }
           : { where: { voterId: 'no-match' } }
       }
     });
@@ -43,13 +53,13 @@ export default async function VotePage({ params }: { params: Promise<{ id: strin
     notFound();
   }
 
-  if (isSignedIn && submission.votes.length > 0) {
+  if (submission.votes.length > 0) {
     return (
       <main className={dashboardStyles.main}>
         <div className={dashboardStyles.container} style={{ textAlign: 'center' }}>
           <h1 className={dashboardStyles.cardTitle}>Vote Recorded</h1>
           <p className="text-secondary mb-8">You have already cast your vote for this submission.</p>
-          <Link href="/dashboard/employee" className="btn-primary">Back to Dashboard</Link>
+          <Link href={isSignedIn ? "/dashboard/employee" : "/challenges"} className="btn-primary">Back to Dashboard</Link>
         </div>
       </main>
     )

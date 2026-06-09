@@ -46,7 +46,16 @@ export default async function CompanyDashboard() {
         challenges: {
           include: {
             _count: {
-              select: { submissions: { where: { resumeUrl: null } } }
+              select: { 
+                submissions: { 
+                  where: { 
+                    OR: [
+                      { content: { not: '' } },
+                      { fileUrl: { not: null } }
+                    ] 
+                  } 
+                } 
+              }
             }
           },
           orderBy: { createdAt: 'desc' }
